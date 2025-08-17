@@ -19,16 +19,30 @@
 <body>
   <main class="mt-5">
     <div class="container">
-      <a href="index.html"><img src="logo-jap.png" alt="Jovenes a Programar"></a>
+      <div class="nav">
+        <a href="index.html"><img src="logo-jap.png" alt="Jovenes a Programar"></a>
+        <label class="switch">
+          Night
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
+        <label for="idioma">🌐</label>
+        <select id="idioma" name="idioma">
+          <option value="es">ES</option>
+          <option value="en">ENG</option>
+      </select>
+      </div>
         <form action="" class="formulario">
           <h2>Iniciar Sesion</h2>
           <label for="usuario">Usuario:</label>
           <input type="text" class="campo" id="usuario" required placeholder="Ingrese su nombre de usuario">
           <label for="contrasena">Contraseña:</label>
           <input type="password" class="campo" id="contrasena" required placeholder="Ingrese su contraseña">
-          <input type="submit" value="Iniciar Sesion" class="ingresar">
+          <input type="submit" value="Iniciar Sesion" id="btn-ingresar">
           <p>No recuerdas tu contraseña? <a href="">recuperar mi cuenta</a></p>
           <p>No tiene una cuenta? <a href="">registrate aquí</a></p>
+          <p>Otras formas de inicio de sesion</p>
+          <input type="button" value="Google" id="btn-google">
         </form>
     </div>
   </main>
