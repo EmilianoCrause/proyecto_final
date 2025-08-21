@@ -18,7 +18,7 @@ fetch(API)
                     <div class="col">
                         <div class="d-flex w-100 justify-content-between">
                             <h4 class="mb-1">${product.name} - ${product.currency} ${product.cost}</h4>
-                            <small class="text-muted">${product.sold} vendidos</small>
+                            <small class="text-muted">${product.soldCount} vendidos</small>
                         </div>
                         <p class="mb-1">${product.description}</p>    
                     </div>
