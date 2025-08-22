@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eMercado - Todo lo que busques está aquí</title>
+    <title>Iniciar Sesión - eMercado</title>
 
     <!-- Fuente Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,27 +21,25 @@
     <!-- ====== HEADER ====== -->
     <header>
         <nav>
-            <!-- <a href="index.html">
-                <img src="img/extra/logo-jap.png" alt="Jóvenes a Programar" class="logo">
 
-            </a> -->
-
+            <!-- Logo del e_commerce -->
             <a href="index.html">
                 <div class="e-commerce">
                     <span id="e-mercado">
                         <span class="resaltar">e •</span> mercado
                     </span>
-                    <span id="subtitulo" class="subtitulo">
+                    <span class="subtitulo">
                         ¡Tu <span class="bold">e_commerce</span> favorito!
                     </span>
                 </div>
             </a>
 
+            <!-- Controles de modo claro/oscuro e idioma -->
             <div class="selectores">
-                <!-- Modo claro/oscuro -->
-                <button class="light-btn">
+    
+                <!-- Botón para cambiar entre modo claro/oscuro -->
+                <button class="light-btn" aria-label="Cambiar modo claro/oscuro">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <!--Boxicons v3.0 https://boxicons.com | License  https://docs.boxicons.com/free-->
                         <path
                             d="M12 6.99a5.01 5.01 0 1 0 0 10.02 5.01 5.01 0 1 0 0-10.02M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z">
                         </path>
@@ -50,9 +48,8 @@
 
                 <!-- Selector de idioma -->
                 <div class="lang-container">
-                    <button class="lang-btn">
+                    <button class="lang-btn" aria-label="Seleccionar idioma">
                         <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <!--Boxicons v3.0 https://boxicons.com | License  https://docs.boxicons.com/free-->
                             <path
                                 d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z">
                             </path>
@@ -66,57 +63,59 @@
                         <option value="en">ENG</option>
                     </select>
                 </div>
+
             </div>
+
         </nav>
     </header>
 
     <!-- ====== MAIN ====== -->
     <main>
-        <form action="" class="formulario">
-            <h1>Iniciar sesión</h1>
+        <!-- Formulario de inicio de sesión -->
+        <form action="#" class="formulario" method="post">
+            <h1 id="login-title">Iniciar sesión</h1>
 
-            <!-- Campos -->
+            <!-- Campo de email -->
             <div class="campos">
-                <input type="email" id="usuario" placeholder="Correo electrónico">
+                <input type="email" id="usuario" placeholder="Correo electrónico" required>
             </div>
+            
+            <!-- Campo de contraseña -->
             <div class="campos">
-                <input type="password" id="contrasena" placeholder="Contraseña">
+                <input type="password" id="contrasena" placeholder="Contraseña" required>
             </div>
 
-            <!-- Checkbox -->
+            <!-- Checkbox para recordar sesión -->
             <label id="checkbox-label">
                 <input type="checkbox" id="remember" class="checkbox">
-                Mantener la sesión iniciada
+                <span id="remember-text">Mantener la sesión iniciada</span>
             </label>
 
-            <!-- Botón de login -->
+            <!-- Botón de envío del formulario -->
             <button type="submit" id="btn-ingresar">Ingresar</button>
 
-            <!-- Recuperar / Registrar -->
+            <!-- Enlaces adicionales -->
             <div class="recuperar-registrar">
-                <p>No recuerdas tu contraseña? <a href="">Recuperar mi cuenta</a></p>
-                <p>No tienes cuenta? <a href="">Regístrate aquí</a></p>
+                <p id="recover-text">¿No recuerdas tu contraseña? <a href="#">Recuperar mi cuenta</a></p>
+                <p id="register-text">¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
             </div>
 
-            <!-- Otras formas de inicio -->
-            <div>
-                <div class="login-otras-formas">
-                    <div class="linea"></div>
-                    <span class="linea">Otras formas de inicio de sesión</span>
-                    <div class="linea"></div>
-                </div>
+            <!-- Otras formas -->
+            <div class="login-otras-formas">
+                <span id="other-methods-text">Otras formas de inicio de sesión</span>
+            </div>
 
-                <div class="otros-met">
-                    <button type="button" class="btn-otras-formas">
-                        <img class="icon-img" src="img/extra/google.png" alt="Iniciar sesión con Google">
-                    </button>
-                    <button type="button" class="btn-otras-formas">
-                        <img class="icon-img" src="img/extra/facebook.png" alt="Iniciar sesión con Facebook">
-                    </button>
-                    <button type="button" class="btn-otras-formas">
-                        <img class="icon-img" src="img/extra/github.png" alt="Iniciar sesión con GitHub">
-                    </button>
-                </div>
+            <!-- Botones de login con redes sociales -->
+            <div class="otros-met">
+                <button type="button" class="btn-otras-formas">
+                    <img class="icon-img" src="img/extra/google.png" alt="Google">
+                </button>
+                <button type="button" class="btn-otras-formas">
+                    <img class="icon-img" src="img/extra/facebook.png" alt="Facebook">
+                </button>
+                <button type="button" class="btn-otras-formas">
+                    <img class="icon-img" src="img/extra/github.png" alt="GitHub">
+                </button>
             </div>
         </form>
     </main>
@@ -124,12 +123,11 @@
     <!-- ====== FOOTER ====== -->
     <footer>
         <div>
-            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank" class="resaltar">Jóvenes a
-                    Programar</a></p>
+            <p id="footer-text">Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank" class="resaltar">Jóvenes a Programar</a></p>
         </div>
-
     </footer>
 
+    <!-- Scripts -->
     <script src="js/login.js"></script>
 </body>
 
