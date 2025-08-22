@@ -2,59 +2,135 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
-  
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: rgb(248, 249, 250);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eMercado - Todo lo que busques está aquí</title>
+
+    <!-- Fuente Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
 </head>
 
 <body>
-  <main class="mt-5">
-    <div class="container">
-      <div class="nav">
-        <a href="index.html"><img src="logo-jap.png" alt="Jovenes a Programar"></a>
-        <label class="switch">
-          Night
-          <input type="checkbox">
-          <span class="slider"></span>
-        </label>
-        <label for="idioma">🌐</label>
-        <select id="idioma" name="idioma">
-          <option value="es">ES</option>
-          <option value="en">ENG</option>
-      </select>
-      </div>
+    <!-- ====== HEADER ====== -->
+    <header>
+        <nav>
+            <!-- <a href="index.html">
+                <img src="img/extra/logo-jap.png" alt="Jóvenes a Programar" class="logo">
+
+            </a> -->
+
+            <a href="index.html">
+                <div class="e-commerce">
+                    <span id="e-mercado">
+                        <span class="resaltar">e •</span> mercado
+                    </span>
+                    <span id="subtitulo" class="subtitulo">
+                        ¡Tu <span class="bold">e_commerce</span> favorito!
+                    </span>
+                </div>
+            </a>
+
+            <div class="selectores">
+                <!-- Modo claro/oscuro -->
+                <button class="light-btn">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <!--Boxicons v3.0 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                        <path
+                            d="M12 6.99a5.01 5.01 0 1 0 0 10.02 5.01 5.01 0 1 0 0-10.02M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z">
+                        </path>
+                    </svg>
+                </button>
+
+                <!-- Selector de idioma -->
+                <div class="lang-container">
+                    <button class="lang-btn">
+                        <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <!--Boxicons v3.0 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                            <path
+                                d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z">
+                            </path>
+                            <path
+                                d="m12.25,14.97l.49-1.94c-.13-.03-1.6-.43-3.17-1.42,1.4-1.41,2.49-3.26,2.74-5.61h1.68v-2h-5v-2h-2v2H2v2h8.3c-.25,1.91-1.19,3.34-2.31,4.4-.69-.65-1.31-1.44-1.74-2.4h-2.13c.5,1.44,1.33,2.63,2.3,3.61-1.57.99-3.04,1.39-3.17,1.42l.49,1.94c1.18-.3,2.76-.96,4.26-2.02,1.49,1.06,3.08,1.72,4.25,2.02Z">
+                            </path>
+                        </svg>
+                    </button>
+                    <select id="idioma" name="idioma">
+                        <option value="es">ES</option>
+                        <option value="en">ENG</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ====== MAIN ====== -->
+    <main>
         <form action="" class="formulario">
-          <h2>Iniciar Sesion</h2>
-          <label for="usuario">Usuario:</label>
-          <input type="text" class="campo" id="usuario" required placeholder="Ingrese su nombre de usuario">
-          <label for="contrasena">Contraseña:</label>
-          <input type="password" class="campo" id="contrasena" required placeholder="Ingrese su contraseña">
-          <input type="submit" value="Iniciar Sesion" id="btn-ingresar">
-          <p>No recuerdas tu contraseña? <a href="">recuperar mi cuenta</a></p>
-          <p>No tiene una cuenta? <a href="">registrate aquí</a></p>
-          <p>Otras formas de inicio de sesion</p>
-          <input type="button" value="Google" id="btn-google">
+            <h1>Iniciar sesión</h1>
+
+            <!-- Campos -->
+            <div class="campos">
+                <input type="email" id="usuario" placeholder="Correo electrónico">
+            </div>
+            <div class="campos">
+                <input type="password" id="contrasena" placeholder="Contraseña">
+            </div>
+
+            <!-- Checkbox -->
+            <label id="checkbox-label">
+                <input type="checkbox" id="remember" class="checkbox">
+                Mantener la sesión iniciada
+            </label>
+
+            <!-- Botón de login -->
+            <button type="submit" id="btn-ingresar">Ingresar</button>
+
+            <!-- Recuperar / Registrar -->
+            <div class="recuperar-registrar">
+                <p>No recuerdas tu contraseña? <a href="">Recuperar mi cuenta</a></p>
+                <p>No tienes cuenta? <a href="">Regístrate aquí</a></p>
+            </div>
+
+            <!-- Otras formas de inicio -->
+            <div>
+                <div class="login-otras-formas">
+                    <div class="linea"></div>
+                    <span class="linea">Otras formas de inicio de sesión</span>
+                    <div class="linea"></div>
+                </div>
+
+                <div class="otros-met">
+                    <button type="button" class="btn-otras-formas">
+                        <img class="icon-img" src="img/extra/google.png" alt="Iniciar sesión con Google">
+                    </button>
+                    <button type="button" class="btn-otras-formas">
+                        <img class="icon-img" src="img/extra/facebook.png" alt="Iniciar sesión con Facebook">
+                    </button>
+                    <button type="button" class="btn-otras-formas">
+                        <img class="icon-img" src="img/extra/github.png" alt="Iniciar sesión con GitHub">
+                    </button>
+                </div>
+            </div>
         </form>
-    </div>
-  </main>
-  <footer class="text-muted">
-    <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
-    </div>
-  </footer>
-  <script src="js/login.js"></script>
+    </main>
+
+    <!-- ====== FOOTER ====== -->
+    <footer>
+        <div>
+            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank" class="resaltar">Jóvenes a
+                    Programar</a></p>
+        </div>
+
+    </footer>
+
+    <script src="js/login.js"></script>
 </body>
 
 </html>
