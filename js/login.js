@@ -53,9 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
             (!uservalido ? usuario : contrasena).focus();
             return;
         }
-        sessionStorage.setItem('usuario', uservalido);
-
-        window.location.href = 'index.html'
 
         // ======== Guardar sesión ========
         if (rememberCheckbox.checked) {
@@ -66,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.location.href = 'index.html';
     });
-    
+
     // ======== Si ya hay usuario guardado ========
     const savedUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
     if (savedUser) {
