@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(){
-    let usuario = sessionStorage.getItem("usuario");
-
-    if (!usuario) {
+    let usuSession = sessionStorage.getItem("usuario");
+    let usuLocal =localStorage.getItem("usuario");
+    
+    if (!usuSession && !usuLocal) {
         window.location = "login.html";
         return;
     }
