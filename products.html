@@ -37,50 +37,96 @@
     </div>
   </nav>
   <main class="pb-5">
-    <div class="text-center p-4">
-      <h2>Autos</h2>
-      <p class="lead">Verás aquí todos los autos del sitio.</p>
+  <!-- Barra superior SOLO móvil -->
+  <div class="container-fluid p-2 border-bottom d-flex justify-content-between align-items-center d-md-none">
+    <h2 class="m-0">Autos</h2>
+    <div class="d-flex align-items-center">
+      <div class="btn-group btn-group-toggle me-2" data-bs-toggle="buttons">
+        <input type="radio" class="btn-check" name="optionsMobile" id="sortAscMobile">
+        <label class="btn btn-light" for="sortAscMobile">A-Z</label>
+        <input type="radio" class="btn-check" name="optionsMobile" id="sortDescMobile">
+        <label class="btn btn-light" for="sortDescMobile">Z-A</label>
+        <input type="radio" class="btn-check" name="optionsMobile" id="sortByCountMobile" checked>
+        <label class="btn btn-light" for="sortByCountMobile"><i class="fas fa-sort-amount-down mr-1"></i></label>
+      </div>
+      <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapseMobile">
+        <i class="fas fa-filter"></i>
+      </button>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col text-end">
-          <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
-            <input type="radio" class="btn-check" name="options" id="sortAsc">
-            <label class="btn btn-light" for="sortAsc">A-Z</label>
-            <input type="radio" class="btn-check" name="options" id="sortDesc">
-            <label class="btn btn-light" for="sortDesc">Z-A</label>
-            <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-            <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1"></i></label>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
-          <div class="row container p-0 m-0">
-            <div class="col">
-              <p class="font-weight-normal text-end my-2">Cant.</p>
-            </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
-            </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
-            </div>
-            <div class="col-3 p-0">
-              <div class="btn-group" role="group">
-                <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="list-group" id="products-list-container">
+  </div>
+
+  <!-- Vista escritorio (igual que la original) -->
+  <div class="text-center p-4 d-none d-md-block">
+    <h2>Autos</h2>
+    <p class="lead">Verás aquí todos los autos del sitio.</p>
+  </div>
+
+  <div class="container">
+    <!-- Filtros escritorio -->
+    <div class="row d-none d-md-block">
+      <div class="col text-end">
+        <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
+          <input type="radio" class="btn-check" name="options" id="sortAsc">
+          <label class="btn btn-light" for="sortAsc">A-Z</label>
+          <input type="radio" class="btn-check" name="options" id="sortDesc">
+          <label class="btn btn-light" for="sortDesc">Z-A</label>
+          <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
+          <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1"></i></label>
         </div>
       </div>
     </div>
-  </main>
+
+    <!-- Filtros cantidad escritorio -->
+    <div class="row d-none d-md-block">
+      <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container" id="filterCollapse">
+        <div class="row container p-0 m-0">
+          <div class="col">
+            <p class="font-weight-normal text-end my-2">Cant.</p>
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
+          </div>
+          <div class="col-3 p-0">
+            <div class="btn-group d-flex flex-row" role="group">
+              <button class="btn btn-light w-100" id="rangeFilterCount">Filtrar</button>
+              <button class="btn btn-link btn-sm w-100" id="clearRangeFilter">Limpiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtros cantidad móvil (collapse) -->
+    <div class="row d-md-none collapse" id="filterCollapseMobile">
+      <div class="col-12 mb-1 container">
+        <div class="row container p-0 m-0">
+          <div class="col">
+            <input class="form-control mb-2" type="number" placeholder="min." id="rangeFilterCountMinMobile">
+          </div>
+          <div class="col">
+            <input class="form-control mb-2" type="number" placeholder="máx." id="rangeFilterCountMaxMobile">
+          </div>
+          <div class="col-12 p-0 mt-2">
+            <div class="btn-group d-flex flex-column" role="group">
+              <button class="btn btn-light w-100 mb-1" id="rangeFilterCountMobile">Filtrar</button>
+              <button class="btn btn-link btn-sm w-100" id="clearRangeFilterMobile">Limpiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="row">
+      <div class="list-group" id="products-list-container"></div>
+    </div>
+  </div>
+</main>
+
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">

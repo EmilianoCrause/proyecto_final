@@ -12,15 +12,18 @@ fetch(API)
 
             item.innerHTML = `
                 <div class="row">
-                    <div class="col-3">
-                        <img src="${product.image}" alt="${product.name}" class="img-thumbnail">
+                    <div class="col-12 col-md-3">
+                        <img src="${product.image}" alt="${product.name}" class="img-fluid img-thumbnail mb-3 mb-md-0">
                     </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${product.name} - ${product.currency} ${product.cost}</h4>
-                            <small class="text-muted">${product.soldCount} vendidos</small>
-                        </div>
-                        <p class="mb-1">${product.description}</p>    
+                    <div class="col-12 col-md-9">
+                        <h4 class="mb-2">${product.name}</h4>
+                        <p class="mb-2">${product.description}</p>
+                        <p class="text-end text-md-start fw-bold">
+                        ${product.currency} ${product.cost}
+                        </p>
+                        <small class="text-muted d-block text-md-start text-end">
+                        ${product.soldCount} vendidos
+                        </small>
                     </div>
                 </div>
             `;
