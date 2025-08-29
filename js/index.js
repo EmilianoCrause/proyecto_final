@@ -10,15 +10,6 @@ document.addEventListener("DOMContentLoaded", function(){
      // Elegir usuario existente
      const savedUser = usuLocal || usuSession;
 
-    // Mostrar usuario en la barra de navegación
-    const userDisplay = document.getElementById("User-display");
-      const username = savedUser.split('@')[0]; 
-      if(username){
-    if (userDisplay) {
-        userDisplay.textContent = username;
-    }
-};
-
     // Agregar eventos a las categorías
     document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);
