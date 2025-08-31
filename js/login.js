@@ -154,5 +154,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedUser) {
         usuario.value = savedUser; // Rellenar campo con usuario guardado
         rememberCheckbox.checked = !!localStorage.getItem('usuario'); // Marcar checkbox si está en localStorage
-    }
+    };
 });

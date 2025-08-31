@@ -193,7 +193,7 @@ main {
     flex: 1; /* Ocupa todo el espacio disponible entre header y footer */
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     padding: 2rem;
 }
 
@@ -425,12 +425,6 @@ footer div {
 
 /* Tablets estándar (768px o menos) */
 @media (max-width: 768px) {
-    .formulario {
-        margin: 2rem 1rem;
-        padding: 1.5rem;
-        border-width: 1.5px;
-    }
-    
     h1 {
         font-size: 1.75rem;
         margin-bottom: 1.25rem;
