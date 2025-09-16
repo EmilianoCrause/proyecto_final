@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,52 +15,100 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item">
-          </li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="categories.html">Categorías</a></li>
+          <li class="nav-item"><a class="nav-link" href="sell.html">Vender</a></li>
+          <li class="nav-item"><span class="nav-link" id="User-display"></span></li>
+          <li class="nav-item"></li>
         </ul>
       </div>
     </div>
   </nav>
-  <main class="pb-5 container">
+
+  <main class="pb-5">
+    <!-- Topbar unificada -->
+    <div class="container-fluid p-2 border-bottom">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h2 id="category-title-desktop" class="mb-2"></h2>
+          <p id="category-subtitle-desktop" class="lead mb-0"></p>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <!-- Orden único -->
+          <div class="btn-group btn-group-toggle me-2" data-bs-toggle="buttons" aria-label="Ordenar">
+            <input type="radio" class="btn-check" name="options" id="sortAsc">
+            <label class="btn btn-light" for="sortAsc">Precio ↑</label>
+
+            <input type="radio" class="btn-check" name="options" id="sortDesc">
+            <label class="btn btn-light" for="sortDesc">Precio ↓</label>
+
+            <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
+            <label class="btn btn-light" for="sortByCount">
+              Rel <i class="fas fa-sort-amount-down mr-1"></i>
+            </label>
+          </div>
+
+          <!-- Botón de filtros (solo visible en móvil) -->
+          <button class="btn btn-light d-md-none" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#filterPanel"
+                  aria-controls="filterPanel" aria-expanded="false" aria-label="Mostrar filtros">
+            <i class="fas fa-filter"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <!-- Panel de filtros único -->
+      <div id="filterPanel" class="collapse d-md-block">
+        <div class="row g-2 align-items-center justify-content-end m-0 py-2">
+          <div class="col-auto">
+            <p class="font-weight-normal my-2 mb-0 text-end">Precio</p>
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <input class="form-control" type="number" placeholder="min." id="rangeFilterPriceMin">
+          </div>
+          <div class="col-6 col-sm-4 col-md-2">
+            <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMax">
+          </div>
+          <div class="col-12 col-sm-4 col-md-3">
+            <div class="btn-group d-flex" role="group">
+              <button class="btn btn-light w-100" id="rangeFilterPrice">Filtrar</button>
+              <button class="btn btn-link btn-sm w-100" id="clearRangeFilter">Limpiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de productos -->
+      <div class="row mt-3">
+        <div class="list-group" id="products-list-container"></div>
       </div>
     </div>
   </main>
+
   <footer class="text-muted">
     <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p class="float-end"><a href="#">Volver arriba</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank" rel="noopener">Jovenes a Programar</a></p>
     </div>
   </footer>
+
+  <!-- Spinner global -->
   <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   </div>
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
+  <script src="js/user-display.js"></script>
 </body>
-
 </html>
