@@ -5,19 +5,18 @@ let filteredProductsArray = [];
 // Función para redirigir a la página de detalles del producto
 // Guardamos el id del producto en localStorage para que product-info.html sepa cuál mostrar
 function setProductID(id) {
-  localStorage.setItem("productID", id); // guardamos el id
-  window.location = "product-info.html"; // redirigimos a la página de detalles
+  localStorage.setItem("productID", id);
+  window.location = "product-info.html";
 }
 
 // Función para mostrar la lista de productos en la página
 function showProductsList() {
-  let htmlContentToAppend = ""; // acá vamos a ir armando todo el HTML
+  let htmlContentToAppend = "";
 
   // Recorremos cada producto del array filtrado
   for (let i = 0; i < filteredProductsArray.length; i++) {
     const product = filteredProductsArray[i];
 
-    // Agregamos un bloque de HTML por cada producto
     htmlContentToAppend += `
       <div onclick="setProductID(${product.id})" class="list-group-item list-group-item-action cursor-active">
         <div class="row">
@@ -39,14 +38,14 @@ function showProductsList() {
     `;
   }
 
-  // Insertamos todo el HTML generado dentro del contenedor de productos
   document.getElementById("products-list-container").innerHTML = htmlContentToAppend;
 }
 
-// Filtrar productos por rango de precio
+// --- Filtros y orden ---
+
 function filtrarPorPrecio(minID, maxID) {
-  let min = parseInt(document.getElementById(minID).value);
-  let max = parseInt(document.getElementById(maxID).value);
+  let min = parseInt(document.getElementById(minID)?.value);
+  let max = parseInt(document.getElementById(maxID)?.value);
 
   if (isNaN(min)) min = undefined;
   if (isNaN(max)) max = undefined;
@@ -57,7 +56,6 @@ function filtrarPorPrecio(minID, maxID) {
   showProductsList();
 }
 
-// Ordenar productos según criterio (precio asc/desc o relevancia)
 function ordenarProductos(criterio) {
   if (criterio === "priceAsc") {
     filteredProductsArray.sort((a, b) => a.cost - b.cost);
@@ -69,37 +67,41 @@ function ordenarProductos(criterio) {
   showProductsList();
 }
 
-// Limpiar filtros
 function limpiarFiltros(minID, maxID) {
-  document.getElementById(minID).value = "";
-  document.getElementById(maxID).value = "";
+  const minEl = document.getElementById(minID);
+  const maxEl = document.getElementById(maxID);
+  if (minEl) minEl.value = "";
+  if (maxEl) maxEl.value = "";
   filteredProductsArray = [...currentProductsArray];
   showProductsList();
 }
 
-// Esperamos a que todo el DOM esté cargado antes de ejecutar nuestro código
+// Helper para agregar listeners solo si el elemento existe
+function addClick(id, handler) {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("click", handler);
+}
+
+// --- Inicio ---
 document.addEventListener("DOMContentLoaded", function () {
-  // Obtenemos catID del localStorage, que se guardó cuando el usuario seleccionó una categoría
+  // Obtenemos catID del localStorage
   const catID = localStorage.getItem("catID");
 
-  // Si no hay catID, mostramos un mensaje de error y salimos de la función
   if (!catID) {
     document.getElementById("products-list-container").innerHTML = `
       <div class="alert alert-danger" role="alert">
         Error: No se seleccionó ninguna categoría.
       </div>
     `;
-    return; // salimos para que no siga el resto del código
+    return;
   }
 
-  // Armamos la URL de la API usando la constante PRODUCTS_URL + catID + EXT_TYPE
+  // Armamos la URL de la API
   const API_URL = PRODUCTS_URL + catID + EXT_TYPE;
 
-  // Usamos la función getJSONData (que viene de init.js) para traer los datos de la API
+  // Traemos los datos
   getJSONData(API_URL).then(function (resultObj) {
-    // Verificamos si la API respondió correctamente
     if (resultObj.status === "ok") {
-      // Guardamos los productos en la variable global
       currentProductsArray = resultObj.data.products;
       filteredProductsArray = [...currentProductsArray];
 
@@ -109,19 +111,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const categorySubtitleDesktop = document.getElementById("category-subtitle-desktop");
 
       if (categoryTitleMobile) {
-        categoryTitleMobile.textContent = resultObj.data.catName; // título para móvil (opcional)
+        categoryTitleMobile.textContent = resultObj.data.catName;
       }
-
       if (categoryTitleDesktop && categorySubtitleDesktop) {
-        categoryTitleDesktop.textContent = resultObj.data.catName; // título escritorio
+        categoryTitleDesktop.textContent = resultObj.data.catName;
         categorySubtitleDesktop.textContent =
-          `Verás aquí todos los ${resultObj.data.catName.toLowerCase()} del sitio.`; // subtítulo escritorio
+          `Verás aquí todos los ${resultObj.data.catName.toLowerCase()} del sitio.`;
       }
 
-      // Mostramos la lista de productos
+      // Render inicial
       showProductsList();
     } else {
-      // Si hubo error en la API, lo mostramos en consola y también un mensaje de error en la página
       console.error('Error al cargar productos:', resultObj.data);
       document.getElementById("products-list-container").innerHTML = `
         <div class="alert alert-danger" role="alert">
@@ -131,11 +131,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Listeners (IDs únicos)
-  document.getElementById("rangeFilterPrice").addEventListener("click", () => filtrarPorPrecio("rangeFilterPriceMin", "rangeFilterPriceMax"));
-  document.getElementById("clearRangeFilter").addEventListener("click", () => limpiarFiltros("rangeFilterPriceMin", "rangeFilterPriceMax"));
+  // --- Listeners escritorio ---
+  addClick("rangeFilterPrice", () => filtrarPorPrecio("rangeFilterPriceMin", "rangeFilterPriceMax"));
+  addClick("clearRangeFilter", () => limpiarFiltros("rangeFilterPriceMin", "rangeFilterPriceMax"));
+  addClick("sortAsc", () => ordenarProductos("priceAsc"));
+  addClick("sortDesc", () => ordenarProductos("priceDesc"));
+  addClick("sortByCount", () => ordenarProductos("relevance"));
 
-  document.getElementById("sortAsc").addEventListener("click", () => ordenarProductos("priceAsc"));
-  document.getElementById("sortDesc").addEventListener("click", () => ordenarProductos("priceDesc"));
-  document.getElementById("sortByCount").addEventListener("click", () => ordenarProductos("relevance"));
+  // --- Listeners móvil (opcionales; solo se agregan si existen) ---
+  addClick("rangeFilterPriceMobile", () => filtrarPorPrecio("rangeFilterPriceMinMobile", "rangeFilterPriceMaxMobile"));
+  addClick("clearRangeFilterMobile", () => limpiarFiltros("rangeFilterPriceMinMobile", "rangeFilterPriceMaxMobile"));
+  addClick("sortAscMobile", () => ordenarProductos("priceAsc"));
+  addClick("sortDescMobile", () => ordenarProductos("priceDesc"));
+  addClick("sortByCountMobile", () => ordenarProductos("relevance"));
 });
