@@ -188,3 +188,21 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.topbar {gap: 12px;}
+.topbar .lead { display: none;}
+.controls { gap: 8px;}
+.filter-panel { margin-top: 8px;}
+
+@media (min-width: 768px) {
+  .topbar { padding: 16px 24px !important;}
+  .topbar .lead { display: block;}
+  .btn-filters-toggle { display: none;}
+
+  #filterPanel.collapse {
+    display: block !important;
+    height: auto !important;
+    visibility: visible !important;
+  }
+  .filter-panel .row { justify-content: flex-end;}
+}

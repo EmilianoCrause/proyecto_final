@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,113 +15,103 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item">
-            <span class="nav-link" id="User-display"></span>
-          </li>
-          <li class="nav-item">
-          </li>
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="categories.html">Categorías</a></li>
+          <li class="nav-item"><a class="nav-link" href="sell.html">Vender</a></li>
+          <li class="nav-item"><span class="nav-link" id="User-display"></span></li>
+          <li class="nav-item"></li>
         </ul>
       </div>
     </div>
   </nav>
+
   <main class="pb-5">
     <!-- Barra superior SOLO móvil -->
-    <div class="container-fluid p-2 border-bottom d-flex justify-content-between align-items-center d-md-none">
-      <h2 id="category-title-mobile"></h2> <!-- ID para móvil -->
-      <div class="d-flex align-items-center">
-        <div class="btn-group btn-group-toggle me-2" data-bs-toggle="buttons">
-          <input type="radio" class="btn-check" name="optionsMobile" id="sortAscMobile">
-          <label class="btn btn-light" for="sortAscMobile">Precio ↑</label>
-          <input type="radio" class="btn-check" name="optionsMobile" id="sortDescMobile">
-          <label class="btn btn-light" for="sortDescMobile">Precio ↓</label>
-          <input type="radio" class="btn-check" name="optionsMobile" id="sortByCountMobile" checked>
-          <label class="btn btn-light" for="sortByCountMobile">Rel<i class="fas fa-sort-amount-down mr-1"></i></label>
+    <div class="container-fluid p-2 border-bottom d-md-none">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 id="category-title-mobile" class="mb-0"></h2>
+        <div class="d-flex align-items-center">
+          <div class="btn-group btn-group-toggle me-2" data-bs-toggle="buttons" aria-label="Ordenar (móvil)">
+            <input type="radio" class="btn-check" name="optionsMobile" id="sortAscMobile">
+            <label class="btn btn-light" for="sortAscMobile">Precio ↑</label>
+
+            <input type="radio" class="btn-check" name="optionsMobile" id="sortDescMobile">
+            <label class="btn btn-light" for="sortDescMobile">Precio ↓</label>
+
+            <input type="radio" class="btn-check" name="optionsMobile" id="sortByCountMobile" checked>
+            <label class="btn btn-light" for="sortByCountMobile">
+              Rel <i class="fas fa-sort-amount-down me-1"></i>
+            </label>
+          </div>
+
+          <!-- Toggle filtros móvil -->
+          <button class="btn btn-light" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#filterCollapseMobile"
+                  aria-controls="filterCollapseMobile" aria-expanded="false" aria-label="Mostrar filtros">
+            <i class="fas fa-filter"></i>
+          </button>
         </div>
-        <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapseMobile">
-          <i class="fas fa-filter"></i>
-        </button>
+      </div>
+
+      <!-- Filtros móvil (collapse) -->
+      <div class="collapse mt-2" id="filterCollapseMobile">
+        <div class="row gx-2">
+          <div class="col-6">
+            <input class="form-control" type="number" placeholder="min." id="rangeFilterPriceMinMobile">
+          </div>
+          <div class="col-6">
+            <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMaxMobile">
+          </div>
+          <div class="col-12 mt-2 d-flex gap-2">
+            <button class="btn btn-light flex-fill" id="rangeFilterPriceMobile">Filtrar</button>
+            <button class="btn btn-link btn-sm flex-fill" id="clearRangeFilterMobile">Limpiar</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Vista escritorio -->
-    <div class="text-center p-4 d-none d-md-block">
-      <h2 id="category-title-desktop"></h2> <!-- ID para escritorio -->
-      <p class="lead" id="category-subtitle-desktop"></p> <!-- ID para subtítulo -->
-    </div>
+    <!-- Topbar ESCRITORIO -->
+    <div class="container-fluid p-2 border-bottom d-none d-md-block">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h2 id="category-title-desktop" class="mb-2"></h2>
+          <p id="category-subtitle-desktop" class="lead mb-0"></p>
+        </div>
 
-    <div class="container">
-      <!-- Filtros escritorio -->
-      <div class="row d-none d-md-block">
-        <div class="col text-end">
-          <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
+        <div class="d-flex align-items-center">
+          <!-- Orden escritorio -->
+          <div class="btn-group btn-group-toggle me-2" data-bs-toggle="buttons" aria-label="Ordenar (escritorio)">
             <input type="radio" class="btn-check" name="options" id="sortAsc">
             <label class="btn btn-light" for="sortAsc">Precio ↑</label>
+
             <input type="radio" class="btn-check" name="options" id="sortDesc">
             <label class="btn btn-light" for="sortDesc">Precio ↓</label>
+
             <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-            <label class="btn btn-light" for="sortByCount">Rel<i class="fas fa-sort-amount-down mr-1"></i></label>
+            <label class="btn btn-light" for="sortByCount">
+              Rel <i class="fas fa-sort-amount-down me-1"></i>
+            </label>
+          </div>
+
+          <!-- Filtro precio escritorio -->
+          <div class="input-group input-group-sm" style="width: 260px;">
+            <input class="form-control" type="number" placeholder="min." id="rangeFilterPriceMin">
+            <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMax">
+            <button class="btn btn-outline-secondary" id="rangeFilterPrice">Filtrar</button>
+            <button class="btn btn-outline-secondary" id="clearRangeFilter">Limpiar</button>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Filtros cantidad escritorio -->
-      <div class="row d-none d-md-block">
-        <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container" id="filterCollapse">
-          <div class="row container p-0 m-0">
-            <div class="col">
-              <p class="font-weight-normal text-end my-2">Precio</p>
-            </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="min." id="rangeFilterPriceMin">
-            </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMax">
-            </div>
-            <div class="col-3 p-0">
-              <div class="btn-group d-flex flex-row" role="group">
-                <button class="btn btn-light w-100" id="rangeFilterPrice">Filtrar</button>
-                <button class="btn btn-link btn-sm w-100" id="clearRangeFilter">Limpiar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filtros cantidad móvil (collapse) -->
-      <div class="row d-md-none collapse" id="filterCollapseMobile">
-        <div class="col-12 mb-1 container">
-          <div class="row container p-0 m-0">
-            <div class="col">
-              <input class="form-control mb-2" type="number" placeholder="min." id="rangeFilterPriceMinMobile">
-            </div>
-            <div class="col">
-              <input class="form-control mb-2" type="number" placeholder="máx." id="rangeFilterPriceMaxMobile">
-            </div>
-            <div class="col-12 p-0 mt-2">
-              <div class="btn-group d-flex flex-column" role="group">
-                <button class="btn btn-light w-100 mb-1" id="rangeFilterPriceMobile">Filtrar</button>
-                <button class="btn btn-link btn-sm w-100" id="clearRangeFilterMobile">Limpiar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lista de productos -->
+    <!-- Lista de productos -->
+    <div class="container mt-3">
       <div class="row">
         <div class="list-group" id="products-list-container"></div>
       </div>
@@ -131,24 +120,21 @@
 
   <footer class="text-muted">
     <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
+      <p class="float-end"><a href="#">Volver arriba</a></p>
+      <p>Este sitio forma parte de
+        <a href="https://jovenesaprogramar.edu.uy/" target="_blank" rel="noopener">Jóvenes a Programar</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
+
+  <!-- Spinner global -->
   <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   </div>
+
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
   <script src="js/user-display.js"></script>
 </body>
-
 </html>
