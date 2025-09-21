@@ -189,15 +189,18 @@ a.custom-card:hover {
   color: orange;
 }
 
+/* ---------------- PRODUCTOS RELACIONADOS Y GALERÍA ---------------- */
 .related-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transform: scale(0.82);
+  transform-origin: top center;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  border-radius: 6px;
 }
 .related-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transform: translateY(-6px) scale(0.85);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* ---------- PRODUCTOS RELACIONADOS ---------- */
 #related-products {
   border: 1px solid #e6e6e6;
   padding: 18px;
@@ -206,23 +209,6 @@ a.custom-card:hover {
   margin-top: 2rem;
 }
 
-/* Reducir tamaño de las cards relacionadas */
-:root {
-  --related-scale: 0.82; /* ajustar (0.7 más chico, 1 sin cambio) */
-}
-
-.related-card {
-  transform: scale(var(--related-scale));
-  transform-origin: top center;
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
-  border-radius: 6px;
-}
-.related-card:hover {
-  transform: translateY(-6px) scale(calc(var(--related-scale) + 0.03));
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-/* Titulos y texto pequeñas para que entren en la vista previa */
 .related-card .card-title {
   font-size: 0.95rem;
   margin-bottom: 4px;
@@ -237,13 +223,12 @@ a.custom-card:hover {
   color: #111;
   font-size: 0.9rem;
 }
-
-/* Imagen en miniatura fija */
 .related-card .card-img-top {
   border-radius: 4px 4px 0 0;
+  height: 160px !important;
+  object-fit: cover;
 }
 
-/* Estilos para la galería del producto (principal) */
 .thumb-wrapper {
   border: 1px solid #000;
   border-radius: 4px;
@@ -254,7 +239,6 @@ a.custom-card:hover {
   display:block;
 }
 
-/* Botón comprar pequeño si lo querés (no modificar la parte superior si la descartás) */
 .btn-buy {
   background-color: #efa639;
   border: none;
@@ -268,14 +252,11 @@ a.custom-card:hover {
   background-color: #eb9a20;
 }
 
-/* Margen "considerable" para centrar verticalmente aprox (media altura hasta footer)
-   Nota: usa la regla que ya tenés main { min-height: cal00vhc(1 - 210px); } */
 #product-info-container {
   margin-top: calc((100vh - 210px) / 8);
   margin-bottom: 2.5rem;
 }
 
-/* Ajustes responsivos */
 @media (max-width: 992px) {
   :root { --related-scale: 0.92; }
   #product-info-container { margin-top: 2rem; }
@@ -287,8 +268,22 @@ a.custom-card:hover {
   margin-bottom: 0.5rem;
   padding: 0;
 }
-related-card img {
-  height: 160px !important;
-  object-fit: cover;
-  border-radius: 8px;
+
+/* ---------------- NUEVA ESTRUCTURA MAIN (TOPBAR Y FILTROS) ---------------- */
+.topbar { gap: 12px; }
+.topbar .lead { display: none; }
+.controls { gap: 8px; }
+.filter-panel { margin-top: 8px; }
+
+@media (min-width: 768px) {
+  .topbar { padding: 16px 24px !important; }
+  .topbar .lead { display: block; }
+  .btn-filters-toggle { display: none; }
+
+  #filterPanel.collapse {
+    display: block !important;
+    height: auto !important;
+    visibility: visible !important;
+  }
+  .filter-panel .row { justify-content: flex-end; }
 }
