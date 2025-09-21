@@ -41,6 +41,14 @@ function showProductsList() {
   document.getElementById("products-list-container").innerHTML = htmlContentToAppend;
 }
 
+// barra de busqueda
+
+document.getElementById("btn-buscar").addEventListener("click", function() {
+  const searchTerm = document.getElementById("search-bar").value.toLowerCase();
+  filteredProductsArray = currentProductsArray.filter(product => product.name.toLowerCase().includes(searchTerm));
+  showProductsList();
+});
+
 // --- Filtros y orden ---
 
 function filtrarPorPrecio(minID, maxID) {
