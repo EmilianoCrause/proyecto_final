@@ -3,54 +3,41 @@ let currentProductsArray = [];
 let filteredProductsArray = [];
 
 // Función para redirigir a la página de detalles del producto
-// Guardamos el id del producto en localStorage para que product-info.html sepa cuál mostrar
 function setProductID(id) {
-  localStorage.setItem("productID", id);
+  localStorage.setItem("productID", id); // guardamos el id del producto
   window.location = "product-info.html";
 }
 
 // Función para mostrar la lista de productos en la página
 function showProductsList() {
+  const productList = document.getElementById("products-list-container");
   let htmlContentToAppend = "";
 
-  // Recorremos cada producto del array filtrado
   for (let i = 0; i < filteredProductsArray.length; i++) {
     const product = filteredProductsArray[i];
 
     htmlContentToAppend += `
-      <div onclick="setProductID(${product.id})" class="list-group-item list-group-item-action cursor-active">
+      <div class="list-group-item list-group-item-action cursor-active" onclick="setProductID(${product.id})">
         <div class="row">
           <div class="col-12 col-md-3">
             <img src="${product.image}" alt="${product.name}" class="img-fluid img-thumbnail mb-3 mb-md-0">
           </div>
           <div class="col-12 col-md-9">
-            <h4 class="mb-2">${product.name}</h4>
-            <p class="mb-2">${product.description}</p>
-            <p class="text-end text-md-start fw-bold">
-              ${product.currency} ${product.cost}
-            </p>
-            <small class="text-muted d-block text-md-start text-end">
-              ${product.soldCount} vendidos
-            </small>
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="mb-2">${product.name} - ${product.currency} ${product.cost}</h4>
+              <small class="text-muted">${product.soldCount} vendidos</small>
+            </div>
+            <p class="mb-1">${product.description}</p>
           </div>
         </div>
       </div>
     `;
   }
 
-  document.getElementById("products-list-container").innerHTML = htmlContentToAppend;
+  productList.innerHTML = htmlContentToAppend;
 }
 
-// barra de busqueda
-
-document.getElementById("btn-buscar").addEventListener("click", function() {
-  const searchTerm = document.getElementById("search-bar").value.toLowerCase();
-  filteredProductsArray = currentProductsArray.filter(product => product.name.toLowerCase().includes(searchTerm));
-  showProductsList();
-});
-
 // --- Filtros y orden ---
-
 function filtrarPorPrecio(minID, maxID) {
   let min = parseInt(document.getElementById(minID)?.value);
   let max = parseInt(document.getElementById(maxID)?.value);
@@ -59,8 +46,10 @@ function filtrarPorPrecio(minID, maxID) {
   if (isNaN(max)) max = undefined;
 
   filteredProductsArray = currentProductsArray.filter(product => {
-    return (min === undefined || product.cost >= min) && (max === undefined || product.cost <= max);
+    return (min === undefined || product.cost >= min) &&
+           (max === undefined || product.cost <= max);
   });
+
   showProductsList();
 }
 
@@ -113,14 +102,15 @@ document.addEventListener("DOMContentLoaded", function () {
       currentProductsArray = resultObj.data.products;
       filteredProductsArray = [...currentProductsArray];
 
+      // Guardamos nombre de categoría
+      localStorage.setItem("catName", resultObj.data.catName);
+
       // Títulos dinámicos (si existen)
       const categoryTitleMobile = document.getElementById("category-title-mobile");
       const categoryTitleDesktop = document.getElementById("category-title-desktop");
       const categorySubtitleDesktop = document.getElementById("category-subtitle-desktop");
 
-      if (categoryTitleMobile) {
-        categoryTitleMobile.textContent = resultObj.data.catName;
-      }
+      if (categoryTitleMobile) categoryTitleMobile.textContent = resultObj.data.catName;
       if (categoryTitleDesktop && categorySubtitleDesktop) {
         categoryTitleDesktop.textContent = resultObj.data.catName;
         categorySubtitleDesktop.textContent =
@@ -146,10 +136,17 @@ document.addEventListener("DOMContentLoaded", function () {
   addClick("sortDesc", () => ordenarProductos("priceDesc"));
   addClick("sortByCount", () => ordenarProductos("relevance"));
 
-  // --- Listeners móvil (opcionales; solo se agregan si existen) ---
+  // --- Listeners móvil ---
   addClick("rangeFilterPriceMobile", () => filtrarPorPrecio("rangeFilterPriceMinMobile", "rangeFilterPriceMaxMobile"));
   addClick("clearRangeFilterMobile", () => limpiarFiltros("rangeFilterPriceMinMobile", "rangeFilterPriceMaxMobile"));
   addClick("sortAscMobile", () => ordenarProductos("priceAsc"));
   addClick("sortDescMobile", () => ordenarProductos("priceDesc"));
   addClick("sortByCountMobile", () => ordenarProductos("relevance"));
+});
+
+// --- Barra de búsqueda ---
+document.getElementById("btn-buscar")?.addEventListener("click", function () {
+  const searchTerm = document.getElementById("search-bar")?.value.toLowerCase();
+  filteredProductsArray = currentProductsArray.filter(product => product.name.toLowerCase().includes(searchTerm));
+  showProductsList();
 });
