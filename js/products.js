@@ -83,6 +83,8 @@ function addClick(id, handler) {
 document.addEventListener("DOMContentLoaded", function () {
   // Obtenemos catID del localStorage
   const catID = localStorage.getItem("catID");
+  const langBtn = document.querySelector('.lang-btn');
+  const langSelect = document.getElementById('idioma');
 
   if (!catID) {
     document.getElementById("products-list-container").innerHTML = `
@@ -127,6 +129,61 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
       `;
     }
+
+    // --- BÚSQUEDA: botón "clear" aparece sólo cuando hay texto ---
+  const searchBar = document.getElementById("search-bar");
+  const clearBtn = document.getElementById("clear-search");
+
+  if (searchBar && clearBtn) {
+    // ocultamos al inicio
+    clearBtn.style.display = "none";
+
+    // evento input: filtra y muestra/oculta el botón
+    searchBar.addEventListener("input", () => {
+      const searchTerm = searchBar.value.trim().toLowerCase();
+
+      // filtrar productos
+      if (searchTerm === "") {
+        // si no hay texto, mostramos todos
+        filteredProductsArray = [...currentProductsArray];
+      } else {
+        filteredProductsArray = currentProductsArray.filter(product =>
+          product.name.toLowerCase().includes(searchTerm)
+        );
+      }
+      showProductsList();
+
+      // mostrar u ocultar el botón limpiar
+      clearBtn.style.display = searchTerm ? "block" : "none";
+    });
+
+    // clic en limpiar: vacía, restablece y oculta el botón
+    clearBtn.addEventListener("click", () => {
+      searchBar.value = "";
+      filteredProductsArray = [...currentProductsArray];
+      showProductsList();
+      clearBtn.style.display = "none";
+      searchBar.focus();
+    });
+  }
+
+  if (langBtn && langSelect) {
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita propagación
+      langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
+    });
+  }
+
+      // Ocultar selector al hacer clic fuera de él
+    document.addEventListener('click', () => {
+        langSelect.style.display = 'none';
+    });
+
+    // Evitar que se oculte al hacer clic dentro del selector
+    langSelect.addEventListener('click', (e) => {
+        e.stopPropagation(); // Detener la propagación del evento
+    });
+    
   });
 
   // --- Listeners escritorio ---
@@ -142,11 +199,4 @@ document.addEventListener("DOMContentLoaded", function () {
   addClick("sortAscMobile", () => ordenarProductos("priceAsc"));
   addClick("sortDescMobile", () => ordenarProductos("priceDesc"));
   addClick("sortByCountMobile", () => ordenarProductos("relevance"));
-});
-
-// --- Barra de búsqueda ---
-document.getElementById("btn-buscar")?.addEventListener("click", function () {
-  const searchTerm = document.getElementById("search-bar")?.value.toLowerCase();
-  filteredProductsArray = currentProductsArray.filter(product => product.name.toLowerCase().includes(searchTerm));
-  showProductsList();
 });
