@@ -14,8 +14,14 @@
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    <link href="css/products.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
 </head>
+
+<style>
+    .search-form {
+        visibility: visible !important;
+    }
+</style>
 
 <body>
     <header>
@@ -90,63 +96,82 @@
     </header>
 
     <main>
-        
+
         <div class="categoria-contenedor">
-            <a href="categories.html">
-            <button class="light-btn"><span>Categorías</span></button>
+            <a href="categories.html" class="light-btn">
+                <svg id="Layer_1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"
+                    class="light-img">
+                    <path
+                        d="m8.865 1.374c-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762zm-1.073 6.418c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292zm5.343 1.834c.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762zm1.073-6.418c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292zm-5.344 9.165c-.069-.016-1.719-.373-3.364-.373s-3.295.357-3.364.373c-.382.083-.68.381-.763.763-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.382.381.68.763.763.069.016 1.719.373 3.364.373s3.295-.357 3.364-.373c.382-.083.68-.381.763-.763.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.763-.763zm-1.072 6.419c-.571.094-1.445.208-2.292.208s-1.721-.114-2.292-.208c-.094-.571-.208-1.445-.208-2.292s.114-1.721.208-2.292c.571-.094 1.445-.208 2.292-.208s1.721.114 2.292.208c.094.571.208 1.445.208 2.292s-.114 1.721-.208 2.292zm14.915 2.501-2.304-2.304c.382-.681.597-1.512.597-2.489 0-2.817-1.683-4.5-4.5-4.5s-4.5 1.683-4.5 4.5 1.683 4.5 4.5 4.5c.977 0 1.808-.215 2.489-.597l2.304 2.304c.391.391 1.023.391 1.414 0s.391-1.023 0-1.414zm-8.707-4.793c0-1.706.794-2.5 2.5-2.5s2.5.794 2.5 2.5-.794 2.5-2.5 2.5-2.5-.794-2.5-2.5z" />
+                </svg>
+
+                <span>Categorías</span>
             </a>
+
+            <div class="container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" id="breadcrumb-container">
+                    </ol>
+                </nav>
+            </div>
         </div>
         
-
         <div class="container">
             <div class="row">
                 <!-- Columna filtros -->
-                <aside class="col-md-3 d-none d-md-block">
-                    <!-- Ordenar -->
-                    <div class="filter-box mb-3">
-                        <h6 class="filter-title">Ordenar por</h6>
-                        <div class="btn-group-vertical w-100" role="group">
-                            <input type="radio" class="btn-check" name="options" id="sortAsc">
-                            <label class="btn btn-light" for="sortAsc">Precio ascendente</label>
-                            <input type="radio" class="btn-check" name="options" id="sortDesc">
-                            <label class="btn btn-light" for="sortDesc">Precio descendente</label>
-                            <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-                            <label class="btn btn-light" for="sortByCount">Más vendidos</label>
+                <aside class="col-md-3 filters-aside">
+                    <div>
+                        <h6>Ordenar por</h6>
+                        <div class="sort-options">
+                            <label>
+                                <input type="radio" name="options" value="asc">
+                                <span>Precio ascendente</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="options" value="desc">
+                                <span>Precio descendente</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="options" value="count" checked>
+                                <span>Más vendidos</span>
+                            </label>
                         </div>
                     </div>
 
-                    <!-- Filtro precio -->
-                    <div class="filter-box">
-                        <h6 class="filter-title">Precio</h6>
-                        <div class="filter-input mb-2">
-                            <input type="number" placeholder="mín." id="rangeFilterPriceMin">
+                    <form class="filter-box" id="priceFilterForm">
+                        <h6>Precio</h6>
+                        <div class="filter-input-group">
+                            <div class="filter-input">
+                                <input type="number" placeholder="mín." id="rangeFilterPriceMin" name="minPrice" min="0">
+                            </div>
+                            <span>-</span>
+                            <div class="filter-input">
+                                <input type="number" placeholder="máx." id="rangeFilterPriceMax" name="maxPrice" min="0">
+                            </div>
                         </div>
-                        <div class="filter-input mb-2">
-                            <input type="number" placeholder="máx." id="rangeFilterPriceMax">
+                        <div class="filter-actions">
+                            <button type="submit" class="filter-btn">Filtrar</button>
+                            <button type="reset" class="clear-btn" id="clearRangeFilter">Limpiar</button>
                         </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn filter-btn flex-fill" id="rangeFilterPrice">Filtrar</button>
-                            <button class="btn clear-btn flex-fill" id="clearRangeFilter">Limpiar</button>
-                        </div>
-                    </div>
+                    </form>
                 </aside>
 
                 <!-- Columna productos -->
                 <section class="col-md-9">
-                    <div class="row" id="products-list-container"></div>
+                    <div class="products-grid" id="products-list-container"></div>
+                </section>
             </div>
-            </section>
-        </div>
         </div>
     </main>
 
-    <footer>
+    <footer class="text-muted">
         <div class="container">
-            <div>
-                <p id="footer-text">Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/"
-                        target="_blank">Jóvenes a Programar</a></p>
-            </div>
-            <p><a href="#">Volver arriba</a></p>
+            <p class="float-end">
+                <a href="#">Volver arriba</a>
+            </p>
+            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a
+                    Programar</a>
+            </p>
         </div>
     </footer>
 
