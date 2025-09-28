@@ -13,7 +13,9 @@ const translations = {
         "register-link": "Regístrate aquí",
         "other-methods-text": "Otras formas de inicio de sesión",
         "footer-text": "Este sitio forma parte de",
-        "alert-message": "Por favor, completá usuario y contraseña"
+        "alert-message": "Por favor, completá usuario y contraseña con datos válidos",
+        "alert-title": "Atención",
+        "alert-confirm": "Entendido",
     },
     en: { // Inglés
         "login-title": "Log in",
@@ -27,7 +29,9 @@ const translations = {
         "register-link": "Sign up here",
         "other-methods-text": "Other login methods",
         "footer-text": "This site is part of",
-        "alert-message": "Please complete both email and password"
+        "alert-message": "Please complete both email and password fields with valid data",
+        "alert-title": "Warning",
+        "alert-confirm": "OK",
     }
 };
 
@@ -47,20 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('login-title').textContent = translations[lang]['login-title'];
         document.getElementById('remember-text').textContent = translations[lang]['remember-text'];
         document.getElementById('btn-ingresar').textContent = translations[lang]['btn-ingresar'];
-        
+
         // Actualizar enlaces con HTML (texto + enlace)
-        document.getElementById('recover-text').innerHTML = translations[lang]['recover-text'] + 
+        document.getElementById('recover-text').innerHTML = translations[lang]['recover-text'] +
             ' <a href="" id="recover-link">' + translations[lang]['recover-link'] + '</a>';
-        document.getElementById('register-text').innerHTML = translations[lang]['register-text'] + 
+        document.getElementById('register-text').innerHTML = translations[lang]['register-text'] +
             ' <a href="" id="register-link">' + translations[lang]['register-link'] + '</a>';
-        
+
         // Texto de métodos alternativos
         document.getElementById('other-methods-text').textContent = translations[lang]['other-methods-text'];
-        
+
         // Footer con enlace fijo (no se traduce "Jóvenes a Programar")
-        document.getElementById('footer-text').innerHTML = translations[lang]['footer-text'] + 
+        document.getElementById('footer-text').innerHTML = translations[lang]['footer-text'] +
             ' <a href="https://jovenesaprogramar.edu.uy/" target="_blank" class="resaltar">Jóvenes a Programar</a>';
-        
+
         // Actualizar placeholders (textos dentro de los campos de entrada)
         usuario.placeholder = translations[lang]['email-placeholder'];
         contrasena.placeholder = translations[lang]['password-placeholder'];
@@ -95,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     langSelect.addEventListener('click', (e) => {
         e.stopPropagation(); // Detener la propagación del evento
     });
-    
+
     // ======== MODO OSCURO ========
     // Cargar preferencia de modo oscuro desde localStorage
     if (localStorage.getItem('darkMode') === 'true') {
@@ -126,11 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Marcar campos inválidos
             if (!uservalido) usuario.classList.add('is-invalid');
             if (!passvalida) contrasena.classList.add('is-invalid');
-            
+
             // Mostrar mensaje de error en el idioma actual
             const currentLang = localStorage.getItem('language') || 'es';
-            alert(translations[currentLang]['alert-message']);
-            
+            Swal.fire({
+                title: translations[currentLang]['alert-title'],
+                text: translations[currentLang]['alert-message'],
+                icon: "warning",
+                confirmButtonText: translations[currentLang]['alert-confirm']
+            });
+
             // Enfocar el primer campo vacío
             (!uservalido ? usuario : contrasena).focus();
             return; // Detener ejecución
