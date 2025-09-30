@@ -15,7 +15,6 @@ const translations = {
         "footer-text": "Este sitio forma parte de",
         "alert-message": "Por favor, completá usuario y contraseña con datos válidos",
         "alert-title": "Atención",
-        "alert-confirm": "Entendido",
     },
     en: { // Inglés
         "login-title": "Log in",
@@ -31,7 +30,6 @@ const translations = {
         "footer-text": "This site is part of",
         "alert-message": "Please complete both email and password fields with valid data",
         "alert-title": "Warning",
-        "alert-confirm": "OK",
     }
 };
 
@@ -134,10 +132,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mostrar mensaje de error en el idioma actual
             const currentLang = localStorage.getItem('language') || 'es';
             Swal.fire({
+                toast: true,                           // alerta tipo notificación
+                position: 'bottom-end',                    // esquina superior derecha
+                icon: 'warning',
                 title: translations[currentLang]['alert-title'],
                 text: translations[currentLang]['alert-message'],
-                icon: "warning",
-                confirmButtonText: translations[currentLang]['alert-confirm']
+                showConfirmButton: false,              // sin botón, no bloquea
+                timer: 3000,                            // dura 3 segundos
+                timerProgressBar: true
             });
 
             // Enfocar el primer campo vacío
