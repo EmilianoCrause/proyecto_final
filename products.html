@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 
+
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>eMercado - Todo lo que busques está aquí</title>
@@ -52,7 +56,54 @@
                         </path>
                     </svg>
                 </button>
+    <header>
+        <nav>
+            <!-- Logo del e_commerce -->
+            <a href="index.html">
+                <div class="e-commerce">
+                    <span id="e-mercado">
+                        <span class="resaltar">e •</span> mercado
+                    </span>
+                    <span class="subtitulo">¡Tu <span class="bold">e_commerce</span> favorito!</span>
+                </div>
+            </a>
 
+            <!-- Formulario de búsqueda -->
+            <form class="search-form" role="search" onsubmit="return false;">
+                <input type="text" id="search-bar" placeholder="Buscar productos..." aria-label="Buscar">
+                <button type="button" class="clear-search" id="clear-search">×</button>
+            </form>
+
+            <!-- Controles -->
+            <div class="selectores">
+                <button class="light-btn">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M10.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M8.82 15.77c.31.75 1.04 1.23 1.85 1.23h6.18c.79 0 1.51-.47 1.83-1.2l3.24-7.4c.14-.31.11-.67-.08-.95S21.34 7 21 7H7.33L5.92 3.62C5.76 3.25 5.4 3 5 3H2v2h2.33zM19.47 9l-2.62 6h-6.18l-2.5-6z">
+                        </path>
+                    </svg>
+                </button>
+
+                <button class="light-btn">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
+                        fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5">
+                        </path>
+                    </svg>
+                    <span id="User-display"></span>
+                </button>
+            </div>
+
+            <div class="selectores">
+                <!-- Modo claro/oscuro -->
+                <button class="light-btn" aria-label="Cambiar modo claro/oscuro">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M12 6.99a5.01 5.01 0 1 0 0 10.02 5.01 5.01 0 1 0 0-10.02M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z">
+                        </path>
+                    </svg>
                 <button class="light-btn">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
                         fill="currentColor" viewBox="0 0 24 24">
@@ -183,11 +234,24 @@
             <div></div>
         </div>
     </div>
+    <div id="spinner-wrapper">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/products.js"></script>
     <script src="js/user-display.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/user-display.js"></script>
 </body>
+
 
 </html>
