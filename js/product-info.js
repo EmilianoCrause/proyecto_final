@@ -1,4 +1,3 @@
-// js/product-info.js
 document.addEventListener("DOMContentLoaded", function () {
   const productInfoContainer = document.getElementById("product-info-container");
   const relatedList = document.getElementById("related-products-list");
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const infoURL = PRODUCT_INFO_URL + productID + EXT_TYPE;
 
-  // 1) Cargar info del producto actual
+  // Cargar info del producto actual
   getJSONData(infoURL).then(function (resultObj) {
     if (resultObj.status !== "ok") {
       productInfoContainer.innerHTML = '<div class="alert alert-danger">Error al cargar información del producto.</div>';
@@ -22,8 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const product = resultObj.data;
 
-    // Si ya tenías la parte superior diseñada por otra lógica y no querés cambiarla,
-    // podés comentar el bloque que arma el HTML principal. Aquí dejo una versión compacta:
     productInfoContainer.innerHTML = `
       <div class="row align-items-start" style="margin-top:1.5rem; margin-bottom:2rem;">
         <div class="col-lg-7">
@@ -69,8 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    // 2) Productos relacionados
-    // Idea: si tenemos catID en localStorage, pedimos todos los productos de la categoría y construimos
+    // Productos relacionados
+    // Si tenemos catID en localStorage, pedimos todos los productos de la categoría y construimos
     // una lista completa para mostrar precios y descripciones (evita campos faltantes).
     const catID = localStorage.getItem("catID");
 
@@ -150,8 +147,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     breadcrumb.innerHTML = `
   <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-  <li class="breadcrumb-item"><a href="categories.html">${catName}</a></li>
+  <li class="breadcrumb-item"><a href="categories.html">Categorías</a></li>
+  <li class="breadcrumb-item"><a href="products.html">${catName}</a></li>
   <li class="breadcrumb-item active" aria-current="page">${product.name}</li>
 `;
+  });
+  
+});
+
+// --- MODO OSCURO ---
+document.addEventListener("DOMContentLoaded", function () {
+  const darkModeBtn = document.querySelector('.light-btn[aria-label="Cambiar modo claro/oscuro"]');
+  
+  if (!darkModeBtn) return;
+
+  // Verificar si ya hay un tema guardado
+  const savedTheme = localStorage.getItem('darkMode');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  // Aplicar tema inicial
+  if (savedTheme === 'true' || (!savedTheme && prefersDark)) {
+    document.body.classList.add('dark-mode');
+  }
+
+  // Event listener para cambiar modo
+  darkModeBtn.addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+    
+    // Guardar preferencia
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+    
+    // Cambiar aria-label para accesibilidad
+    if (isDark) {
+      darkModeBtn.setAttribute('aria-label', 'Cambiar a modo claro');
+    } else {
+      darkModeBtn.setAttribute('aria-label', 'Cambiar a modo oscuro');
+    }
   });
 });

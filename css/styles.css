@@ -2,7 +2,7 @@
 .card-body,
 .container,
 .site-header {
-  font-family: 'Verdana', serif !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
 .jumbotron .display-4 {
@@ -31,14 +31,18 @@ nav a {
 .jumbotron {
   height: 50vh;
   padding: 5em inherit;
-  margin-bottom: 0;
+  margin-bottom: 5rem;
+  margin-top: 2rem;
   background-color: #53C0FB;
-  background: url('../img/cover_back.png');
+  background-image: url('../img/cover_back.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: black;
   font-weight: bold;
+  border-radius: 10px;
+  border: 1px solid #cdcfd1;
+
 }
 
 @media (min-width: 768px) {
@@ -196,9 +200,10 @@ a.custom-card:hover {
   transition: transform 0.16s ease, box-shadow 0.16s ease;
   border-radius: 6px;
 }
+
 .related-card:hover {
   transform: translateY(-6px) scale(0.85);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 #related-products {
@@ -213,16 +218,19 @@ a.custom-card:hover {
   font-size: 0.95rem;
   margin-bottom: 4px;
 }
+
 .related-card .card-text {
   font-size: 0.78rem;
   color: #666;
   margin-bottom: 6px;
 }
+
 .related-card .price {
   font-weight: 700;
   color: #111;
   font-size: 0.9rem;
 }
+
 .related-card .card-img-top {
   border-radius: 4px 4px 0 0;
   height: 160px !important;
@@ -235,8 +243,9 @@ a.custom-card:hover {
   overflow: hidden;
   background: #fff;
 }
+
 .thumb-wrapper img {
-  display:block;
+  display: block;
 }
 
 .btn-buy {
@@ -248,6 +257,7 @@ a.custom-card:hover {
   font-size: 0.95rem;
   width: 50%;
 }
+
 .btn-buy:hover {
   background-color: #eb9a20;
 }
@@ -258,32 +268,11 @@ a.custom-card:hover {
 }
 
 @media (max-width: 992px) {
-  :root { --related-scale: 0.92; }
-  #product-info-container { margin-top: 2rem; }
-}
-
-.breadcrumb {
-  margin-top: calc((100vh - 210px) / 15);
-  background: transparent;
-  margin-bottom: 0.5rem;
-  padding: 0;
-}
-
-/* ---------------- NUEVA ESTRUCTURA MAIN (TOPBAR Y FILTROS) ---------------- */
-.topbar { gap: 12px; }
-.topbar .lead { display: none; }
-.controls { gap: 8px; }
-.filter-panel { margin-top: 8px; }
-
-@media (min-width: 768px) {
-  .topbar { padding: 16px 24px !important; }
-  .topbar .lead { display: block; }
-  .btn-filters-toggle { display: none; }
-
-  #filterPanel.collapse {
-    display: block !important;
-    height: auto !important;
-    visibility: visible !important;
+  :root {
+    --related-scale: 0.92;
   }
-  .filter-panel .row { justify-content: flex-end; }
+
+  #product-info-container {
+    margin-top: 2rem;
+  }
 }

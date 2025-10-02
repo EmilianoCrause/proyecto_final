@@ -10,122 +10,140 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <link href="css/products.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
 </head>
 
 <body>
-<header>
-        <nav>
-            <!-- Logo del e_commerce -->
-            <a href="index.html">
-                <div class="e-commerce">
-                    <span id="e-mercado">
-                        <span class="resaltar">e •</span> mercado
-                    </span>
-                    <span class="subtitulo">¡Tu <span class="bold">e_commerce</span> favorito!</span>
-                </div>
-            </a>
+  <header>
+    <nav>
+      <!-- Logo del e_commerce -->
+      <a href="index.html">
+        <div class="e-commerce">
+          <span id="e-mercado">
+            <span class="resaltar">e •</span> mercado
+          </span>
+          <span class="subtitulo">¡Tu <span class="bold">e_commerce</span> favorito!</span>
+        </div>
+      </a>
 
-            <!-- Formulario de búsqueda -->
-            <form class="search-form" role="search" onsubmit="return false;">
-                <input type="text" id="search-bar" placeholder="Buscar productos..." aria-label="Buscar">
-                <button type="button" class="clear-search" id="clear-search">×</button>
-            </form>
+      <!-- Formulario de búsqueda -->
+      <form class="search-form" role="search" onsubmit="return false;">
+        <input type="text" id="search-bar" placeholder="Buscar productos..." aria-label="Buscar">
+        <button type="button" class="clear-search" id="clear-search">×</button>
+      </form>
 
-            <!-- Controles -->
-            <div class="selectores">
-                <button class="light-btn">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
-                        fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M10.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M8.82 15.77c.31.75 1.04 1.23 1.85 1.23h6.18c.79 0 1.51-.47 1.83-1.2l3.24-7.4c.14-.31.11-.67-.08-.95S21.34 7 21 7H7.33L5.92 3.62C5.76 3.25 5.4 3 5 3H2v2h2.33zM19.47 9l-2.62 6h-6.18l-2.5-6z">
-                        </path>
-                    </svg>
-                </button>
+      <!-- Controles -->
+      <div class="selectores">
+        <button class="light-btn">
+          <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              d="M10.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M8.82 15.77c.31.75 1.04 1.23 1.85 1.23h6.18c.79 0 1.51-.47 1.83-1.2l3.24-7.4c.14-.31.11-.67-.08-.95S21.34 7 21 7H7.33L5.92 3.62C5.76 3.25 5.4 3 5 3H2v2h2.33zM19.47 9l-2.62 6h-6.18l-2.5-6z">
+            </path>
+          </svg>
+        </button>
 
-                <button class="light-btn">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
-                        fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5">
-                        </path>
-                    </svg>
-                    <span id="User-display"></span>
-                </button>
-            </div>
+        <button class="light-btn">
+          <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256" fill="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5">
+            </path>
+          </svg>
+          <span id="User-display"></span>
+        </button>
+      </div>
 
-            <div class="selectores">
-                <!-- Modo claro/oscuro -->
-                <button class="light-btn" aria-label="Cambiar modo claro/oscuro">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path
-                            d="M12 6.99a5.01 5.01 0 1 0 0 10.02 5.01 5.01 0 1 0 0-10.02M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z">
-                        </path>
-                    </svg>
-                </button>
+      <div class="selectores">
+        <!-- Modo claro/oscuro -->
+        <button class="light-btn" aria-label="Cambiar modo claro/oscuro">
+          <svg class="light-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M12 6.99a5.01 5.01 0 1 0 0 10.02 5.01 5.01 0 1 0 0-10.02M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z">
+            </path>
+          </svg>
+        </button>
 
-                <!-- Selector de idioma -->
-                <div class="lang-container">
-                    <button class="lang-btn" aria-label="Seleccionar idioma">
-                        <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path
-                                d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z">
-                            </path>
-                            <path
-                                d="m12.25,14.97l.49-1.94c-.13-.03-1.6-.43-3.17-1.42,1.4-1.41,2.49-3.26,2.74-5.61h1.68v-2h-5v-2h-2v2H2v2h8.3c-.25,1.91-1.19,3.34-2.31,4.4-.69-.65-1.31-1.44-1.74-2.4h-2.13c.5,1.44,1.33,2.63,2.3,3.61-1.57.99-3.04,1.39-3.17,1.42l.49,1.94c1.18-.3,2.76-.96,4.26-2.02,1.49,1.06,3.08,1.72,4.25,2.02Z">
-                            </path>
-                        </svg>
-                    </button>
-                    <select id="idioma" name="idioma">
-                        <option value="es">ES</option>
-                        <option value="en">ENG</option>
-                    </select>
-                </div>
-            </div>
+        <!-- Selector de idioma -->
+        <div class="lang-container">
+          <button class="lang-btn" aria-label="Seleccionar idioma">
+            <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z">
+              </path>
+              <path
+                d="m12.25,14.97l.49-1.94c-.13-.03-1.6-.43-3.17-1.42,1.4-1.41,2.49-3.26,2.74-5.61h1.68v-2h-5v-2h-2v2H2v2h8.3c-.25,1.91-1.19,3.34-2.31,4.4-.69-.65-1.31-1.44-1.74-2.4h-2.13c.5,1.44,1.33,2.63,2.3,3.61-1.57.99-3.04,1.39-3.17,1.42l.49,1.94c1.18-.3,2.76-.96,4.26-2.02,1.49,1.06,3.08,1.72,4.25,2.02Z">
+              </path>
+            </svg>
+          </button>
+          <select id="idioma" name="idioma">
+            <option value="es">ES</option>
+            <option value="en">ENG</option>
+          </select>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="categoria-contenedor">
+      <a href="categories.html" class="light-btn">
+        <svg id="Layer_1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="light-img">
+          <path
+            d="m8.865 1.374c-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762zm-1.073 6.418c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292zm5.343 1.834c.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762zm1.073-6.418c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292zm-5.344 9.165c-.069-.016-1.719-.373-3.364-.373s-3.295.357-3.364.373c-.382.083-.68.381-.763.763-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.382.381.68.763.763.069.016 1.719.373 3.364.373s3.295-.357 3.364-.373c.382-.083.68-.381.763-.763.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.763-.763zm-1.072 6.419c-.571.094-1.445.208-2.292.208s-1.721-.114-2.292-.208c-.094-.571-.208-1.445-.208-2.292s.114-1.721.208-2.292c.571-.094 1.445-.208 2.292-.208s1.721.114 2.292.208c.094.571.208 1.445.208 2.292s-.114 1.721-.208 2.292zm14.915 2.501-2.304-2.304c.382-.681.597-1.512.597-2.489 0-2.817-1.683-4.5-4.5-4.5s-4.5 1.683-4.5 4.5 1.683 4.5 4.5 4.5c.977 0 1.808-.215 2.489-.597l2.304 2.304c.391.391 1.023.391 1.414 0s.391-1.023 0-1.414zm-8.707-4.793c0-1.706.794-2.5 2.5-2.5s2.5.794 2.5 2.5-.794 2.5-2.5 2.5-2.5-.794-2.5-2.5z" />
+        </svg>
+        <span>Categorías</span>
+      </a>
+      <div class="container">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" id="breadcrumb-container">
+          </ol>
         </nav>
-    </header>
-  <main class="pb-5">
-    <div class="text-center p-4">
-      <h2>Categorías</h2>
-      <p class="lead">Verás aquí todas las categorías del sitio.</p>
+      </div>
     </div>
     <div class="container">
       <div class="row">
-        <div class="col text-end">
-          <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
-            <input type="radio" class="btn-check" name="options" id="sortAsc">
-            <label class="btn btn-light" for="sortAsc">A-Z</label>
-            <input type="radio" class="btn-check" name="options" id="sortDesc">
-            <label class="btn btn-light" for="sortDesc">Z-A</label>
-            <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-            <label class="btn btn-light" for="sortByCount"><i class="fas fa-sort-amount-down mr-1"></i></label>
+        <aside class="col-md-3 filters-aside">
+          <div>
+            <h6>Ordenar por</h6>
+            <div class="sort-options">
+              <label>
+                <input type="radio" name="sortOptions" value="nameAsc">
+                <span>Alfabético (A-Z)</span>
+              </label>
+              <label>
+                <input type="radio" name="sortOptions" value="nameDesc">
+                <span>Alfabético (Z-A)</span>
+              </label>
+              <label>
+                <input type="radio" name="sortOptions" value="relevance" checked>
+                <span>Relevancia</span>
+              </label>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
-          <div class="row container p-0 m-0">
-            <div class="col">
-              <p class="font-weight-normal text-end my-2">Cant.</p>
-            </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="min." id="rangeFilterCountMin">
-            </div>
-            <div class="col">
-              <input class="form-control" type="number" placeholder="máx." id="rangeFilterCountMax">
-            </div>
-            <div class="col-3 p-0">
-              <div class="btn-group" role="group">
-                <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
+
+          <form class="filter-box" id="countFilterForm">
+            <h6>Cantidad</h6>
+            <div class="filter-input-group">
+              <div class="filter-input">
+                <input type="number" placeholder="mín." id="rangeFilterCountMin" name="minCount" min="0">
+              </div>
+              <span>-</span>
+              <div class="filter-input">
+                <input type="number" placeholder="máx." id="rangeFilterCountMax" name="maxCount" min="0">
               </div>
             </div>
+            <div class="filter-actions">
+              <button type="submit" class="filter-btn">Filtrar</button>
+              <button type="reset" class="clear-btn" id="clearRangeFilter">Limpiar</button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="col-md-9">
+          <div class="categories-grid" id="cat-list-container">
+            <!-- Aquí se cargarán las categorías -->
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="list-group" id="cat-list-container">
-        </div>
+        </section>
       </div>
     </div>
   </main>
@@ -134,7 +152,8 @@
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <div id="spinner-wrapper">
