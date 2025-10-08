@@ -152,32 +152,105 @@ document.addEventListener("DOMContentLoaded", function () {
   <li class="breadcrumb-item active" aria-current="page">${product.name}</li>
 `;
   });
-  
+
+  const commentsContainer = document.getElementById("comments-container");
+  const commentsURL = PRODUCT_INFO_COMMENTS_URL + productID + EXT_TYPE;
+
+  getJSONData(commentsURL).then(function (res) {
+    if (res.status !== "ok") {
+      commentsContainer.innerHTML = '<div class="alert alert-warning">No se pudieron cargar los comentarios.</div>';
+      return;
+    }
+
+    const comments = res.data;
+
+    if (!comments.length) {
+      commentsContainer.innerHTML = '<p class="text-muted">No hay comentarios para este producto.</p>';
+      return;
+    }
+
+    // Renderizar comentarios y formulario
+    let commentsHTML = '<p class="text-muted">No hay comentarios para este producto.</p>';
+    if (comments.length) {
+      commentsHTML = comments.map(c => `
+        <div class="comment">
+          <div class="comment-header">
+            <span class="comment-user">${c.user}</span>
+            <span class="comment-date">${c.dateTime}</span>
+          </div>
+          <div class="comment-body">
+            <div>${renderStars(c.score)}</div>
+            <p>${c.description}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    commentsContainer.innerHTML = `
+      <div class="comments-layout">
+        <div class="comments-list">
+          <h4 class="mb-3">Comentarios</h4>
+          ${commentsHTML}
+        </div>
+        </div>
+      </div>
+    `;
+
+    // <div class="add-comment-form"> CÓDIGO EN CASO DE QUERER AGREGAR EL FORM PARA AGREGAR CALIFICACIÓN
+    //       <h5>Deja tu comentario</h5>
+    //       <form>
+    //         <div class="mb-3">
+    //           <label for="comment-text" class="form-label">Comentario</label>
+    //           <textarea class="form-control" id="comment-text" rows="3"></textarea>
+    //         </div>
+    //         <div class="mb-3">
+    //           <label for="comment-score" class="form-label">Puntuación</label>
+    //           <select class="form-select" id="comment-score">
+    //             <option selected>Elige una puntuación</option>
+    //             <option value="1">1</option>
+    //             <option value="2">2</option>
+    //             <option value="3">3</option>
+    //             <option value="4">4</option>
+    //             <option value="5">5</option>
+    //           </select>
+    //         </div>
+    //         <button type="submit" class="btn btn-primary">Enviar</button>
+    //       </form>
+  });
+
+  // Función para mostrar estrellas según score
+  function renderStars(score) {
+    let stars = "";
+    for (let i = 1; i <= 5; i++) {
+      stars += i <= score ? "★" : "☆";
+    }
+    return `<span class="text-warning">${stars}</span>`;
+  }
 });
 
 // --- MODO OSCURO ---
 document.addEventListener("DOMContentLoaded", function () {
   const darkModeBtn = document.querySelector('.light-btn[aria-label="Cambiar modo claro/oscuro"]');
-  
+
   if (!darkModeBtn) return;
 
   // Verificar si ya hay un tema guardado
   const savedTheme = localStorage.getItem('darkMode');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
+
   // Aplicar tema inicial
   if (savedTheme === 'true' || (!savedTheme && prefersDark)) {
     document.body.classList.add('dark-mode');
   }
 
   // Event listener para cambiar modo
-  darkModeBtn.addEventListener('click', function() {
+  darkModeBtn.addEventListener('click', function () {
     document.body.classList.toggle('dark-mode');
-    
+
     // Guardar preferencia
     const isDark = document.body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDark);
-    
+
     // Cambiar aria-label para accesibilidad
     if (isDark) {
       darkModeBtn.setAttribute('aria-label', 'Cambiar a modo claro');
