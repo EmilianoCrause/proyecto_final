@@ -857,6 +857,7 @@ footer div {
 .relevant-products-container {
     margin-top: 3rem;
     margin-bottom: 3rem;
+    width: auto;
 }
 
 .carousel-wrapper {
@@ -939,7 +940,7 @@ body.dark-mode .carousel-btn:hover {
     width: 30px;
     height: 30px;
     font-size: 2rem;
-    background-color: var(--primary-hover);
+    background-color: rgba(128, 128, 128, 0.614);
     border-radius: 50%;
     color: #000;
     display: flex;
