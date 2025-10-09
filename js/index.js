@@ -30,14 +30,14 @@ document.addEventListener("DOMContentLoaded", async function () {
 function initDarkMode() {
     const darkModeBtn = document.querySelector('.light-btn[aria-label="Cambiar modo claro/oscuro"]');
     if (darkModeBtn) {
-        const savedTheme = localStorage.getItem("darkMode");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-        if (savedTheme === "true" || (!savedTheme && prefersDark)) {
+        // Ya no necesitamos verificar aquí porque el script inline lo hace
+        // Solo sincronizamos con el body si es necesario
+        if (document.documentElement.classList.contains("dark-mode")) {
             document.body.classList.add("dark-mode");
         }
 
         darkModeBtn.addEventListener("click", () => {
+            document.documentElement.classList.toggle("dark-mode");
             document.body.classList.toggle("dark-mode");
             const isDark = document.body.classList.contains("dark-mode");
             localStorage.setItem("darkMode", isDark);

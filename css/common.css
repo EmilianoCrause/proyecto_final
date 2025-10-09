@@ -17,6 +17,8 @@
     --mode-icons: black;
 }
 
+/* Aplicar dark mode tanto a html como a body para evitar flash */
+html.dark-mode,
 body.dark-mode {
     --bg-color: #121212;
     --primary-color: #ffa217;
