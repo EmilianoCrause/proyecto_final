@@ -2,7 +2,7 @@
 .card-body,
 .container,
 .site-header {
-  font-family: 'Inter', sans-serif !important;
+  font-family: 'DM Sans', sans-serif !important;
 }
 
 .jumbotron .display-4 {
@@ -30,19 +30,14 @@ nav a {
 
 .jumbotron {
   height: 50vh;
-  padding: 5em inherit;
-  margin-bottom: 5rem;
-  margin-top: 2rem;
-  background-color: #53C0FB;
-  background-image: url('../img/cover_back.png');
+  margin-bottom: 2rem;
+  background-image: url('../img/Mercado.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   color: black;
   font-weight: bold;
-  border-radius: 10px;
-  border: 1px solid #cdcfd1;
-
+  min-width: 100%;
 }
 
 @media (min-width: 768px) {
