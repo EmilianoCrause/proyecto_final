@@ -123,11 +123,67 @@ header nav {
     align-items: center;
 }
 
+/* Toggle para modo oscuro */
+.theme-toggle {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    width: 60px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 50px;
+    transition: background 0.3s ease;
+}
+
+.theme-toggle input {
+    display: none;
+}
+
+.theme-toggle label {
+    width: 24px;
+    height: 24px;
+    background: #ccc;
+    display: flex;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle label::before {
+    content: "☼";
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.theme-toggle input:checked+label::before {
+    content: "☾";
+}
+
+.theme-toggle input:checked+label {
+    margin-left: 26px;
+    background: var(--primary-color);
+}
+
+body.dark-mode .theme-toggle {
+    background: var(--input-bg);
+    border-color: var(--input-border);
+}
+
+body.dark-mode .theme-toggle label {
+    background: #666;
+}
+
+body.dark-mode .theme-toggle input:checked+label {
+    background: var(--primary-color);
+}
+
 .light-btn,
 .lang-btn {
     background: transparent;
-    border: 1px solid #cdcfd1;
-    border-radius: 12px;
+    border: none;
     padding: 0.5rem;
     display: flex;
     gap: 0.5rem;
@@ -152,8 +208,8 @@ header nav {
 
 .light-img,
 .lang-svg {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     fill: var(--mode-icons);
 }
 
@@ -931,12 +987,12 @@ body.dark-mode .carousel-btn:hover {
 }
 
 .swiper .swiper-pagination-bullet-active {
-  background-color: var(--primary-hover);
+    background-color: var(--primary-hover);
 }
 
 .relevant-products-container .swiper-button-next,
 .relevant-products-container .swiper-button-prev {
-    
+
     width: 30px;
     height: 30px;
     font-size: 2rem;
@@ -948,6 +1004,6 @@ body.dark-mode .carousel-btn:hover {
     justify-content: center;
 }
 
-#index-h2{
+#index-h2 {
     margin-bottom: 2rem;
 }
