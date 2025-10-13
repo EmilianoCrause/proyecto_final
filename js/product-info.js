@@ -194,68 +194,75 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
         </div>
       </div>
-    `;
+    
 
-    // <div class="add-comment-form"> CÓDIGO EN CASO DE QUERER AGREGAR EL FORM PARA AGREGAR CALIFICACIÓN
-    //       <h5>Deja tu comentario</h5>
-    //       <form>
-    //         <div class="mb-3">
-    //           <label for="comment-text" class="form-label">Comentario</label>
-    //           <textarea class="form-control" id="comment-text" rows="3"></textarea>
-    //         </div>
-    //         <div class="mb-3">
-    //           <label for="comment-score" class="form-label">Puntuación</label>
-    //           <select class="form-select" id="comment-score">
-    //             <option selected>Elige una puntuación</option>
-    //             <option value="1">1</option>
-    //             <option value="2">2</option>
-    //             <option value="3">3</option>
-    //             <option value="4">4</option>
-    //             <option value="5">5</option>
-    //           </select>
-    //         </div>
-    //         <button type="submit" class="btn btn-primary">Enviar</button>
-    //       </form>
-  });
+    <div class="add-comment-form">
+          <h5>Deja tu comentario</h5>
+          <form>
+            <div class="mb-3">
+              <label for="comment-text" class="form-label">Comentario</label>
+              <textarea class="form-control" id="comment-text" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="comment-score" class="form-label">Puntuación</label>
+              <select class="form-select" id="comment-score">
+                <option selected>Elige una puntuación</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+    </div>`;
 
-  // Función para mostrar estrellas según score
-  function renderStars(score) {
-    let stars = "";
-    for (let i = 1; i <= 5; i++) {
-      stars += i <= score ? "★" : "☆";
-    }
-    return `<span class="text-warning">${stars}</span>`;
-  }
-});
-
-// --- MODO OSCURO ---
-document.addEventListener("DOMContentLoaded", function () {
-  const darkModeBtn = document.querySelector('.light-btn[aria-label="Cambiar modo claro/oscuro"]');
-
-  if (!darkModeBtn) return;
-
-  // Verificar si ya hay un tema guardado
-  const savedTheme = localStorage.getItem('darkMode');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  // Aplicar tema inicial
-  if (savedTheme === 'true' || (!savedTheme && prefersDark)) {
-    document.body.classList.add('dark-mode');
-  }
-
-  // Event listener para cambiar modo
-  darkModeBtn.addEventListener('click', function () {
-    document.body.classList.toggle('dark-mode');
-
-    // Guardar preferencia
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDark);
-
-    // Cambiar aria-label para accesibilidad
-    if (isDark) {
-      darkModeBtn.setAttribute('aria-label', 'Cambiar a modo claro');
-    } else {
-      darkModeBtn.setAttribute('aria-label', 'Cambiar a modo oscuro');
+    // Función para mostrar estrellas según score
+    function renderStars(score) {
+      let stars = "";
+      for (let i = 1; i <= 5; i++) {
+        stars += i <= score ? "★" : "☆";
+      }
+      return `<span class="text-warning">${stars}</span>`;
     }
   });
+
+  // --- MODO OSCURO ---
+  const themeToggle = document.getElementById('theme-toggle-checkbox');
+  if (themeToggle) {
+    if (document.documentElement.classList.contains("dark-mode")) {
+      document.body.classList.add("dark-mode");
+      themeToggle.checked = true;
+    }
+    themeToggle.addEventListener("change", () => {
+      const isDark = themeToggle.checked;
+      if (isDark) {
+        document.documentElement.classList.add("dark-mode");
+        document.body.classList.add("dark-mode");
+      } else {
+        document.documentElement.classList.remove("dark-mode");
+        document.body.classList.remove("dark-mode");
+      }
+      localStorage.setItem("darkMode", isDark);
+    });
+
+    function initLanguageSelector() {
+      const langBtn = document.querySelector(".lang-btn");
+      const langSelect = document.getElementById("idioma");
+      if (langBtn && langSelect) {
+        langBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
+        });
+
+        langSelect.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+          langSelect.style.display = "none";
+        });
+      }
+    }
+
+    initLanguageSelector();
+  };
 });
