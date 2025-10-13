@@ -25,23 +25,44 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     initDarkMode();
     await initRelevantProductsCarousel();
+    initLanguageSelector();
 });
 
 function initDarkMode() {
-    const darkModeBtn = document.querySelector('.light-btn[aria-label="Cambiar modo claro/oscuro"]');
-    if (darkModeBtn) {
-        // Ya no necesitamos verificar aquí porque el script inline lo hace
-        // Solo sincronizamos con el body si es necesario
+    const themeToggle = document.getElementById('theme-toggle-checkbox');
+    if (themeToggle) {
+        // Sincronizar estado inicial
         if (document.documentElement.classList.contains("dark-mode")) {
             document.body.classList.add("dark-mode");
+            themeToggle.checked = true;
         }
-
-        darkModeBtn.addEventListener("click", () => {
-            document.documentElement.classList.toggle("dark-mode");
-            document.body.classList.toggle("dark-mode");
-            const isDark = document.body.classList.contains("dark-mode");
+        // Escuchar cambios
+        themeToggle.addEventListener("change", () => {
+            const isDark = themeToggle.checked;
+            if (isDark) {
+                document.documentElement.classList.add("dark-mode");
+                document.body.classList.add("dark-mode");
+            } else {
+                document.documentElement.classList.remove("dark-mode");
+                document.body.classList.remove("dark-mode");
+            }
             localStorage.setItem("darkMode", isDark);
-            darkModeBtn.setAttribute("aria-label", isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+        });
+    }
+}
+
+function initLanguageSelector() {
+    const langBtn = document.querySelector(".lang-btn");
+    const langSelect = document.getElementById("idioma");
+    if (langBtn && langSelect) {
+        langBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
+        });
+
+        langSelect.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+            langSelect.style.display = "none";
         });
     }
 }

@@ -7,15 +7,16 @@
     <title>eMercado - Todo lo que busques está aquí</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    
+
     <!-- Script para evitar flash al cargar modo oscuro -->
     <script>
-        (function() {
+        (function () {
             const savedTheme = localStorage.getItem("darkMode");
             const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
             if (savedTheme === "true" || (!savedTheme && prefersDark)) {
@@ -55,19 +56,20 @@
             <!-- Controles -->
             <div class="selectores">
                 <button class="light-btn">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
-                        fill="currentColor" viewBox="0 0 24 24">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
+                        viewBox="0 0 256 256">
                         <path
-                            d="M10.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M17.5 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3M8.82 15.77c.31.75 1.04 1.23 1.85 1.23h6.18c.79 0 1.51-.47 1.83-1.2l3.24-7.4c.14-.31.11-.67-.08-.95S21.34 7 21 7H7.33L5.92 3.62C5.76 3.25 5.4 3 5 3H2v2h2.33zM19.47 9l-2.62 6h-6.18l-2.5-6z">
+                            d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z">
                         </path>
                     </svg>
+
                 </button>
 
                 <button class="light-btn">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="256" height="256"
-                        fill="currentColor" viewBox="0 0 24 24">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
+                        viewBox="0 0 256 256">
                         <path
-                            d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5">
+                            d="M234.38,210a123.36,123.36,0,0,0-60.78-53.23,76,76,0,1,0-91.2,0A123.36,123.36,0,0,0,21.62,210a12,12,0,1,0,20.77,12c18.12-31.32,50.12-50,85.61-50s67.49,18.69,85.61,50a12,12,0,0,0,20.77-12ZM76,96a52,52,0,1,1,52,52A52.06,52.06,0,0,1,76,96Z">
                         </path>
                     </svg>
                     <span id="User-display"></span>
@@ -75,14 +77,11 @@
             </div>
 
             <div class="selectores">
-                <!-- Modo claro/oscuro -->
-                <button class="light-btn" aria-label="Cambiar modo claro/oscuro">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path
-                            d="M12 6.99a5.01 5.01 0 1 0 0 10.02 5.01 5.01 0 1 0 0-10.02M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z">
-                        </path>
-                    </svg>
-                </button>
+                <!-- Modo claro/oscuro - Toggle -->
+                <div class="theme-toggle">
+                    <input type="checkbox" id="theme-toggle-checkbox">
+                    <label for="theme-toggle-checkbox"></label>
+                </div>
 
                 <!-- Selector de idioma -->
                 <div class="lang-container">
@@ -117,14 +116,14 @@
                 </div>
                 <!-- If we need pagination -->
                 <div class="swiper-pagination"></div>
-                
+
                 <!-- If we need navigation buttons -->
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-button-next"></div>
             </div>
         </div>
 
-                <div class="container">
+        <div class="container">
             <div class="row">
                 <div class="col-md-4">
                     <div class="product-card" id="autos">
