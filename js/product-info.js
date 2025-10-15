@@ -218,6 +218,52 @@ document.addEventListener("DOMContentLoaded", function () {
           </form>
     </div>`;
 
+const commentForm = commentsContainer.querySelector("form");
+const commentText = commentForm.querySelector("#comment-text");
+const commentScore = commentForm.querySelector("#comment-score");
+const commentsList = commentsContainer.querySelector(".comments-list");
+
+commentForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const text = commentText.value.trim();
+  const score = parseInt(commentScore.value);
+  const user = localStorage.getItem("user") || "Usuario actual";
+
+  if (!text || isNaN(score) || score < 1 || score > 5) {
+    alert("Por favor ingresa un comentario y selecciona una puntuación válida (1–5).");
+    return;
+  }
+
+  // Crear fecha actual 
+  const now = new Date();
+  const formattedDate = now.toLocaleString("es-ES", { 
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit"
+  });
+
+  // Crear nuevo comentario
+  const newCommentHTML = `
+    <div class="comment">
+      <div class="comment-header">
+        <span class="comment-user">${user}</span>
+        <span class="comment-date">${formattedDate}</span>
+      </div>
+      <div class="comment-body">
+        <div>${renderStars(score)}</div>
+        <p>${text}</p>
+      </div>
+    </div>
+  `;
+
+  // Insertar al final de la lista de comentarios
+  commentsList.insertAdjacentHTML("beforeend", newCommentHTML);
+
+  // Limpiar formulario
+  commentText.value = "";
+  commentScore.value = "Elige una puntuación";
+});
+
     // Función para mostrar estrellas según score
     function renderStars(score) {
       let stars = "";
