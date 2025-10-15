@@ -49,7 +49,7 @@ function filterAndShow() {
     const minCount = parseInt(document.getElementById('rangeFilterCountMin').value) || 0;
     const maxCount = parseInt(document.getElementById('rangeFilterCountMax').value) || Infinity;
 
-    filteredCategoriesArray = currentCategoriesArray.filter(category => 
+    filteredCategoriesArray = currentCategoriesArray.filter(category =>
         category.productCount >= minCount && category.productCount <= maxCount
     );
 
@@ -82,29 +82,51 @@ function initEventListeners() {
 }
 
 function initDarkMode() {
-  const darkModeBtn = document.querySelector('.light-btn[aria-label="Cambiar modo claro/oscuro"]');
-  if (darkModeBtn) {
-    const savedTheme = localStorage.getItem("darkMode");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    if (savedTheme === "true" || (!savedTheme && prefersDark)) {
-      document.body.classList.add("dark-mode");
+    const themeToggle = document.getElementById('theme-toggle-checkbox');
+    if (themeToggle) {
+        // Sincronizar estado inicial
+        if (document.documentElement.classList.contains("dark-mode")) {
+            document.body.classList.add("dark-mode");
+            themeToggle.checked = true;
+        }
+        // Escuchar cambios
+        themeToggle.addEventListener("change", () => {
+            const isDark = themeToggle.checked;
+            if (isDark) {
+                document.documentElement.classList.add("dark-mode");
+                document.body.classList.add("dark-mode");
+            } else {
+                document.documentElement.classList.remove("dark-mode");
+                document.body.classList.remove("dark-mode");
+            }
+            localStorage.setItem("darkMode", isDark);
+        });
     }
-
-    darkModeBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      const isDark = document.body.classList.contains("dark-mode");
-      localStorage.setItem("darkMode", isDark);
-      darkModeBtn.setAttribute("aria-label", isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
-    });
-  }
 }
+
+function initLanguageSelector() {
+    const langBtn = document.querySelector(".lang-btn");
+    const langSelect = document.getElementById("idioma");
+    if (langBtn && langSelect) {
+        langBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
+        });
+
+        langSelect.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+            langSelect.style.display = "none";
+        });
+    }
+}
+
+initLanguageSelector();
 
 document.addEventListener("DOMContentLoaded", function () {
     getJSONData(CATEGORIES_URL).then(function (resultObj) {
         if (resultObj.status === "ok") {
             currentCategoriesArray = resultObj.data;
-            filterAndShow(); 
+            filterAndShow();
             initEventListeners();
         } else {
             console.error("Error al cargar categorías:", resultObj.data);

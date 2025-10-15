@@ -17,10 +17,12 @@
     --mode-icons: black;
 }
 
+/* Aplicar dark mode tanto a html como a body para evitar flash */
+html.dark-mode,
 body.dark-mode {
     --bg-color: #121212;
     --primary-color: #ffa217;
-    --primary-hover: #e78b00;
+    --primary-hover: #ffa217;
     --font-color: #f5f5f5;
     --card-bg: rgba(40, 40, 40, 0.7);
     --input-bg: #1e1e1e;
@@ -48,7 +50,7 @@ html {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 0.85rem;
     font-weight: 400;
     color: var(--font-color);
@@ -121,11 +123,67 @@ header nav {
     align-items: center;
 }
 
+/* Toggle para modo oscuro */
+.theme-toggle {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    width: 60px;
+    height: 32px;
+    padding: 4px;
+    border-radius: 50px;
+    transition: background 0.3s ease;
+}
+
+.theme-toggle input {
+    display: none;
+}
+
+.theme-toggle label {
+    width: 24px;
+    height: 24px;
+    background: #ccc;
+    display: flex;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle label::before {
+    content: "☼";
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.theme-toggle input:checked+label::before {
+    content: "☾";
+}
+
+.theme-toggle input:checked+label {
+    margin-left: 26px;
+    background: var(--primary-color);
+}
+
+body.dark-mode .theme-toggle {
+    background: var(--input-bg);
+    border-color: var(--input-border);
+}
+
+body.dark-mode .theme-toggle label {
+    background: #666;
+}
+
+body.dark-mode .theme-toggle input:checked+label {
+    background: var(--primary-color);
+}
+
 .light-btn,
 .lang-btn {
     background: transparent;
-    border: 1px solid #cdcfd1;
-    border-radius: 12px;
+    border: none;
     padding: 0.5rem;
     display: flex;
     gap: 0.5rem;
@@ -150,8 +208,8 @@ header nav {
 
 .light-img,
 .lang-svg {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     fill: var(--mode-icons);
 }
 
@@ -346,7 +404,7 @@ main {
 
 .categoria-card__count-badge {
     align-self: flex-start;
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     color: var(--font-color);
     padding: 0.3rem 0.7rem;
     border-radius: 20px;
@@ -627,6 +685,10 @@ aside h6 {
     cursor: pointer;
 }
 
+#ver-mas.product-btn {
+    font-size: 1.2rem;
+}
+
 .product-btn:hover {
     border: 1px solid var(--primary-hover);
     color: var(--primary-hover);
@@ -644,6 +706,121 @@ body.dark-mode .product-card:hover {
 body.dark-mode .product-image-wrapper {
     background: #2a2a2a;
 }
+
+
+/* ===============================
+   Comentarios
+   =============================== */
+
+#comments-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--input-border);
+}
+
+#comments-container h4 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.comment {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.comment:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.comment-user {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.comment-date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+body.dark-mode .comment-date {
+    color: #aaa;
+}
+
+.comment-body p {
+    margin: 0.5rem 0 0 0;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+.comment .text-warning {
+    color: var(--primary-color) !important;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+/* Formulario para añadir comentario */
+/* .add-comment-form {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--input-border);
+}
+
+.add-comment-form h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.add-comment-form .form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.add-comment-form .form-control,
+.add-comment-form .form-select {
+    background-color: var(--input-bg);
+    color: var(--font-color);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.2s;
+}
+
+.add-comment-form .form-control:focus,
+.add-comment-form .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px var(--shadow-color);
+    outline: none;
+}
+
+.add-comment-form .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: black;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.add-comment-form .btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+} */
+
 
 /* ===============================
    Footer
@@ -710,4 +887,123 @@ footer div {
     .subtitulo {
         font-size: 0.8rem;
     }
+}
+
+/* ===============================
+   Layout de Comentarios
+   =============================== */
+
+.comments-layout {
+    display: flex;
+    gap: 2rem;
+}
+
+.comments-list {
+    flex: 1;
+}
+
+.add-comment-form {
+    flex: 1;
+}
+
+/* ===============================
+   Productos relevantes carrusel
+   =============================== */
+
+.relevant-products-container {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: auto;
+}
+
+.carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none;
+    /* Safari y Chrome */
+}
+
+.carousel .product-card {
+    min-width: 280px;
+    flex: 0 0 auto;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    transition: all 0.2s;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+body.dark-mode .carousel-btn {
+    background-color: rgba(40, 40, 40, 0.8);
+    border-color: #555;
+    color: #f5f5f5;
+}
+
+body.dark-mode .carousel-btn:hover {
+    background-color: #1e1e1e;
+    border-color: #777;
+}
+
+.relevant-products-container .swiper-pagination {
+    position: static;
+    margin-top: 20px;
+}
+
+.swiper .swiper-pagination-bullet-active {
+    background-color: var(--primary-hover);
+}
+
+.relevant-products-container .swiper-button-next,
+.relevant-products-container .swiper-button-prev {
+
+    width: 30px;
+    height: 30px;
+    font-size: 2rem;
+    background-color: rgba(128, 128, 128, 0.614);
+    border-radius: 50%;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#index-h2 {
+    margin-bottom: 2rem;
 }
