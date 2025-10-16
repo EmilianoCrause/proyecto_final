@@ -116,13 +116,50 @@
       </div>
     </div>
 
-    <div class="container" id="product-info-container">
-    </div>
-    <div class="container mt-4" id="comments-container">
-    </div>
-    <div class="container mt-5 mb-5">
-      <h4 class="mb-4">Productos relacionados</h4>
-      <div class="row justify-content-center" id="related-products-list"></div>
+    <!-- Fila de contenido -->
+    <div class="row">
+      <!-- Columna de info y prod. relacionados -->
+      <div class="col-md-8">
+        <div class="container" id="product-info-container">
+        </div>
+        <div class="container mt-5 mb-5">
+          <h4 class="mb-4">Productos relacionados</h4>
+          <div class="row justify-content-center" id="related-products-list"></div>
+        </div>
+      </div>
+      <!-- Columna de comentarios -->
+      <div class="col">
+        <div class="container mt-4" id="comments-container">
+        </div>
+        <div id="form-calif">
+          <h4 class="mb-4">Dejar tu calificación</h4>
+          <form id="reviewForm" class="border rounded p-4 shadow-sm w-100">
+            <!-- Calificación con estrellas -->
+            <div class="mb-3">
+              <div class="rating">
+                <input type="radio" name="star" class="comment-score" id="star5" value="5"><label for="star5"><i></i></label>
+                <input type="radio" name="star" class="comment-score" id="star4" value="4"><label for="star4"><i></i></label>
+                <input type="radio" name="star" class="comment-score" id="star3" value="3"><label for="star3"><i></i></label>
+                <input type="radio" name="star" class="comment-score" id="star2" value="2"><label for="star2"><i></i></label>
+                <input type="radio" name="star" class="comment-score" id="star1" value="1"><label for="star1"><i></i></label>
+              </div>
+            </div>
+
+            <!-- Comentario -->
+            <div class="mb-3">
+              <label for="comment" class="form-label fw-semibold">Comentario:</label>
+              <textarea class="form-control" id="comment-text" rows="3" placeholder="Escribe tu opinión aquí..." required></textarea>
+            </div>
+
+            <!-- Botón -->
+            <div class="text-end">
+              <button type="submit" class="btn btn-buy align-self-start mt-auto">
+                <i class="fa fa-paper-plane me-1"></i> Enviar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </main>
   <footer class="text-muted">
