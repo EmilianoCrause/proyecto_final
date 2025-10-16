@@ -418,6 +418,73 @@ body.dark-mode .categoria-card__count-badge {
 }
 
 /* ===============================
+   Comentarios
+   =============================== */
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse; /* ⭐ la 5 queda a la derecha */
+    justify-content: flex-end;
+    gap: 4px;
+}
+
+/* Ocultar los radios */
+.rating input {
+    display: none;
+}
+
+/* Estilo base de las estrellas */
+.rating label i {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    clip-path: polygon(
+        50% 0%, 
+        61% 35%, 
+        98% 35%, 
+        68% 57%, 
+        79% 91%, 
+        50% 70%, 
+        21% 91%, 
+        32% 57%, 
+        2% 35%, 
+        39% 35%
+    );
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Hover: ilumina actual y las de la derecha (por row-reverse) */
+.rating label:hover i,
+.rating label:hover ~ label i {
+    background-color: orange;
+}
+
+/* Checked: ilumina actual y las de la derecha (por row-reverse) */
+.rating input:checked ~ label i {
+    background-color: orange;
+}
+
+#form-calif{
+    margin-top: 10px;
+}
+
+#form-calif button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Estilo para delimitar el contenedor de los comentarios */
+#cont-comment{
+    max-height: 55vh;
+    overflow: auto;
+    padding: 10px;  
+}
+
+/* ===============================
    Filtros y aside
    =============================== */
 .filters-aside {

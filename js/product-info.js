@@ -190,45 +190,25 @@ document.addEventListener("DOMContentLoaded", function () {
       <div class="comments-layout">
         <div class="comments-list">
           <h4 class="mb-3">Comentarios</h4>
-          ${commentsHTML}
+          <div id="cont-comment">
+            ${commentsHTML}
+          </div>
         </div>
         </div>
       </div>
-    
+    `;
 
-    <div class="add-comment-form">
-          <h5>Deja tu comentario</h5>
-          <form>
-            <div class="mb-3">
-              <label for="comment-text" class="form-label">Comentario</label>
-              <textarea class="form-control" id="comment-text" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="comment-score" class="form-label">Puntuación</label>
-              <select class="form-select" id="comment-score">
-                <option selected>Elige una puntuación</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-          </form>
-    </div>`;
-
-const commentForm = commentsContainer.querySelector("form");
+const commentForm = document.querySelector("#reviewForm");
 const commentText = commentForm.querySelector("#comment-text");
-const commentScore = commentForm.querySelector("#comment-score");
-const commentsList = commentsContainer.querySelector(".comments-list");
+const commentsList = commentsContainer.querySelector("#cont-comment");
 
 commentForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const text = commentText.value.trim();
-  const score = parseInt(commentScore.value);
-  const user = localStorage.getItem("user") || "Usuario actual";
+  const commentScore = commentForm.querySelector('input[name="star"]:checked');
+  const score = commentScore ? parseInt(commentScore.value) : NaN;
+  const user = localStorage.getItem("usuario") || sessionStorage.getItem("usuario") || "Usuario actual";
 
   if (!text || isNaN(score) || score < 1 || score > 5) {
     alert("Por favor ingresa un comentario y selecciona una puntuación válida (1–5).");
@@ -261,7 +241,8 @@ commentForm.addEventListener("submit", function (e) {
 
   // Limpiar formulario
   commentText.value = "";
-  commentScore.value = "Elige una puntuación";
+  const allRadios = commentForm.querySelectorAll('.comment-score');
+  allRadios.forEach(r => r.checked = false);
 });
 
     // Función para mostrar estrellas según score
