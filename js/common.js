@@ -1,8 +1,4 @@
-// Archivo común para funciones compartidas entre páginas
-
-// Verificación de usuario logueado (para index.html principalmente)
 document.addEventListener("DOMContentLoaded", async function () {
-    // Solo ejecutar en index.html
     if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
         let usuSession = sessionStorage.getItem(STORAGE_KEYS.USUARIO);
         let usuLocal = localStorage.getItem(STORAGE_KEYS.USUARIO);
@@ -12,7 +8,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             return;
         }
 
-        // Agregar eventos a las categorías en index
         const autos = document.getElementById("autos");
         const juguetes = document.getElementById("juguetes");
         const muebles = document.getElementById("muebles");
@@ -36,25 +31,20 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
         }
 
-        // Inicializar carrusel si existe
         await initRelevantProductsCarousel();
     }
 
-    // Inicializar funciones comunes en todas las páginas
     initDarkMode();
     initLanguageSelector();
 });
 
-// Función para inicializar el modo oscuro
 function initDarkMode() {
     const themeToggle = document.getElementById('theme-toggle-checkbox');
     if (themeToggle) {
-        // Sincronizar estado inicial
         if (document.documentElement.classList.contains("dark-mode")) {
             document.body.classList.add("dark-mode");
             themeToggle.checked = true;
         }
-        // Escuchar cambios
         themeToggle.addEventListener("change", () => {
             const isDark = themeToggle.checked;
             if (isDark) {
@@ -69,7 +59,6 @@ function initDarkMode() {
     }
 }
 
-// Función para inicializar el selector de idioma
 function initLanguageSelector() {
     const langBtn = document.querySelector(".lang-btn");
     const langSelect = document.getElementById("idioma");
@@ -86,15 +75,13 @@ function initLanguageSelector() {
     }
 }
 
-// Función para inicializar el carrusel de productos relevantes (solo para index.html)
 async function initRelevantProductsCarousel() {
     const carousel = document.getElementById("relevant-products-carousel");
     if (!carousel) return;
 
-    const categoryIds = [101, 102, 103, 105]; // IDs for Autos, Juguetes, Muebles, Computadoras
+    const categoryIds = [101, 102, 103, 105];
 
     try {
-        // Fetch de todos los productos de forma paralela
         const promises = categoryIds.map(id => getJSONData(PRODUCTS_URL + id + EXT_TYPE));
         const results = await Promise.all(promises);
 
@@ -105,7 +92,6 @@ async function initRelevantProductsCarousel() {
             }
         }
 
-        // Mezclamos la lista
         products.sort(() => 0.5 - Math.random());
 
         if (products.length > 0) {
@@ -146,7 +132,6 @@ async function initRelevantProductsCarousel() {
     }
 }
 
-// Función auxiliar para renderizar productos del carrusel
 function renderCarouselProducts(container, products) {
     if (!products.length) {
         container.innerHTML = '<p class="text-muted">No hay productos para mostrar.</p>';

@@ -7,6 +7,16 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 
+// Constantes para claves de localStorage
+const STORAGE_KEYS = {
+    USUARIO: "usuario",
+    CAT_ID: "catID",
+    CAT_NAME: "catName",
+    PRODUCT_ID: "productID",
+    DARK_MODE: "darkMode",
+    LANGUAGE: "language"
+};
+
 let showSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "block";
 }
