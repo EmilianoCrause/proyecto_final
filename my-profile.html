@@ -132,7 +132,7 @@
           <div class="row">
             <div class="col-md-5 text-center">
               <h2 class="fw-bold mb-3">Mi perfil</h2>
-              <img src="img/extra/icono-perfil.png" alt="Imagen Perfil" class="img-fluid rounded-circle bg-light p-1" width="130">
+              <img src="img/extra/icono-perfil.png" alt="Imagen Perfil" class="img-fluid rounded-circle bg-light p-3" width="200"  id="profile-img">
             </div>
 
             <!-- Columna de Informacion -->
@@ -165,15 +165,17 @@
             </div>
           </div>
           <form class="mx-auto form-edit-perfil" id="form-edit">
+
               <!-- Botones de acción -->
               <div class="mb-3 d-flex gap-2">
                 <div class="btn-edit-img">
-                  <button id="btn-borrar-img" class="btn btn-sm">
+                  <button id="btn-borrar-img" class="btn btn-sm btn-input-img">
                     <i class="bi bi-trash3"></i>
                   </button>
-                  <button id="btn-cargar-img" class="btn btn-sm">
-                    <i class="bi bi-image"></i>
-                  </button>
+                  <label for="img-input" class="btn btn-sm btn-input-img">
+                    <i class="bi bi-image"></i> 
+                  </label>
+                  <input type="file" id="img-input" accept="image/*">
                 </div>
                 <button id="btn-cerrar" class="btn btn-sm">
                   <i class="bi bi-x-lg"></i>
@@ -211,9 +213,7 @@
       </div>
     </div>
   <div class="container text-center my-4">
-  <img id="imagenProfile" src="img/default-profile.png" alt="Imagen de perfil" class="rounded-circle" width="120" height="120">
   <div class="mt-3">
-    <input type="file" id="img-input" accept="image/*">
   </div>
 </div>
   </main>

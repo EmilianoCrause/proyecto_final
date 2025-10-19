@@ -67,22 +67,28 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // ======== MODO OSCURO ========
     // Cargar preferencia inicial
-if (localStorage.getItem('darkMode') === 'true') {
-    document.body.classList.add('dark-mode');
-    darkToggle.checked = true; // Mantener el checkbox activado
-}
-
-// Alternar modo oscuro/claro
-darkToggle.addEventListener('change', () => {
-    if (darkToggle.checked) {
+    if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
-    } else {
-        document.body.classList.remove('dark-mode');
+        darkToggle.checked = true; // Mantener el checkbox activado
     }
-    localStorage.setItem('darkMode', darkToggle.checked);
-});
 
-})const profileImg = document.getElementById('profile-img');
+    // Alternar modo oscuro/claro
+    darkToggle.addEventListener('change', () => {
+        if (darkToggle.checked) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+        localStorage.setItem('darkMode', darkToggle.checked);
+    });
+
+    document.getElementById('btn-borrar-img').addEventListener('click', ()=>{
+        localStorage.removeItem('profileImage')
+    })
+
+})
+
+const profileImg = document.getElementById('profile-img');
 const imgInput = document.getElementById('img-input');
 
 window.addEventListener('DOMContentLoaded', () => {
