@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const savedUser = localStorage.getItem("usuario") || sessionStorage.getItem("usuario");
+    const savedUser = localStorage.getItem(STORAGE_KEYS.USUARIO) || sessionStorage.getItem("usuario");
 
     if (!savedUser) return; // salir si no hay usuario
 

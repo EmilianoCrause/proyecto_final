@@ -36,8 +36,8 @@ function sortCategories(criteria, array){
 }
 
 function setCatID(id) {
-    localStorage.setItem("catID", id);
-    window.location = "products.html"
+    localStorage.setItem(STORAGE_KEYS.CAT_ID, id);
+    window.location = "products.html";
 }
 
 function showCategoriesList(){
@@ -83,16 +83,78 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     //Muestro las categorías ordenadas
     showCategoriesList();
 }
+function initEventListeners() {
+    document.querySelectorAll('input[name="sortOptions"]').forEach(input => {
+        input.addEventListener('change', filterAndShow);
+    });
 
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
-    getJSONData(CATEGORIES_URL).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            currentCategoriesArray = resultObj.data
-            showCategoriesList()
-            //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
+    const filterForm = document.getElementById('countFilterForm');
+    if (filterForm) {
+        filterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            filterAndShow();
+        });
+    }
+
+    const clearButton = document.getElementById('clearRangeFilter');
+    if (clearButton) {
+        clearButton.addEventListener('click', () => {
+            document.getElementById('rangeFilterCountMin').value = '';
+            document.getElementById('rangeFilterCountMax').value = '';
+            filterAndShow();
+        });
+    }
+}
+
+function initDarkMode() {
+    const themeToggle = document.getElementById('theme-toggle-checkbox');
+    if (themeToggle) {
+        // Sincronizar estado inicial
+        if (document.documentElement.classList.contains("dark-mode")) {
+            document.body.classList.add("dark-mode");
+            themeToggle.checked = true;
+        }
+        // Escuchar cambios
+        themeToggle.addEventListener("change", () => {
+            const isDark = themeToggle.checked;
+            if (isDark) {
+                document.documentElement.classList.add("dark-mode");
+                document.body.classList.add("dark-mode");
+            } else {
+                document.documentElement.classList.remove("dark-mode");
+                document.body.classList.remove("dark-mode");
+            }
+            localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark);
+        });
+    }
+}
+
+function initLanguageSelector() {
+    const langBtn = document.querySelector(".lang-btn");
+    const langSelect = document.getElementById("idioma");
+    if (langBtn && langSelect) {
+        langBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
+        });
+
+        langSelect.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+            langSelect.style.display = "none";
+        });
+    }
+}
+
+initLanguageSelector();
+
+document.addEventListener("DOMContentLoaded", function () {
+    getJSONData(CATEGORIES_URL).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            currentCategoriesArray = resultObj.data;
+            filterAndShow();
+            initEventListeners();
+        } else {
+            console.error("Error al cargar categorías:", resultObj.data);
         }
     });
 
