@@ -210,9 +210,8 @@ body.dark-mode .theme-toggle input:checked+label {
 
 .light-img,
 .lang-svg {
-    width: 28px;
-    height: 28px;
-    fill: var(--mode-icons);
+    width: 2rem;
+    height: auto;
 }
 
 #User-display {
@@ -221,25 +220,43 @@ body.dark-mode .theme-toggle input:checked+label {
     font-weight: 500;
 }
 
+/* ===============================
+   SELECTOR DE IDIOMA - Estilos mejorados
+   =============================== */
+
 .lang-container {
     position: relative;
 }
 
 #idioma {
+    display: none; /* Oculto por defecto, se muestra con JavaScript al hacer click */
     position: absolute;
     top: 100%;
-    right: 0;
-    margin-top: 0.25rem;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 0.25rem;
-    background: white;
-    z-index: 10;
-    display: none;
+    left: 0;
+    margin-top: 5px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--input-border);
+    padding: 8px 12px;
+    background-color: var(--input-bg);
+    color: var(--font-color);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s, color 0.2s;
+    z-index: 100;
 }
 
-.lang-container:hover #idioma {
-    display: block;
+#idioma:hover {
+    border-color: var(--primary-color);
+}
+
+#idioma option {
+    background-color: var(--input-bg);
+    color: var(--font-color);
+    padding: 8px;
+    border-radius: var(--border-radius);
 }
 
 /* ===============================
@@ -660,6 +677,12 @@ aside h6 {
     flex-direction: column;
 }
 
+/* Altura uniforme solo para las cards principales del index (fuera del carrusel) */
+.container > .row .product-card {
+    height: 100%;
+    min-height: 400px;
+}
+
 .product-card:hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.169);
@@ -704,6 +727,13 @@ aside h6 {
     flex-direction: column;
 }
 
+.product-header {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.75rem;
+}
+
 .product-title {
     font-size: 1.1rem;
     font-weight: 400;
@@ -729,13 +759,12 @@ aside h6 {
     font-size: 0.9rem;
     line-height: 1.5;
     opacity: 0.8;
-    flex: 1;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
 .product-action {
