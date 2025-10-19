@@ -97,70 +97,18 @@
     </nav>
   </header>
   <main>
-
-    <div class="categoria-contenedor">
-      <a href="categories.html" class="light-btn">
-        <svg id="Layer_1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" class="light-img">
-          <path
-            d="m8.865 1.374c-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762zm-1.073 6.418c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292zm5.343 1.834c.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762zm1.073-6.418c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292zm-5.344 9.165c-.069-.016-1.719-.373-3.364-.373s-3.295.357-3.364.373c-.382.083-.68.381-.763.763-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.382.381.68.763.763.069.016 1.719.373 3.364.373s3.295-.357 3.364-.373c.382-.083.68-.381.763-.763.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.763-.763zm-1.072 6.419c-.571.094-1.445.208-2.292.208s-1.721-.114-2.292-.208c-.094-.571-.208-1.445-.208-2.292s.114-1.721.208-2.292c.571-.094 1.445-.208 2.292-.208s1.721.114 2.292.208c.094.571.208 1.445.208 2.292s-.114 1.721-.208 2.292zm14.915 2.501-2.304-2.304c.382-.681.597-1.512.597-2.489 0-2.817-1.683-4.5-4.5-4.5s-4.5 1.683-4.5 4.5 1.683 4.5 4.5 4.5c.977 0 1.808-.215 2.489-.597l2.304 2.304c.391.391 1.023.391 1.414 0s.391-1.023 0-1.414zm-8.707-4.793c0-1.706.794-2.5 2.5-2.5s2.5.794 2.5 2.5-.794 2.5-2.5 2.5-2.5-.794-2.5-2.5z" />
-        </svg>
-
-        <span>Categorías</span>
-      </a>
-
-      <div class="container">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb" id="breadcrumb-container">
-          </ol>
-        </nav>
-      </div>
+    <div class="container mt-2 mb-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb" id="breadcrumb-container">
+      </ol>
+    </nav>
+  </div>
+    <div class="container" id="product-info-container">
     </div>
-
-    <!-- Fila de contenido -->
-    <div class="row">
-      <!-- Columna de info y prod. relacionados -->
-      <div class="col-md-8">
-        <div class="container" id="product-info-container">
-        </div>
-        <div class="container mt-5 mb-5">
-          <h4 class="mb-4">Productos relacionados</h4>
-          <div class="row justify-content-center" id="related-products-list"></div>
-        </div>
-      </div>
-      <!-- Columna de comentarios -->
-      <div class="col">
-        <div class="container mt-4" id="comments-container">
-        </div>
-        <div id="form-calif">
-          <h4 class="mb-4">Dejar tu calificación</h4>
-          <form id="reviewForm" class="border rounded p-4 shadow-sm w-100">
-            <!-- Calificación con estrellas -->
-            <div class="mb-3">
-              <div class="rating">
-                <input type="radio" name="star" class="comment-score" id="star5" value="5"><label for="star5"><i></i></label>
-                <input type="radio" name="star" class="comment-score" id="star4" value="4"><label for="star4"><i></i></label>
-                <input type="radio" name="star" class="comment-score" id="star3" value="3"><label for="star3"><i></i></label>
-                <input type="radio" name="star" class="comment-score" id="star2" value="2"><label for="star2"><i></i></label>
-                <input type="radio" name="star" class="comment-score" id="star1" value="1"><label for="star1"><i></i></label>
-              </div>
-            </div>
-
-            <!-- Comentario -->
-            <div class="mb-3">
-              <label for="comment" class="form-label fw-semibold">Comentario:</label>
-              <textarea class="form-control" id="comment-text" rows="3" placeholder="Escribe tu opinión aquí..." required></textarea>
-            </div>
-
-            <!-- Botón -->
-            <div class="text-end">
-              <button type="submit" class="btn btn-buy align-self-start mt-auto">
-                <i class="fa fa-paper-plane me-1"></i> Enviar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <div class="container mt-5 mb-5">
+  <h4 class="mb-4">Productos relacionados</h4>
+  <div class="row justify-content-center" id="related-products-list"></div>
+</div>
   </main>
   <footer class="text-muted">
     <div class="container">
@@ -181,6 +129,7 @@
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
+  <script src="js/common.js"></script>
   <script src="js/product-info.js"></script>
   <script src="js/user-display.js"></script>
 </body>

@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ======== SELECTOR DE IDIOMA ========
     // Cargar idioma guardado o usar español por defecto
-    const savedLang = localStorage.getItem('language') || 'es';
+    const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'es';
     langSelect.value = savedLang; // Establecer el valor del select
     loadTranslations(savedLang); // Cargar traducciones
 
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cambiar idioma cuando se selecciona una opción
     langSelect.addEventListener('change', (e) => {
         const selectedLang = e.target.value; // Obtener el idioma seleccionado
-        localStorage.setItem('language', selectedLang); // Guardar en localStorage
+        localStorage.setItem(STORAGE_KEYS.LANGUAGE, selectedLang); // Guardar en localStorage
         loadTranslations(selectedLang); // Cargar nuevas traducciones
     });
 
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ======== MODO OSCURO ========
     // Cargar preferencia de modo oscuro desde localStorage
-    if (localStorage.getItem('darkMode') === 'true') {
+    if (localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true') {
         document.body.classList.add('dark-mode'); // Aplicar modo oscuro
     }
 
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     darkToggle.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode'); // Alternar clase
         // Guardar preferencia en localStorage
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        localStorage.setItem(STORAGE_KEYS.DARK_MODE, document.body.classList.contains('dark-mode'));
     });
 
     // ======== VALIDACIÓN DE FORMULARIO ========
@@ -150,9 +150,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // ======== GUARDAR SESIÓN ========
         // Guardar usuario según la preferencia "recordarme"
         if (rememberCheckbox.checked) {
-            localStorage.setItem('usuario', uservalido); // Guardar permanentemente
+            localStorage.setItem(STORAGE_KEYS.USUARIO, uservalido); // Guardar permanentemente
         } else {
-            sessionStorage.setItem('usuario', uservalido); // Guardar solo para esta sesión
+            sessionStorage.setItem(STORAGE_KEYS.USUARIO, uservalido); // Guardar solo para esta sesión
         }
 
         // Redirigir a la página principal
@@ -161,9 +161,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ======== CARGAR USUARIO GUARDADO ========
     // Verificar si hay un usuario guardado (en localStorage o sessionStorage)
-    const savedUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
+    const savedUser = localStorage.getItem(STORAGE_KEYS.USUARIO) || sessionStorage.getItem(STORAGE_KEYS.USUARIO);
     if (savedUser) {
         usuario.value = savedUser; // Rellenar campo con usuario guardado
-        rememberCheckbox.checked = !!localStorage.getItem('usuario'); // Marcar checkbox si está en localStorage
+        rememberCheckbox.checked = !!localStorage.getItem(STORAGE_KEYS.USUARIO); // Marcar checkbox si está en localStorage
     };
 });

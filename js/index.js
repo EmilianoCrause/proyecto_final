@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    let usuSession = sessionStorage.getItem("usuario");
-    let usuLocal = localStorage.getItem("usuario");
+    let usuSession = sessionStorage.getItem(STORAGE_KEYS.USUARIO);
+    let usuLocal = localStorage.getItem(STORAGE_KEYS.USUARIO);
 
     if (!usuSession && !usuLocal) {
         window.location = "login.html";
@@ -11,15 +11,15 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Agregar eventos a las categorías
     document.getElementById("autos").addEventListener("click", function () {
-        localStorage.setItem("catID", 101);
+        localStorage.setItem(STORAGE_KEYS.CAT_ID, 101);
         window.location = "products.html";
     });
     document.getElementById("juguetes").addEventListener("click", function () {
-        localStorage.setItem("catID", 102);
+        localStorage.setItem(STORAGE_KEYS.CAT_ID, 102);
         window.location = "products.html";
     });
     document.getElementById("muebles").addEventListener("click", function () {
-        localStorage.setItem("catID", 103);
+        localStorage.setItem(STORAGE_KEYS.CAT_ID, 103);
         window.location = "products.html";
     });
 
@@ -46,7 +46,7 @@ function initDarkMode() {
                 document.documentElement.classList.remove("dark-mode");
                 document.body.classList.remove("dark-mode");
             }
-            localStorage.setItem("darkMode", isDark);
+            localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark);
         });
     }
 }
@@ -149,7 +149,7 @@ function renderCarouselProducts(container, products) {
     container.querySelectorAll(".product-card").forEach(card => {
         card.addEventListener("click", function () {
             const id = this.dataset.id;
-            localStorage.setItem("productID", id);
+            localStorage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
             window.location = "product-info.html";
         });
     });
