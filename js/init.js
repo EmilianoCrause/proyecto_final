@@ -39,3 +39,7 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+document.getElementById("btn-perfil").addEventListener("click", function(){
+  window.location.href = 'my-profile.html'
+})
