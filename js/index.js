@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", async function () {
         window.location = "login.html";
         return;
     }
-     // Elegir usuario existente
-     const savedUser = usuLocal || usuSession;
+    // Elegir usuario existente
+    const savedUser = usuLocal || usuSession;
 
     // Agregar eventos a las categorías
     document.getElementById("autos").addEventListener("click", function () {

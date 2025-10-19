@@ -1,152 +1,178 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
+
+    <!-- Fuente DM Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+
+    <!-- Script para evitar flash al cargar modo oscuro -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("darkMode");
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (savedTheme === "true" || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add("dark-mode");
+            }
+        })();
+    </script>
 </head>
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<style>
+    .search-form {
+        visibility: visible !important;
+    }
+</style>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="categories.html">Categorías</a></li>
-          <li class="nav-item"><a class="nav-link" href="sell.html">Vender</a></li>
-          <li class="nav-item d-flex">
-            <div class="col-12">
-              <div class="input-group">
-                <input type="search" id="search-bar" class="form-control" placeholder="Buscar..." aria-label="Buscar..." aria-describedby="basic-addon1">
-                <button class="btn btn-dark btn-outline-secondary" id="btn-buscar">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"></path>
-                  </svg>
+<body>
+    <header>
+        <nav>
+            <!-- Logo del e_commerce -->
+            <a href="index.html">
+                <div class="e-commerce">
+                    <span id="e-mercado">
+                        <span class="resaltar">e •</span> mercado
+                    </span>
+                    <span class="subtitulo">¡Tu <span class="bold">e_commerce</span> favorito!</span>
+                </div>
+            </a>
+
+            <!-- Formulario de búsqueda -->
+            <form class="search-form" role="search" onsubmit="return false;">
+                <input type="text" id="search-bar" placeholder="Buscar productos..." aria-label="Buscar">
+                <button type="button" class="clear-search" id="clear-search">×</button>
+            </form>
+
+            <!-- Controles -->
+            <div class="selectores">
+                <button class="light-btn">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
+                        viewBox="0 0 256 256">
+                        <path
+                            d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z">
+                        </path>
+                    </svg>
+
+                </button>
+
+                <button class="light-btn">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
+                        viewBox="0 0 256 256">
+                        <path
+                            d="M234.38,210a123.36,123.36,0,0,0-60.78-53.23,76,76,0,1,0-91.2,0A123.36,123.36,0,0,0,21.62,210a12,12,0,1,0,20.77,12c18.12-31.32,50.12-50,85.61-50s67.49,18.69,85.61,50a12,12,0,0,0,20.77-12ZM76,96a52,52,0,1,1,52,52A52.06,52.06,0,0,1,76,96Z">
+                        </path>
+                    </svg>
+                    <span id="User-display"></span>
                 </button>
               </div>
             </div>
-          </li>
-          <li class="nav-item"><span class="nav-link" id="User-display"></span></li>
-          <li class="nav-item"></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+        </nav>
+    </header>
 
-  <main class="pb-5">
-    <!-- Barra superior SOLO móvil -->
-    <div class="container-fluid p-2 border-bottom d-md-none">
-      <div class="d-flex justify-content-between align-items-center">
-        <h2 id="category-title-mobile" class="mb-0"></h2>
-        <div class="d-flex align-items-center">
-          <div class="btn-group btn-group-toggle me-2" data-bs-toggle="buttons" aria-label="Ordenar (móvil)">
-            <input type="radio" class="btn-check" name="optionsMobile" id="sortAscMobile">
-            <label class="btn btn-light" for="sortAscMobile">Precio ↑</label>
+    <main>
 
-            <input type="radio" class="btn-check" name="optionsMobile" id="sortDescMobile">
-            <label class="btn btn-light" for="sortDescMobile">Precio ↓</label>
+        <div class="categoria-contenedor">
+            <a href="categories.html" class="light-btn">
+                <svg id="Layer_1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"
+                    class="light-img">
+                    <path
+                        d="m8.865 1.374c-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762zm-1.073 6.418c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292zm5.343 1.834c.07.016 1.72.374 3.365.374s3.295-.358 3.365-.374c.381-.083.679-.381.762-.762.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.762-.762-.07-.016-1.72-.374-3.365-.374s-3.295.358-3.365.374c-.381.083-.679.381-.762.762-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.381.381.679.762.762zm1.073-6.418c.57-.093 1.441-.208 2.292-.208s1.721.115 2.292.208c.094.572.208 1.445.208 2.292s-.114 1.721-.208 2.292c-.57.093-1.441.208-2.292.208s-1.721-.115-2.292-.208c-.094-.572-.208-1.445-.208-2.292s.114-1.721.208-2.292zm-5.344 9.165c-.069-.016-1.719-.373-3.364-.373s-3.295.357-3.364.373c-.382.083-.68.381-.763.763-.016.069-.373 1.719-.373 3.364s.357 3.295.373 3.364c.083.382.381.68.763.763.069.016 1.719.373 3.364.373s3.295-.357 3.364-.373c.382-.083.68-.381.763-.763.016-.069.373-1.719.373-3.364s-.357-3.295-.373-3.364c-.083-.381-.381-.679-.763-.763zm-1.072 6.419c-.571.094-1.445.208-2.292.208s-1.721-.114-2.292-.208c-.094-.571-.208-1.445-.208-2.292s.114-1.721.208-2.292c.571-.094 1.445-.208 2.292-.208s1.721.114 2.292.208c.094.571.208 1.445.208 2.292s-.114 1.721-.208 2.292zm14.915 2.501-2.304-2.304c.382-.681.597-1.512.597-2.489 0-2.817-1.683-4.5-4.5-4.5s-4.5 1.683-4.5 4.5 1.683 4.5 4.5 4.5c.977 0 1.808-.215 2.489-.597l2.304 2.304c.391.391 1.023.391 1.414 0s.391-1.023 0-1.414zm-8.707-4.793c0-1.706.794-2.5 2.5-2.5s2.5.794 2.5 2.5-.794 2.5-2.5 2.5-2.5-.794-2.5-2.5z" />
+                </svg>
 
-            <input type="radio" class="btn-check" name="optionsMobile" id="sortByCountMobile" checked>
-            <label class="btn btn-light" for="sortByCountMobile">
-              Rel <i class="fas fa-sort-amount-down me-1"></i>
-            </label>
-          </div>
+                <span>Categorías</span>
+            </a>
 
-          <!-- Toggle filtros móvil -->
-          <button class="btn btn-light" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#filterCollapseMobile"
-                  aria-controls="filterCollapseMobile" aria-expanded="false" aria-label="Mostrar filtros">
-            <i class="fas fa-filter"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Filtros móvil (collapse) -->
-      <div class="collapse mt-2" id="filterCollapseMobile">
-        <div class="row gx-2">
-          <div class="col-6">
-            <input class="form-control" type="number" placeholder="min." id="rangeFilterPriceMinMobile">
-          </div>
-          <div class="col-6">
-            <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMaxMobile">
-          </div>
-          <div class="col-12 mt-2 d-flex gap-2">
-            <button class="btn btn-light flex-fill" id="rangeFilterPriceMobile">Filtrar</button>
-            <button class="btn btn-link btn-sm flex-fill" id="clearRangeFilterMobile">Limpiar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Topbar ESCRITORIO -->
-    <div class="container-fluid p-2 border-bottom d-none d-md-block">
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <h2 id="category-title-desktop" class="mb-2"></h2>
-          <p id="category-subtitle-desktop" class="lead mb-0"></p>
+            <div class="container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb" id="breadcrumb-container">
+                    </ol>
+                </nav>
+            </div>
         </div>
 
-        <div class="d-flex align-items-center">
-          <!-- Orden escritorio -->
-          <div class="btn-group btn-group-toggle me-2" data-bs-toggle="buttons" aria-label="Ordenar (escritorio)">
-            <input type="radio" class="btn-check" name="options" id="sortAsc">
-            <label class="btn btn-light" for="sortAsc">Precio ↑</label>
+        <div class="container">
+            <div class="row">
+                <!-- Columna filtros -->
+                <aside class="col-md-3 filters-aside">
+                    <div>
+                        <h6>Ordenar por</h6>
+                        <div class="sort-options">
+                            <label>
+                                <input type="radio" name="options" value="asc">
+                                <span>Precio ascendente</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="options" value="desc">
+                                <span>Precio descendente</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="options" value="count" checked>
+                                <span>Más vendidos</span>
+                            </label>
+                        </div>
+                    </div>
 
-            <input type="radio" class="btn-check" name="options" id="sortDesc">
-            <label class="btn btn-light" for="sortDesc">Precio ↓</label>
+                    <form class="filter-box" id="priceFilterForm">
+                        <h6>Precio</h6>
+                        <div class="filter-input-group">
+                            <div class="filter-input">
+                                <input type="number" placeholder="mín." id="rangeFilterPriceMin" name="minPrice"
+                                    min="0">
+                            </div>
+                            <span>-</span>
+                            <div class="filter-input">
+                                <input type="number" placeholder="máx." id="rangeFilterPriceMax" name="maxPrice"
+                                    min="0">
+                            </div>
+                        </div>
+                        <div class="filter-actions">
+                            <button type="submit" class="filter-btn">Filtrar</button>
+                            <button type="reset" class="clear-btn" id="clearRangeFilter">Limpiar</button>
+                        </div>
+                    </form>
+                </aside>
 
-            <input type="radio" class="btn-check" name="options" id="sortByCount" checked>
-            <label class="btn btn-light" for="sortByCount">
-              Rel <i class="fas fa-sort-amount-down me-1"></i>
-            </label>
-          </div>
-
-          <!-- Filtro precio escritorio -->
-          <div class="input-group input-group-sm" style="width: 260px;">
-            <input class="form-control" type="number" placeholder="min." id="rangeFilterPriceMin">
-            <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMax">
-            <button class="btn btn-outline-secondary" id="rangeFilterPrice">Filtrar</button>
-            <button class="btn btn-outline-secondary" id="clearRangeFilter">Limpiar</button>
-          </div>
+                <!-- Columna productos -->
+                <section class="col-md-9">
+                    <div class="products-grid" id="products-list-container"></div>
+                </section>
+            </div>
         </div>
-      </div>
+    </main>
+
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-end">
+                <a href="#">Volver arriba</a>
+            </p>
+            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a
+                    Programar</a>
+            </p>
+        </div>
+    </footer>
+
+    <div id="spinner-wrapper">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 
-    <!-- Lista de productos -->
-    <div class="container mt-3">
-      <div class="row">
-        <div class="list-group" id="products-list-container"></div>
-      </div>
-    </div>
-  </main>
-
-  <footer class="text-muted">
-    <div class="container">
-      <p class="float-end"><a href="#">Volver arriba</a></p>
-      <p>Este sitio forma parte de
-        <a href="https://jovenesaprogramar.edu.uy/" target="_blank" rel="noopener">Jóvenes a Programar</a>
-      </p>
-    </div>
-  </footer>
-
-  <!-- Spinner global -->
-  <div id="spinner-wrapper">
-    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-  </div>
-
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/user-display.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/user-display.js"></script>
 </body>
 </html>

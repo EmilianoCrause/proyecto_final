@@ -1,6 +1,7 @@
-// Variable global donde vamos a guardar la lista de productos de la categoría actual
+// Variables Globales
 let currentProductsArray = [];
 let filteredProductsArray = [];
+const SORT_MAP = { asc: "priceAsc", desc: "priceDesc", count: "relevance" };
 
 // Mapeo de opciones de ordenamiento
 const SORT_MAP = {
@@ -15,7 +16,7 @@ function setProductID(id) {
     window.location = "product-info.html";
 }
 
-// Función para mostrar la lista de productos en la página
+// Muestra la lista de productos en el contenedor principal
 function showProductsList() {
     const productList = document.getElementById("products-list-container");
     let htmlContentToAppend = "";

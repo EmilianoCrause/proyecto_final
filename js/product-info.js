@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      // Limitar cantidad muestra (ej.: hasta 10)
       const toShow = relatedItems.slice(0, 10);
       const html = toShow.map(p => `
         <div class="col-10 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
@@ -95,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // Si hay catID pedimos la lista de la categoría (más info), si no, usamos product.relatedProducts
     if (catID) {
       getJSONData(PRODUCTS_URL + catID + EXT_TYPE).then(function (resCat) {
         if (resCat.status === "ok") {
