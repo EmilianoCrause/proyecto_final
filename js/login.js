@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contrasena.placeholder = translations[lang]['password-placeholder'];
     }
     // Cargar idioma guardado o usar español por defecto
-    const savedLang = localStorage.getItem('language') || 'es';
+    const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'es';
     langSelect.value = savedLang; // Establecer el valor del select
     loadTranslations(savedLang); // Cargar traducciones
 
