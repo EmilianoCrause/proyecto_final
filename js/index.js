@@ -1,7 +1,7 @@
-// El cÛdigo de inicializaciÛn del index ahora est· en common.js
-// Este archivo queda vacÌo porque common.js maneja:
-// - VerificaciÛn de usuario logueado
-// - Eventos de categorÌas (autos, juguetes, muebles)
+// El c√≥digo de inicializaci√≥n del index ahora est√° en common.js
+// Este archivo queda vac√≠o porque common.js maneja:
+// - Verificaci√≥n de usuario logueado
+// - Eventos de categor√≠as (autos, juguetes, muebles)
 // - initDarkMode()
 // - initLanguageSelector()
 // - initRelevantProductsCarousel()
