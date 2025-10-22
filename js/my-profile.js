@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
+    if (!verificarUsuario()) return;
+    
     //Campos para mostrar informacion
     const infoNom = document.getElementById('info-nom') // Campo nombre
     const infoApell = document.getElementById('info-apell') // Campo apellido
@@ -111,3 +113,7 @@ if (imgInput) {
     }
   });
 }
+
+// Inicializar dark mode y selector de idioma
+initDarkMode();
+initLanguageSelector();
