@@ -44,8 +44,6 @@ header nav {
     align-items: center;
 }
 
-
-
 body.dark-mode .theme-toggle {
     background: var(--input-bg);
     border-color: var(--input-border);
