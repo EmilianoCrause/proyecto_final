@@ -36,9 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuario = document.getElementById('usuario');
     const contrasena = document.getElementById('contrasena');
     const rememberCheckbox = document.getElementById('remember');
-    const darkToggle = document.querySelector('.light-btn');
     const langSelect = document.getElementById('idioma');
     const langBtn = document.querySelector('.lang-btn');
+
+    // Usar funciones de utils.js
+    initDarkMode();
+    initLanguageSelector();
 
     function loadTranslations(lang) {
         document.getElementById('login-title').textContent = translations[lang]['login-title'];
@@ -60,37 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Cargar idioma guardado o usar español por defecto
     const savedLang = localStorage.getItem('language') || 'es';
-    langSelect.value = savedLang; // Establecer el valor del select
-    loadTranslations(savedLang); // Cargar traducciones
+    langSelect.value = savedLang;
+    loadTranslations(savedLang);
 
-    // Mostrar/ocultar selector al hacer clic en el botón
-    langBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evitar que el clic se propague a otros elementos
-        // Alternar entre mostrar y ocultar el selector
-        langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
-    });
-
+    // Manejar cambio de idioma
     langSelect.addEventListener('change', (e) => {
         const selectedLang = e.target.value;
         localStorage.setItem('language', selectedLang);
         loadTranslations(selectedLang);
-    });
-
-    document.addEventListener('click', () => {
-        langSelect.style.display = 'none';
-    });
-
-    langSelect.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-    }
-
-    darkToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
     });
 
     form.addEventListener('submit', (e) => {

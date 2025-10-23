@@ -1,0 +1,47 @@
+/* ===============================
+   VARIABLES CSS GLOBALES
+   =============================== */
+
+:root {
+    /* Colores principales */
+    --bg-color: #fffef8;
+    --primary-color: #efa639;
+    --primary-hover: #eb9a20;
+    --font-color: #000;
+    
+    /* Estilos de componentes */
+    --border-radius: 12px;
+    --card-bg: rgba(255, 255, 255, 0.3);
+    --input-bg: #fff;
+    --input-border: #00000064;
+    
+    /* Sombras y efectos */
+    --shadow-color: #ffe6cf;
+    
+    /* Footer */
+    --footer-bg: #FFEEDF;
+    --footer-font: #000;
+    
+    /* Otros */
+    --highlight-color: var(--primary-color);
+    --mode-icons: black;
+    --info-perfil-bg: #e7e7e7;
+}
+
+/* Modo oscuro */
+html.dark-mode,
+body.dark-mode {
+    --bg-color: #121212;
+    --primary-color: #ffa217;
+    --primary-hover: #ffa217;
+    --font-color: #f5f5f5;
+    --card-bg: rgba(40, 40, 40, 0.7);
+    --input-bg: #1e1e1e;
+    --input-border: #444;
+    --shadow-color: #222;
+    --footer-bg: #1a1a1a;
+    --footer-font: #f5f5f5;
+    --highlight-color: var(--primary-color);
+    --mode-icons: #fff;
+    --info-perfil-bg: rgba(40, 40, 40, 0.7);
+}

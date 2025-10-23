@@ -2,11 +2,6 @@ let currentCategoriesArray = [];
 let filteredCategoriesArray = [];
 const SORT_MAP = { nameAsc: 'nameAsc', nameDesc: 'nameDesc', relevance: 'relevance' };
 
-function setCatID(id) {
-    localStorage.setItem("catID", id);
-    window.location = "products.html";
-}
-
 function sortCategories(criteria) {
     if (criteria === 'nameAsc') {
         filteredCategoriesArray.sort((a, b) => a.name.localeCompare(b.name));
@@ -81,48 +76,9 @@ function initEventListeners() {
     }
 }
 
-function initDarkMode() {
-    const themeToggle = document.getElementById('theme-toggle-checkbox');
-    if (themeToggle) {
-        // Sincronizar estado inicial
-        if (document.documentElement.classList.contains("dark-mode")) {
-            document.body.classList.add("dark-mode");
-            themeToggle.checked = true;
-        }
-        // Escuchar cambios
-        themeToggle.addEventListener("change", () => {
-            const isDark = themeToggle.checked;
-            if (isDark) {
-                document.documentElement.classList.add("dark-mode");
-                document.body.classList.add("dark-mode");
-            } else {
-                document.documentElement.classList.remove("dark-mode");
-                document.body.classList.remove("dark-mode");
-            }
-            localStorage.setItem("darkMode", isDark);
-        });
-    }
-}
-
-function initLanguageSelector() {
-    const langBtn = document.querySelector(".lang-btn");
-    const langSelect = document.getElementById("idioma");
-    if (langBtn && langSelect) {
-        langBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
-        });
-
-        langSelect.addEventListener("click", (e) => e.stopPropagation());
-        document.addEventListener("click", () => {
-            langSelect.style.display = "none";
-        });
-    }
-}
-
-initLanguageSelector();
-
 document.addEventListener("DOMContentLoaded", function () {
+    if (!verificarUsuario()) return;
+    
     getJSONData(CATEGORIES_URL).then(function (resultObj) {
         if (resultObj.status === "ok") {
             currentCategoriesArray = resultObj.data;
@@ -134,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     initDarkMode();
+    initLanguageSelector();
 
     const breadcrumb = document.getElementById("breadcrumb-container");
     if (breadcrumb) {

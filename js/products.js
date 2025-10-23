@@ -3,14 +3,6 @@ let currentProductsArray = [];
 let filteredProductsArray = [];
 const SORT_MAP = { asc: "priceAsc", desc: "priceDesc", count: "relevance" };
 
-// Funciones Principales
-
-// Guarda el ID de un producto en localStorage y redirige a la página de product-info
-function setProductID(id) {
-    localStorage.setItem("productID", id);
-    window.location = "product-info.html";
-}
-
 // Muestra la lista de productos en el contenedor principal
 function showProductsList() {
     const productList = document.getElementById("products-list-container");
@@ -86,11 +78,6 @@ function limpiarFiltros(minID, maxID) {
     ordenarProductos("relevance");
 }
 
-function addClick(id, handler) {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener("click", handler);
-}
-
 // Inicializaciones
 
 function initSort() {
@@ -144,48 +131,9 @@ function initSearchBar() {
     }
 }
 
-function initDarkMode() {
-    const themeToggle = document.getElementById('theme-toggle-checkbox');
-    if (themeToggle) {
-        // Sincronizar estado inicial
-        if (document.documentElement.classList.contains("dark-mode")) {
-            document.body.classList.add("dark-mode");
-            themeToggle.checked = true;
-        }
-        // Escuchar cambios
-        themeToggle.addEventListener("change", () => {
-            const isDark = themeToggle.checked;
-            if (isDark) {
-                document.documentElement.classList.add("dark-mode");
-                document.body.classList.add("dark-mode");
-            } else {
-                document.documentElement.classList.remove("dark-mode");
-                document.body.classList.remove("dark-mode");
-            }
-            localStorage.setItem("darkMode", isDark);
-        });
-    }
-}
-
-function initLanguageSelector() {
-    const langBtn = document.querySelector(".lang-btn");
-    const langSelect = document.getElementById("idioma");
-    if (langBtn && langSelect) {
-        langBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
-        });
-
-        langSelect.addEventListener("click", (e) => e.stopPropagation());
-        document.addEventListener("click", () => {
-            langSelect.style.display = "none";
-        });
-    }
-}
-
 // Carga de productos
 function loadProducts() {
-    const catID = localStorage.getItem("catID");
+    const catID = localStorage.getItem(STORAGE_KEYS.CAT_ID);
     const productListContainer = document.getElementById("products-list-container");
 
     if (!catID) {
@@ -202,7 +150,7 @@ function loadProducts() {
             currentProductsArray = resultObj.data.products;
             filteredProductsArray = [...currentProductsArray];
 
-            localStorage.setItem("catName", resultObj.data.catName);
+            localStorage.setItem(STORAGE_KEYS.CAT_NAME, resultObj.data.catName);
 
             const categoryTitleMobile = document.getElementById("category-title-mobile");
             const categoryTitleDesktop = document.getElementById("category-title-desktop");
@@ -236,6 +184,8 @@ function loadProducts() {
 
 // --- INICIO ---
 document.addEventListener("DOMContentLoaded", () => {
+    if (!verificarUsuario()) return;
+    
     loadProducts();
     initFilters();
     initSearchBar();

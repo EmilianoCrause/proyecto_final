@@ -2,272 +2,273 @@
 .card-body,
 .container,
 .site-header {
-  font-family: 'DM Sans', sans-serif !important;
+    font-family: 'DM Sans', sans-serif !important;
 }
 
 .jumbotron .display-4 {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 nav a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 @media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
 }
 
 .jumbotron {
-  height: 50vh;
-  margin-bottom: 2rem;
-  background-image: url('../img/Mercado.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: black;
-  font-weight: bold;
-  min-width: 100%;
+    height: 50vh;
+    margin-bottom: 2rem;
+    background-image: url('../img/Mercado.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: black;
+    font-weight: bold;
+    min-width: 100%;
 }
 
 @media (min-width: 768px) {
-  .jumbotron {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
-  }
+    .jumbotron {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+    }
 }
 
 .jumbotron p:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .jumbotron-heading {
-  font-weight: 300;
+    font-weight: 300;
 }
 
 .jumbotron .container {
-  max-width: 40rem;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  text-shadow: 1px 1px 2px grey;
+    max-width: 40rem;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    text-shadow: 1px 1px 2px grey;
 }
 
 .jumbotron .lead {
-  font-size: 38px;
+    font-size: 38px;
 }
 
 footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 }
 
 footer p {
-  margin-bottom: .25rem;
+    margin-bottom: .25rem;
 }
 
 .site-header a {
-  color: white;
-  transition: ease-in-out color .15s;
+    color: white;
+    transition: ease-in-out color .15s;
 }
 
 .site-header .dropdown-menu a {
-  color: black;
+    color: black;
 }
 
 .dropzone {
-  border: 2px dashed #0087F7;
-  border-radius: 5px;
-  background: white;
+    border: 2px dashed var(--primary-color);
+    border-radius: 5px;
+    background: var(--input-bg);
 }
 
 .img-fit {
-  max-height: 100%;
+    max-height: 100%;
 }
 
 .alert {
-  position: fixed;
-  top: 80px;
-  width: 50%;
-  left: 50%;
-  transform: translate(-50%, 0);
+    position: fixed;
+    top: 80px;
+    width: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 .lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 64px;
-  height: 64px;
-  top: 50%;
-  left: 50%;
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    top: 50%;
+    left: 50%;
 }
 
 .cursor-active {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .left {
-  float: left;
-  padding: 4px;
-  background-color: rgba(255, 255, 255, 0.5);
+    float: left;
+    padding: 4px;
+    background-color: var(--card-bg);
 }
 
 .lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 51px;
-  height: 51px;
-  margin: 6px;
-  border: 6px solid #fff;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 51px;
+    height: 51px;
+    margin: 6px;
+    border: 6px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
+    animation-delay: -0.45s;
 }
 
 .lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
+    animation-delay: -0.3s;
 }
 
 .lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
+    animation-delay: -0.15s;
 }
 
 @keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
 
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
 }
 
 #spinner-wrapper {
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1021;
-  display: none;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1021;
+    display: none;
 }
 
 main {
-  min-height: calc(100vh - 210px);
+    min-height: calc(100vh - 210px);
 }
 
 a.custom-card,
 a.custom-card:hover {
-  color: inherit;
-  text-decoration: inherit;
+    color: inherit;
+    text-decoration: inherit;
 }
 
 .checked {
-  color: orange;
+    color: var(--primary-color);
 }
 
 /* ---------------- PRODUCTOS RELACIONADOS Y GALERÍA ---------------- */
 .related-card {
-  transform: scale(0.82);
-  transform-origin: top center;
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
-  border-radius: 6px;
+    transform: scale(0.82);
+    transform-origin: top center;
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+    border-radius: 6px;
 }
 
 .related-card:hover {
-  transform: translateY(-6px) scale(0.85);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px) scale(0.85);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 #related-products {
-  border: 1px solid #e6e6e6;
-  padding: 18px;
-  border-radius: 6px;
-  background: #fff;
-  margin-top: 2rem;
+    border: 1px solid var(--input-border);
+    padding: 18px;
+    border-radius: 6px;
+    background: var(--input-bg);
+    margin-top: 2rem;
 }
 
 .related-card .card-title {
-  font-size: 0.95rem;
-  margin-bottom: 4px;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
 }
 
 .related-card .card-text {
-  font-size: 0.78rem;
-  color: #666;
-  margin-bottom: 6px;
+    font-size: 0.78rem;
+    color: var(--font-color);
+    margin-bottom: 6px;
+    opacity: 0.7;
 }
 
 .related-card .price {
-  font-weight: 700;
-  color: #111;
-  font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--font-color);
+    font-size: 0.9rem;
 }
 
 .related-card .card-img-top {
-  border-radius: 4px 4px 0 0;
-  height: 160px !important;
-  object-fit: cover;
+    border-radius: 4px 4px 0 0;
+    height: 160px !important;
+    object-fit: cover;
 }
 
 .thumb-wrapper {
-  border: 1px solid #000;
-  border-radius: 4px;
-  overflow: hidden;
-  background: #fff;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--input-bg);
 }
 
 .thumb-wrapper img {
-  display: block;
+    display: block;
 }
 
 .btn-buy {
-  background-color: #efa639;
-  border: none;
-  color: white;
-  font-weight: 600;
-  padding: 6px 12px;
-  font-size: 0.95rem;
-  width: 50%;
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--font-color);
+    font-weight: 600;
+    padding: 6px 12px;
+    font-size: 0.95rem;
+    width: 50%;
 }
 
 .btn-buy:hover {
-  background-color: #eb9a20;
+    background-color: var(--primary-hover);
 }
 
 #product-info-container {
-  margin-top: calc((100vh - 210px) / 8);
-  margin-bottom: 2.5rem;
+    margin-top: calc((100vh - 210px) / 8);
+    margin-bottom: 2.5rem;
 }
 
 @media (max-width: 992px) {
-  :root {
-    --related-scale: 0.92;
-  }
+    :root {
+        --related-scale: 0.92;
+    }
 
-  #product-info-container {
-    margin-top: 2rem;
-  }
+    #product-info-container {
+        margin-top: 2rem;
+    }
 }

@@ -3,8 +3,8 @@
     }
 
     .menu-link.active {
-        background-color: #e59d21;
-    color: black !important;
+        background-color: var(--primary-color);
+        color: var(--font-color) !important;
     }
 
     .menu-link {
@@ -14,16 +14,16 @@
         align-items: center;
         gap: 8px;
         padding: 8px 12px;
-        border-radius: 8px;
+        border-radius: var(--border-radius);
         transition: background 0.2s;
     }
 
     .menu-link.active:hover {
-        background-color: #e59d21;
+        background-color: var(--primary-hover);
     }
 
     .menu-link:hover {
-        background-color: #f1f1f1;
+        background-color: var(--card-bg);
     }
 
     .info-box {
@@ -32,7 +32,7 @@
     }
 
     .btn-edit {
-        background-color: #e59d21;
+        background-color: var(--primary-color);
         color: var(--font-color);
         border: none;
         display: block;       
@@ -50,11 +50,11 @@
 
     .btn-input-img{
         margin-right: 1vw;
-        background-color: #fffef8;
-        border-radius: 8px;
+        background-color: var(--bg-color);
+        border-radius: var(--border-radius);
     }
     .btn-edit:hover {
-        background-color: #cf8c1f;
+        background-color: var(--primary-hover);
     }
 
     .form-edit-perfil{
@@ -62,7 +62,7 @@
     }
 
     .form-edit-perfil input{
-        border-color: #e59d21;
+        border-color: var(--primary-color);
     }
 
     #img-input{
