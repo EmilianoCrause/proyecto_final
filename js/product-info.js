@@ -55,6 +55,40 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
     `;
 
+		// Funcionalidad del botón "Comprar" 
+		const buyBtn = document.getElementById("buyBtnTop");
+
+		if (buyBtn) {
+  			buyBtn.addEventListener("click", function () {
+    			// Recupera carrito actual (si no existe, crea uno vacío)
+    			let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    			// Crear objeto del producto a guardar
+    			const productToBuy = {
+      				id: product.id,
+      				name: product.name,
+      				cost: product.cost,
+      				currency: product.currency,
+      				image: (product.images && product.images[0]) || "",
+      				count: 1
+    			};
+
+    			// Verificar si ya está en el carrito
+    			const existingProduct = cart.find(item => item.id === productToBuy.id);
+    			if (existingProduct) {
+      				existingProduct.count += 1;
+    			} else {
+      				cart.push(productToBuy);
+    			}
+
+    			// Guardar carrito actualizado
+    			localStorage.setItem("cart", JSON.stringify(cart));
+
+    			// Redirigir a la pantalla del carrito
+    			window.location.href = "cart.html";
+  			});
+		}	
+
 		// Miniaturas: clic -> reemplaza imagen principal
 		document.querySelectorAll(".product-thumb").forEach((thumb) => {
 			thumb.addEventListener("click", function () {
