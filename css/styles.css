@@ -31,7 +31,7 @@ nav a {
 .jumbotron {
     height: 50vh;
     margin-bottom: 2rem;
-    background-image: url('../img/Mercado.png');
+    background-image: var(--img-banner);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
