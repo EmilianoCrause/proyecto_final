@@ -55,46 +55,48 @@ document.addEventListener('DOMContentLoaded', async function() {
         );
         
         let subTot = 0;
+        let cantProd =0;
 
         // Mostrar productos en la lista
         productos.forEach(({ data: product, item }) => {
-    const itemTot = product.cost * item.cantidad;
-    subTot += itemTot;
+            const itemTot = product.cost * item.cantidad;
+            subTot += itemTot;
+            cantProd += item.cantidad;
 
-    const li = document.createElement("li");
-    li.classList.add(
-        "list-group-item",
-        "position-relative",  // necesario para que el botón absoluto se refiera a este li
-        "d-flex",
-        "align-items-center",
-        "gap-3",
-        "cart-item"
-    );
+            const li = document.createElement("li");
+            li.classList.add(
+                "list-group-item",
+                "position-relative",  // necesario para que el botón absoluto se refiera a este li
+                "d-flex",
+                "align-items-center",
+                "gap-3",
+                "cart-item"
+            );
 
-    li.innerHTML = `
-        <img src="${product.images[0]}" alt="${product.name}" 
-            style="width:80px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">
+            li.innerHTML = `
+                <img src="${product.images[0]}" alt="${product.name}" 
+                    style="width:80px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">
 
-        <div class="flex-grow-1 d-flex flex-column">
-            <div class="d-flex justify-content-between align-items-start">
-                <p class="mb-1">${product.name}</p>
-                <p>Cantidad: x${item.cantidad}</p>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0" style="max-width:280px;">
-                    ${product.description.length > 40 ? product.description.slice(0, 40) + "…" : product.description}
-                </p>
-                <p>${product.currency} ${itemTot.toLocaleString()}</p>
-            </div>
-        </div>
+                <div class="flex-grow-1 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <p class="mb-1">${product.name}</p>
+                        <p>Cantidad: x${item.cantidad}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="mb-0" style="max-width:280px;">
+                            ${product.description.length > 40 ? product.description.slice(0, 40) + "…" : product.description}
+                        </p>
+                        <p>${product.currency} ${itemTot.toLocaleString()}</p>
+                    </div>
+                </div>
 
-        <button class="btn btn-sm btn-cerrar">
-            <i class="bi bi-x-lg"></i>
-        </button>
-    `;
+                <button class="btn btn-sm btn-cerrar">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            `;
 
-    lista.appendChild(li);
-});
+            lista.appendChild(li);
+        });
 
 
         // Insertar lista en el contenedor
@@ -102,6 +104,12 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         // Mostrar subtotal
         inputSubtot.textContent = subTot.toLocaleString();
+
+        // Mostrar articulos totales en el carrito
+        const badge = document.getElementById("cart-badge");
+        if (badge) {
+            badge.textContent = cantProd;
+        }
 
         // === Evento para eliminar producto ===
         document.querySelectorAll('.btn-cerrar').forEach(btn => {
