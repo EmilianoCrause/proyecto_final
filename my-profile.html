@@ -63,7 +63,8 @@
 
             <!-- Controles -->
             <div class="selectores">
-                <button class="light-btn">
+                <!-- Botón del carrito con badge -->
+                <button class="light-btn position-relative" id="btn-cart" onclick="window.location.href='cart.html'">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
                         <path
@@ -71,8 +72,13 @@
                         </path>
                     </svg>
 
+                    <span id="cart-badge" class="position-absolute"
+                        style="top:-4px; right:-4px; background:#F09100; color:white; border-radius:999px; font-size:12px; line-height:1; padding:2px 6px; min-width:20px; text-align:center;">
+                        0
+                    </span>
                 </button>
 
+                <!-- Botón perfil-->
                 <button class="light-btn" id="btn-perfil">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
@@ -81,6 +87,14 @@
                         </path>
                     </svg>
                     <span id="User-display"></span>
+                </button>
+
+                <!-- Botón Cerrar sesión -->
+                <button class="light-btn" id="btn-logout">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256">
+                        <path d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z"></path>
+                    </svg>
+                    <span class="d-none d-sm-inline">Cerrar sesión</span>
                 </button>
             </div>
 
@@ -120,6 +134,7 @@
             </div>
         </nav>
     </header>
+
   <main class="py-5">
     <div class="container">
       <div class="row align-items-start g-4" id="principal-container">
@@ -239,6 +254,37 @@
   <script src="js/utils.js"></script>
   <script src="js/my-profile.js"></script>
   <script src="js/user-display.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // ==== BADGE DEL CARRITO ===
+    const badge = document.getElementById("cart-badge");
+    if (badge) {
+      let cart = [];
+      try {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+      } catch (e) {
+        cart = [];
+      }
+
+      const totalCantidad = cart.reduce(
+        (acc, item) => acc + (item.count || 0),
+        0
+      );
+
+      badge.textContent = totalCantidad;
+    }
+
+    // ==== CERRAR SESIÓN ====
+    const logoutBtn = document.getElementById("btn-logout");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("profileImage");
+        window.location.href = "login.html";
+      });
+    }
+  });
+  </script>
 </body>
 
 </html>
