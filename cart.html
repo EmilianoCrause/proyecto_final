@@ -49,16 +49,19 @@
 
             <!-- Controles -->
             <div class="selectores">
-                <button id="btn-cart" class="btn light-btn position-relative">
+                <!-- Botón carrito con badge -->
+                <button id="btn-cart" class="btn light-btn position-relative" onclick="window.location.href='cart.html'">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                         viewBox="0 0 256 256">
                         <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
                     </svg>
-                    <span id="cart-badge" class="position-absolute">
+                    <span id="cart-badge" class="position-absolute"
+                        style="top:-4px; right:-4px; background:#F09100; color:white; border-radius:999px; font-size:12px; line-height:1; padding:2px 6px; min-width:20px; text-align:center;">
                         0
                     </span>
                 </button>
 
+                <!-- Botón perfil  -->
                 <button class="light-btn" id="btn-perfil">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
@@ -67,6 +70,14 @@
                         </path>
                     </svg>
                     <span id="User-display"></span>
+                </button>
+
+                <!-- Botón Cerrar sesión -->
+                <button class="light-btn" id="btn-logout">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256">
+                        <path d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z"></path>
+                    </svg>
+                    <span class="d-none d-sm-inline">Cerrar sesión</span>
                 </button>
             </div>
 
@@ -146,6 +157,39 @@
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/user-display.js"></script>
+
+  <!-- Script logout + badge carrito -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // ==== CERRAR SESIÓN ====
+      const logoutBtn = document.getElementById("btn-logout");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("user");
+          localStorage.removeItem("profileImage");
+          window.location.href = "login.html";
+        });
+      }
+
+      // ==== BADGE DEL CARRITO ====
+      const badge = document.getElementById("cart-badge");
+      if (!badge) return;
+
+      let cart = [];
+      try {
+        cart = JSON.parse(localStorage.getItem("cart")) || [];
+      } catch (e) {
+        cart = [];
+      }
+
+      const totalCantidad = cart.reduce(
+        (acc, item) => acc + (item.count || 0),
+        0
+      );
+
+      badge.textContent = totalCantidad;
+    });
+  </script>
 </body>
 
 </html>
