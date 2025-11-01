@@ -118,7 +118,7 @@
 
                 <!-- Selector de idioma -->
                 <div class="lang-container">
-                    <button class="lang-btn" aria-label="Seleccionar idioma">
+                    <button id="btnIdioma" class="lang-btn" aria-label="Seleccionar idioma">
                         <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path
                                 d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z">
@@ -128,10 +128,16 @@
                             </path>
                         </svg>
                     </button>
-                    <select id="idioma" name="idioma">
-                        <option value="es">ES</option>
-                        <option value="en">ENG</option>
-                    </select>
+                    <!--Traducción de Google-->
+                     <div class="lang-dropdown" id="langDropdown">
+                        <button data-lang="es">ES</button>
+                        <button data-lang="en">EN</button>
+                        <button data-lang="fr">FR</button>
+                        <button data-lang="pt">PT</button>
+                        <button data-lang="de">DE</button>
+                    </div>
+
+                    <div id="google_translate_element" style="opacity:0; height:0; overflow:hidden;"></div>
                 </div>
             </div>
         </nav>
@@ -240,38 +246,8 @@
     <script src="js/index.js"></script>
     <script src="js/user-display.js"></script>
     <script src="js/translate.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // ==== CERRAR SESIÓN ====
-  const logoutBtn = document.getElementById("btn-logout");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("user");
-      localStorage.removeItem("profileImage");
-      window.location.href = "login.html";
-    });
-  }
-
-  // ==== BADGE DEL CARRITO ====
-  const badge = document.getElementById("cart-badge");
-  if (!badge) return;
-
-  let cart = [];
-  try {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
-  } catch (e) {
-    cart = [];
-  }
-
-  const totalCantidad = cart.reduce(
-    (acc, item) => acc + (item.count || 0),
-    0
-  );
-
-  badge.textContent = totalCantidad;
-});
-</script>
+    <!--Script de Google-->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 </html>

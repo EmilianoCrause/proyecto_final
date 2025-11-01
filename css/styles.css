@@ -272,3 +272,27 @@ a.custom-card:hover {
         margin-top: 2rem;
     }
 }
+
+/* Oculta la barra superior y otros elementos molestos del widget */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+
+
+/* Oculta el cuadro flotante de traducción */
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+/* Evita que aparezcan marcas o frames flotantes */
+.goog-tooltip,
+.goog-te-balloon-frame {
+  display: none !important
+}
+
+/* Evita parpadeos al traducir */
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
