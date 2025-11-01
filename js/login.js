@@ -62,17 +62,55 @@ document.addEventListener('DOMContentLoaded', () => {
         contrasena.placeholder = translations[lang]['password-placeholder'];
     }
     // Cargar idioma guardado o usar español por defecto
+<<<<<<< HEAD
     const savedLang = localStorage.getItem('language') || 'es';
     langSelect.value = savedLang;
     loadTranslations(savedLang);
+=======
+    const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'es';
+    langSelect.value = savedLang; // Establecer el valor del select
+    loadTranslations(savedLang); // Cargar traducciones
+>>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
 
     // Manejar cambio de idioma
     langSelect.addEventListener('change', (e) => {
+<<<<<<< HEAD
         const selectedLang = e.target.value;
         localStorage.setItem('language', selectedLang);
         loadTranslations(selectedLang);
     });
 
+=======
+        const selectedLang = e.target.value; // Obtener el idioma seleccionado
+        localStorage.setItem(STORAGE_KEYS.LANGUAGE, selectedLang); // Guardar en localStorage
+        loadTranslations(selectedLang); // Cargar nuevas traducciones
+    });
+
+    // Ocultar selector al hacer clic fuera de él
+    document.addEventListener('click', () => {
+        langSelect.style.display = 'none';
+    });
+
+    // Evitar que se oculte al hacer clic dentro del selector
+    langSelect.addEventListener('click', (e) => {
+        e.stopPropagation(); // Detener la propagación del evento
+    });
+
+    // ======== MODO OSCURO ========
+    // Cargar preferencia de modo oscuro desde localStorage
+    if (localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true') {
+        document.body.classList.add('dark-mode'); // Aplicar modo oscuro
+    }
+
+    // Alternar modo oscuro/claro al hacer clic
+    darkToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode'); // Alternar clase
+        // Guardar preferencia en localStorage
+        localStorage.setItem(STORAGE_KEYS.DARK_MODE, document.body.classList.contains('dark-mode'));
+    });
+
+    // ======== VALIDACIÓN DE FORMULARIO ========
+>>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -104,17 +142,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (rememberCheckbox.checked) {
+<<<<<<< HEAD
             localStorage.setItem('usuario', uservalido);
         } else {
             sessionStorage.setItem('usuario', uservalido);
+=======
+            localStorage.setItem(STORAGE_KEYS.USUARIO, uservalido); // Guardar permanentemente
+        } else {
+            sessionStorage.setItem(STORAGE_KEYS.USUARIO, uservalido); // Guardar solo para esta sesión
+>>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
         }
 
         window.location.href = 'index.html';
     });
 
+<<<<<<< HEAD
     const savedUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
     if (savedUser) {
         usuario.value = savedUser;
         rememberCheckbox.checked = !!localStorage.getItem('usuario');
+=======
+    // ======== CARGAR USUARIO GUARDADO ========
+    // Verificar si hay un usuario guardado (en localStorage o sessionStorage)
+    const savedUser = localStorage.getItem(STORAGE_KEYS.USUARIO) || sessionStorage.getItem(STORAGE_KEYS.USUARIO);
+    if (savedUser) {
+        usuario.value = savedUser; // Rellenar campo con usuario guardado
+        rememberCheckbox.checked = !!localStorage.getItem(STORAGE_KEYS.USUARIO); // Marcar checkbox si está en localStorage
+>>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
     };
 });

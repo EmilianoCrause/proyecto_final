@@ -2,6 +2,14 @@ let currentCategoriesArray = [];
 let filteredCategoriesArray = [];
 const SORT_MAP = { nameAsc: 'nameAsc', nameDesc: 'nameDesc', relevance: 'relevance' };
 
+<<<<<<< HEAD
+=======
+function setCatID(id) {
+    localStorage.setItem(STORAGE_KEYS.CAT_ID, id);
+    window.location = "products.html";
+}
+
+>>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
 function sortCategories(criteria) {
     if (criteria === 'nameAsc') {
         filteredCategoriesArray.sort((a, b) => a.name.localeCompare(b.name));
@@ -52,7 +60,6 @@ function filterAndShow() {
     sortCategories(sortOption);
     showCategoriesList();
 }
-
 function initEventListeners() {
     document.querySelectorAll('input[name="sortOptions"]').forEach(input => {
         input.addEventListener('change', filterAndShow);
@@ -76,6 +83,124 @@ function initEventListeners() {
     }
 }
 
+<<<<<<< HEAD
+=======
+function initDarkMode() {
+    const themeToggle = document.getElementById('theme-toggle-checkbox');
+    if (themeToggle) {
+        // Sincronizar estado inicial
+        if (document.documentElement.classList.contains("dark-mode")) {
+            document.body.classList.add("dark-mode");
+            themeToggle.checked = true;
+        }
+        // Escuchar cambios
+        themeToggle.addEventListener("change", () => {
+            const isDark = themeToggle.checked;
+            if (isDark) {
+                document.documentElement.classList.add("dark-mode");
+                document.body.classList.add("dark-mode");
+            } else {
+                document.documentElement.classList.remove("dark-mode");
+                document.body.classList.remove("dark-mode");
+            }
+            localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark);
+        });
+    }
+}
+
+function initLanguageSelector() {
+    const langBtn = document.querySelector(".lang-btn");
+    const langSelect = document.getElementById("idioma");
+    if (langBtn && langSelect) {
+        langBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
+        });
+
+        langSelect.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+            langSelect.style.display = "none";
+        });
+    }
+}
+
+initLanguageSelector();
+
+document.addEventListener("DOMContentLoaded", function () {
+    getJSONData(CATEGORIES_URL).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            currentCategoriesArray = resultObj.data;
+            filterAndShow();
+            initEventListeners();
+        } else {
+            console.error("Error al cargar categorías:", resultObj.data);
+        }
+    });
+
+    document.getElementById("sortAsc").addEventListener("click", function(){
+        sortAndShowCategories(ORDER_ASC_BY_NAME);
+    });
+
+    const filterForm = document.getElementById('countFilterForm');
+    if (filterForm) {
+        filterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            filterAndShow();
+        });
+    }
+
+    const clearButton = document.getElementById('clearRangeFilter');
+    if (clearButton) {
+        clearButton.addEventListener('click', () => {
+            document.getElementById('rangeFilterCountMin').value = '';
+            document.getElementById('rangeFilterCountMax').value = '';
+            filterAndShow();
+        });
+    }
+}
+
+function initDarkMode() {
+    const themeToggle = document.getElementById('theme-toggle-checkbox');
+    if (themeToggle) {
+        // Sincronizar estado inicial
+        if (document.documentElement.classList.contains("dark-mode")) {
+            document.body.classList.add("dark-mode");
+            themeToggle.checked = true;
+        }
+        // Escuchar cambios
+        themeToggle.addEventListener("change", () => {
+            const isDark = themeToggle.checked;
+            if (isDark) {
+                document.documentElement.classList.add("dark-mode");
+                document.body.classList.add("dark-mode");
+            } else {
+                document.documentElement.classList.remove("dark-mode");
+                document.body.classList.remove("dark-mode");
+            }
+            localStorage.setItem("darkMode", isDark);
+        });
+    }
+}
+
+function initLanguageSelector() {
+    const langBtn = document.querySelector(".lang-btn");
+    const langSelect = document.getElementById("idioma");
+    if (langBtn && langSelect) {
+        langBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
+        });
+
+        langSelect.addEventListener("click", (e) => e.stopPropagation());
+        document.addEventListener("click", () => {
+            langSelect.style.display = "none";
+        });
+    }
+}
+
+initLanguageSelector();
+
+>>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
 document.addEventListener("DOMContentLoaded", function () {
     if (!verificarUsuario()) return;
     
