@@ -23,6 +23,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		const product = resultObj.data;
 
+		// Actualizar catID y catName basándose en la categoría del producto
+		// Si el producto tiene información de categoría, actualizarla
+		if (product.category) {
+			localStorage.setItem(STORAGE_KEYS.CAT_ID, product.category);
+			
+			// Mapeo de nombres de categorías comunes
+			const categoryNames = {
+				"101": "Autos",
+				"102": "Juguetes", 
+				"103": "Muebles",
+				"104": "Herramientas",
+				"105": "Computadoras",
+				"106": "Vestimenta",
+				"107": "Electrodomésticos",
+				"108": "Deporte",
+				"109": "Celulares"
+			};
+			
+			const catNameToSave = categoryNames[product.category] || catName;
+			localStorage.setItem(STORAGE_KEYS.CAT_NAME, catNameToSave);
+		}
+
 		productInfoContainer.innerHTML = `
       <div class="row align-items-start" style="margin-top:1.5rem; margin-bottom:2rem;">
         <div class="col-lg-7">
@@ -134,7 +156,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			document.querySelectorAll(".related-card").forEach(card => {
 				card.addEventListener("click", function () {
 					const id = this.dataset.id;
-					localStorage.setItem("productID", id);
+					localStorage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
+					// Mantener la categoría actual al navegar a productos relacionados
 					window.location = "product-info.html";
 				});
 			});
@@ -181,10 +204,12 @@ document.addEventListener("DOMContentLoaded", function () {
 			const fallback = (product.relatedProducts || []).map(r => (typeof r === 'object' ? r : { id: r, name: '', image: '' }));
 			renderRelated(fallback);
 		}
+		// Actualizar breadcrumb con la categoría actualizada
+		const updatedCatName = localStorage.getItem(STORAGE_KEYS.CAT_NAME) || "Categoría";
 		breadcrumb.innerHTML = `
   <li class="breadcrumb-item"><a href="index.html">Home</a></li>
   <li class="breadcrumb-item"><a href="categories.html">Categorías</a></li>
-  <li class="breadcrumb-item"><a href="products.html">${catName}</a></li>
+  <li class="breadcrumb-item"><a href="products.html">${updatedCatName}</a></li>
   <li class="breadcrumb-item active" aria-current="page">${product.name}</li>
 `;
 	});
