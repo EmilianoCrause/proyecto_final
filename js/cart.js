@@ -16,6 +16,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     const contenedorLista = document.getElementById("lista-art");
     const inputSubtot = document.getElementById("input-subtot");
     const badge = document.getElementById("cart-badge");
+    const subtotalLinea = document.getElementById("subtot-lin");
+    const btnComprar = document.getElementById("btn-comprar");
+
+    // Ocultar por defecto subtotal y botón de comprar
+    if (subtotalLinea) {
+        subtotalLinea.style.display = "none";
+        subtotalLinea.style.visibility = "hidden";
+    }
+    if (btnComprar) {
+        btnComprar.style.display = "none";
+        btnComprar.style.visibility = "hidden";
+    }
 
     // ======== LEER CARRITO DEL STORAGE ========
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -23,13 +35,38 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Carrito vacío
     if (!cart.length) {
         contenedorLista.innerHTML = `
-            <div class="alert alert-info text-center" role="alert">
-                No hay artículos disponibles.
+            <div class="text-center py-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="text-muted mb-3" viewBox="0 0 256 256">
+                    <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
+                </svg>
+                <h4 class="mb-2">Tu carrito está vacío</h4>
+                <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
+                <a href="index.html" class="btn btn-buy">
+                    <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                </a>
             </div>
         `;
         if (badge) badge.textContent = "0";
-        if (inputSubtot) inputSubtot.textContent = "0";
+        // Ocultar subtotal y botón de comprar
+        if (subtotalLinea) {
+            subtotalLinea.style.display = "none";
+            subtotalLinea.style.visibility = "hidden";
+        }
+        if (btnComprar) {
+            btnComprar.style.display = "none";
+            btnComprar.style.visibility = "hidden";
+        }
         return;
+    }
+
+    // Mostrar subtotal y botón de comprar cuando hay productos
+    if (subtotalLinea) {
+        subtotalLinea.style.display = "flex";
+        subtotalLinea.style.visibility = "visible";
+    }
+    if (btnComprar) {
+        btnComprar.style.display = "block";
+        btnComprar.style.visibility = "visible";
     }
 
     // ======== SPINNER SEGURO ========
@@ -58,19 +95,54 @@ document.addEventListener('DOMContentLoaded', async function () {
         const lista = document.createElement("ul");
         lista.classList.add("list-group", "mb-3");
 
+        // Tasa de cambio UYU a USD
+        const TASA_CAMBIO_UYU_A_USD = 40;
+
+        // Función para convertir a dólares
+        function convertirADolares(precio, moneda) {
+            if (moneda === "UYU") {
+                return precio / TASA_CAMBIO_UYU_A_USD;
+            }
+            return precio;
+        }
+
         // Función para recalcular totales generales
         function recalcularTotales() {
             let totalCarrito = 0;
             let totalCantidad = 0;
+            let hayDolares = false;
 
+            // Verificar si hay algún producto en dólares
+            cart.forEach((cartItem, ids) => {
+                const prodInfo = detalles[ids].info;
+                if (prodInfo.currency === "USD") {
+                    hayDolares = true;
+                }
+            });
+
+            // Calcular el total según la moneda predominante
             cart.forEach((cartItem, ids) => {
                 const prodInfo = detalles[ids].info;
                 const cantidad = cartItem.count;
                 totalCantidad += cantidad;
-                totalCarrito += prodInfo.cost * cantidad;
+                
+                if (hayDolares) {
+                    // Si hay dólares, convertir todo a USD
+                    const precioEnDolares = convertirADolares(prodInfo.cost, prodInfo.currency);
+                    totalCarrito += precioEnDolares * cantidad;
+                } else {
+                    // Si solo hay pesos, sumar en pesos
+                    totalCarrito += prodInfo.cost * cantidad;
+                }
             });
 
-            inputSubtot.textContent = totalCarrito.toLocaleString();
+            // Mostrar en la moneda correspondiente
+            if (hayDolares) {
+                inputSubtot.textContent = `USD ${totalCarrito.toFixed(2)}`;
+            } else {
+                inputSubtot.textContent = `UYU ${totalCarrito.toLocaleString()}`;
+            }
+            
             if (badge) {
                 badge.textContent = totalCantidad;
             }
@@ -183,12 +255,27 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             if (!cart.length) {
                 contenedorLista.innerHTML = `
-                    <div class="alert alert-info text-center" role="alert">
-                        No hay artículos disponibles.
+                    <div class="text-center py-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="text-muted mb-3" viewBox="0 0 256 256">
+                            <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
+                        </svg>
+                        <h4 class="mb-2">Tu carrito está vacío</h4>
+                        <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
+                        <a href="index.html" class="btn btn-buy">
+                            <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                        </a>
                     </div>
                 `;
                 if (badge) badge.textContent = "0";
-                inputSubtot.textContent = "0";
+                // Ocultar subtotal y botón de comprar
+                if (subtotalLinea) {
+                    subtotalLinea.style.display = "none";
+                    subtotalLinea.style.visibility = "hidden";
+                }
+                if (btnComprar) {
+                    btnComprar.style.display = "none";
+                    btnComprar.style.visibility = "hidden";
+                }
                 return;
             }
 
@@ -214,7 +301,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             </div>
         `;
         if (badge) badge.textContent = "0";
-        if (inputSubtot) inputSubtot.textContent = "0";
+        // Ocultar subtotal y botón de comprar en caso de error
+        if (subtotalLinea) {
+            subtotalLinea.style.display = "none";
+            subtotalLinea.style.visibility = "hidden";
+        }
+        if (btnComprar) {
+            btnComprar.style.display = "none";
+            btnComprar.style.visibility = "hidden";
+        }
     } finally {
         safeHideSpinner();
     }
