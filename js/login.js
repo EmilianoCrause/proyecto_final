@@ -1,120 +1,107 @@
-const translations = {
-    es: {
-        "login-title": "Iniciar sesión",
-        "email-placeholder": "Correo electrónico",
-        "password-placeholder": "Contraseña",
-        "remember-text": "Mantener la sesión iniciada",
-        "btn-ingresar": "Ingresar",
-        "recover-text": "No recuerdas tu contraseña?",
-        "recover-link": "Recuperar mi cuenta",
-        "register-text": "No tienes cuenta?",
-        "register-link": "Regístrate aquí",
-        "other-methods-text": "Otras formas de inicio de sesión",
-        "footer-text": "Este sitio forma parte de",
-        "alert-message": "Por favor, completá usuario y contraseña con datos válidos",
-        "alert-title": "Atención",
-    },
-    en: {
-        "login-title": "Log in",
-        "email-placeholder": "Email",
-        "password-placeholder": "Password",
-        "remember-text": "Keep me logged in",
-        "btn-ingresar": "Log in",
-        "recover-text": "Forgot your password?",
-        "recover-link": "Recover my account",
-        "register-text": "Don't have an account?",
-        "register-link": "Sign up here",
-        "other-methods-text": "Other login methods",
-        "footer-text": "This site is part of",
-        "alert-message": "Please complete both email and password fields with valid data",
-        "alert-title": "Warning",
-    }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.formulario');
     const usuario = document.getElementById('usuario');
     const contrasena = document.getElementById('contrasena');
     const rememberCheckbox = document.getElementById('remember');
-    const langSelect = document.getElementById('idioma');
-    const langBtn = document.querySelector('.lang-btn');
+    const langBtn = document.querySelector('.lang-btn'); 
 
     // Usar funciones de utils.js
     initDarkMode();
     initLanguageSelector();
 
     function loadTranslations(lang) {
-        document.getElementById('login-title').textContent = translations[lang]['login-title'];
-        document.getElementById('remember-text').textContent = translations[lang]['remember-text'];
-        document.getElementById('btn-ingresar').textContent = translations[lang]['btn-ingresar'];
+        // Verificar que los elementos existan antes de manipularlos
+        const elements = {
+            'login-title': document.getElementById('login-title'),
+            'remember-text': document.getElementById('remember-text'),
+            'btn-ingresar': document.getElementById('btn-ingresar'),
+            'recover-text': document.getElementById('recover-text'),
+            'register-text': document.getElementById('register-text'),
+            'other-methods-text': document.getElementById('other-methods-text'),
+            'footer-text': document.getElementById('footer-text')
+        };
 
-        document.getElementById('recover-text').innerHTML = translations[lang]['recover-text'] +
-            ' <a href="" id="recover-link">' + translations[lang]['recover-link'] + '</a>';
-        document.getElementById('register-text').innerHTML = translations[lang]['register-text'] +
-            ' <a href="" id="register-link">' + translations[lang]['register-link'] + '</a>';
+        // Solo actualizar elementos que existen
+        if (elements['login-title']) elements['login-title'].textContent = translations[lang]['login-title'];
+        if (elements['remember-text']) elements['remember-text'].textContent = translations[lang]['remember-text'];
+        if (elements['btn-ingresar']) elements['btn-ingresar'].textContent = translations[lang]['btn-ingresar'];
 
-        document.getElementById('other-methods-text').textContent = translations[lang]['other-methods-text'];
+        if (elements['recover-text']) {
+            elements['recover-text'].innerHTML = translations[lang]['recover-text'] +
+                ' <a href="" id="recover-link">' + translations[lang]['recover-link'] + '</a>';
+        }
 
-        document.getElementById('footer-text').innerHTML = translations[lang]['footer-text'] +
-            ' <a href="https://jovenesaprogramar.edu.uy/" target="_blank" class="resaltar">Jóvenes a Programar</a>';
+        if (elements['register-text']) {
+            elements['register-text'].innerHTML = translations[lang]['register-text'] +
+                ' <a href="" id="register-link">' + translations[lang]['register-link'] + '</a>';
+        }
 
-        usuario.placeholder = translations[lang]['email-placeholder'];
-        contrasena.placeholder = translations[lang]['password-placeholder'];
+        if (elements['other-methods-text']) {
+            elements['other-methods-text'].textContent = translations[lang]['other-methods-text'];
+        }
+
+        if (elements['footer-text']) {
+            elements['footer-text'].innerHTML = translations[lang]['footer-text'] +
+                ' <a href="https://jovenesaprogramar.edu.uy/" target="_blank" class="resaltar">Jóvenes a Programar</a>';
+        }
+
+        // Actualizar placeholders
+        if (usuario) usuario.placeholder = translations[lang]['email-placeholder'];
+        if (contrasena) contrasena.placeholder = translations[lang]['password-placeholder'];
     }
+
     // Cargar idioma guardado o usar español por defecto
     const savedLang = localStorage.getItem('language') || 'es';
-    langSelect.value = savedLang;
     loadTranslations(savedLang);
 
-    // Manejar cambio de idioma
-    langSelect.addEventListener('change', (e) => {
-        const selectedLang = e.target.value;
-        localStorage.setItem('language', selectedLang);
-        loadTranslations(selectedLang);
-    });
+    // Validar que el formulario existe antes de agregar event listener
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+            if (usuario) usuario.classList.remove('is-invalid');
+            if (contrasena) contrasena.classList.remove('is-invalid');
 
-        usuario.classList.remove('is-invalid');
-        contrasena.classList.remove('is-invalid');
+            const uservalido = usuario ? usuario.value.trim() : '';
+            const passvalida = contrasena ? contrasena.value.trim() : '';
 
-        const uservalido = usuario.value.trim();
-        const passvalida = contrasena.value.trim();
+            if (!uservalido || !passvalida) {
+                if (!uservalido && usuario) usuario.classList.add('is-invalid');
+                if (!passvalida && contrasena) contrasena.classList.add('is-invalid');
 
-        if (!uservalido || !passvalida) {
-            if (!uservalido) usuario.classList.add('is-invalid');
-            if (!passvalida) contrasena.classList.add('is-invalid');
+                // Mostrar mensaje de error en el idioma actual
+                const currentLang = localStorage.getItem('language') || 'es';
+                Swal.fire({
+                    toast: true,
+                    position: 'bottom-end',
+                    icon: 'warning',
+                    title: translations[currentLang]['alert-title'],
+                    text: translations[currentLang]['alert-message'],
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
 
-            // Mostrar mensaje de error en el idioma actual
-            const currentLang = localStorage.getItem('language') || 'es';
-            Swal.fire({
-                toast: true,                           // alerta tipo notificación
-                position: 'bottom-end',                    // esquina superior derecha
-                icon: 'warning',
-                title: translations[currentLang]['alert-title'],
-                text: translations[currentLang]['alert-message'],
-                showConfirmButton: false,              // sin botón, no bloquea
-                timer: 3000,
-                timerProgressBar: true
-            });
+                (usuario && !uservalido ? usuario : contrasena)?.focus();
+                return;
+            }
 
-            (!uservalido ? usuario : contrasena).focus();
-            return;
-        }
+            if (rememberCheckbox && rememberCheckbox.checked) {
+                localStorage.setItem('usuario', uservalido);
+            } else {
+                sessionStorage.setItem('usuario', uservalido);
+            }
 
-        if (rememberCheckbox.checked) {
-            localStorage.setItem('usuario', uservalido);
-        } else {
-            sessionStorage.setItem('usuario', uservalido);
-        }
+            window.location.href = 'index.html';
+        });
+    }
 
-        window.location.href = 'index.html';
-    });
-
+    // Cargar usuario guardado si existe
     const savedUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
-    if (savedUser) {
+    if (savedUser && usuario) {
         usuario.value = savedUser;
-        rememberCheckbox.checked = !!localStorage.getItem('usuario');
-    };
+        if (rememberCheckbox) {
+            rememberCheckbox.checked = !!localStorage.getItem('usuario');
+        }
+    }
 });

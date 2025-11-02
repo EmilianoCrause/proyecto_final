@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const savedUser = localStorage.getItem("usuario") || sessionStorage.getItem("usuario");
-    if (!savedUser) return;
+    const savedUser = localStorage.getItem(STORAGE_KEYS.USUARIO) || sessionStorage.getItem(STORAGE_KEYS.USUARIO);
 
     const username = savedUser.split('@')[0];
     const userDisplay = document.getElementById("User-display");

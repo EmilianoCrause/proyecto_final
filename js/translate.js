@@ -1,96 +1,120 @@
 const translations = {
     es: {
-        "index-h2": "Productos Destacados",
-        "ver-mas": "Y mucho más!",
-        "backToTop": "Volver arriba",
-        "footerText": "Este sitio forma parte de",
-        "search-placeholder": "Buscar productos...",
-        products: [
-            { 
-                title: "Autos", 
-                desc: "Los mejores precios en autos 0 kilómetro, de alta y media gama.", 
-                btn: "Ver categoría" 
-            },
-            { 
-                title: "Juguetes", 
-                desc: "Encuentra aquí los mejores precios para niños/as de cualquier edad.", 
-                btn: "Ver categoría" 
-            },
-            { 
-                title: "Muebles", 
-                desc: "Muebles antiguos, nuevos y para ser armados por uno mismo.", 
-                btn: "Ver categoría" 
-            }
-        ],
+        "login-title": "Iniciar sesión",
+        "email-placeholder": "Correo electrónico",
+        "password-placeholder": "Contraseña",
+        "remember-text": "Mantener la sesión iniciada",
+        "btn-ingresar": "Ingresar",
+        "recover-text": "No recuerdas tu contraseña?",
+        "recover-link": "Recuperar mi cuenta",
+        "register-text": "No tienes cuenta?",
+        "register-link": "Regístrate aquí",
+        "other-methods-text": "Otras formas de inicio de sesión",
+        "footer-text": "Este sitio forma parte de",
+        "alert-message": "Por favor, completá usuario y contraseña con datos válidos",
+        "alert-title": "Atención",
     },
     en: {
-        "index-h2": "Featured Products",
-        "ver-mas": "See much more!",
-        "backToTop": "Back to top",
-        "footerText": "This site is part of",
-        "search-placeholder": "Search products...",
-        products: [
-            { 
-                title: "Cars", 
-                desc: "Discover the best prices on brand new vehicles, high-end and mid-range.", 
-                btn: "Explore category" 
-            },
-            { 
-                title: "Toys", 
-                desc: "The best toys and prices for children of all ages.", 
-                btn: "Explore category" 
-            },
-            { 
-                title: "Furniture", 
-                desc: "Classic, modern and DIY furniture at the best prices.", 
-                btn: "Explore category" 
-            }
-        ],
+        "login-title": "Log in",
+        "email-placeholder": "Email",
+        "password-placeholder": "Password",
+        "remember-text": "Keep me logged in",
+        "btn-ingresar": "Log in",
+        "recover-text": "Forgot your password?",
+        "recover-link": "Recover my account",
+        "register-text": "Don't have an account?",
+        "register-link": "Sign up here",
+        "other-methods-text": "Other login methods",
+        "footer-text": "This site is part of",
+        "alert-message": "Please complete both email and password fields with valid data",
+        "alert-title": "Warning",
     }
 };
 
-function loadTranslations(lang) {
-    const t = translations[lang] || translations["es"];
-
-    Object.keys(t).forEach(key => {
-        if (key === "products" || key === "search-placeholder") return;
-        const elem = document.getElementById(key);
-        if (elem) elem.textContent = t[key];
-    });
-
-    const searchBar = document.getElementById("search-bar");
-    if (searchBar) {
-        searchBar.placeholder = t["search-placeholder"];
-    }
-
-    const mainCards = ["autos", "juguetes", "muebles"];
-    const products = t.products;
-
-    mainCards.forEach((cardId, i) => {
-        const card = document.getElementById(cardId);
-        if (card && products[i]) {
-            const title = card.querySelector(".product-title");
-            const description = card.querySelector(".product-description");
-            const btn = card.querySelector(".product-btn");
-            
-            if (title) title.textContent = products[i].title;
-            if (description) description.textContent = products[i].desc;
-            if (btn) btn.textContent = products[i].btn;
-        }
-    });
+// === Inicializa el traductor de Google ===
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'es',
+    includedLanguages: 'es,en,fr,pt,de,it,ru,zh-CN,ja'
+  }, 'google_translate_element');
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const langSelect = document.getElementById("idioma");
-    const savedLang = localStorage.getItem("language") || "es";
-    loadTranslations(savedLang);
+// === Espera a que el DOM esté listo ===
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('btnIdioma');
+  const dropdown = document.getElementById('langDropdown');
 
-    if (langSelect) {
-        langSelect.value = savedLang;
-        langSelect.addEventListener("change", e => {
-            const selectedLang = e.target.value;
-            localStorage.setItem("language", selectedLang);
-            loadTranslations(selectedLang);
-        });
+  if (!btn || !dropdown) return;
+
+  // --- Mostrar/Ocultar menú desplegable ---
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // evita que se cierre de inmediato
+    dropdown.parentElement.classList.toggle('show');
+  });
+
+  // --- Cerrar menú al hacer clic fuera ---
+  document.addEventListener('click', (e) => {
+    if (!dropdown.parentElement.contains(e.target)) {
+      dropdown.parentElement.classList.remove('show');
     }
+  });
+
+  // --- Selección de idioma ---
+  dropdown.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+      const lang = button.dataset.lang;
+      const interval = setInterval(() => {
+        const select = document.querySelector('.goog-te-combo');
+        if (select) {
+          select.value = lang;
+          select.dispatchEvent(new Event('change'));
+          clearInterval(interval);
+        }
+      }, 400);
+
+      dropdown.parentElement.classList.remove('show');
+    });
+  });
+
+  // --- Elimina la barra molesta de Google Translate ---
+  (function removeGoogleBanner() {
+    const observer = new MutationObserver((mutations) => {
+      let removed = false;
+      mutations.forEach(m => {
+        m.addedNodes.forEach(node => {
+          if (!(node instanceof HTMLElement)) return;
+
+          const selectors = [
+            'iframe.goog-te-banner-frame',
+            '.goog-te-banner-frame.skiptranslate',
+            '.goog-tooltip',
+            '.goog-te-balloon-frame'
+          ];
+
+          if (selectors.some(sel => node.matches?.(sel))) {
+            node.remove();
+            removed = true;
+          }
+
+          // Busca dentro del nodo también
+          selectors.forEach(sel => {
+            node.querySelectorAll?.(sel).forEach(el => el.remove());
+          });
+        });
+      });
+
+      if (removed && document.body.style.top) {
+        document.body.style.top = '0px';
+      }
+    });
+
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+
+    // Remueve si ya están presentes
+    setTimeout(() => {
+      document.querySelectorAll('iframe.goog-te-banner-frame, .goog-tooltip, .goog-te-balloon-frame')
+        .forEach(el => el.remove());
+      document.body.style.top = '0px';
+    }, 200);
+  })();
 });
