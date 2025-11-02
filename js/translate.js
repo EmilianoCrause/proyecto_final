@@ -1,3 +1,36 @@
+const translations = {
+    es: {
+        "login-title": "Iniciar sesión",
+        "email-placeholder": "Correo electrónico",
+        "password-placeholder": "Contraseña",
+        "remember-text": "Mantener la sesión iniciada",
+        "btn-ingresar": "Ingresar",
+        "recover-text": "No recuerdas tu contraseña?",
+        "recover-link": "Recuperar mi cuenta",
+        "register-text": "No tienes cuenta?",
+        "register-link": "Regístrate aquí",
+        "other-methods-text": "Otras formas de inicio de sesión",
+        "footer-text": "Este sitio forma parte de",
+        "alert-message": "Por favor, completá usuario y contraseña con datos válidos",
+        "alert-title": "Atención",
+    },
+    en: {
+        "login-title": "Log in",
+        "email-placeholder": "Email",
+        "password-placeholder": "Password",
+        "remember-text": "Keep me logged in",
+        "btn-ingresar": "Log in",
+        "recover-text": "Forgot your password?",
+        "recover-link": "Recover my account",
+        "register-text": "Don't have an account?",
+        "register-link": "Sign up here",
+        "other-methods-text": "Other login methods",
+        "footer-text": "This site is part of",
+        "alert-message": "Please complete both email and password fields with valid data",
+        "alert-title": "Warning",
+    }
+};
+
 // === Inicializa el traductor de Google ===
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({

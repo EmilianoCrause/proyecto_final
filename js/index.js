@@ -1,11 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
-<<<<<<< HEAD
     // Verificar que el usuario esté logueado
     if (!verificarUsuario()) return;
-=======
-    let usuSession = sessionStorage.getItem(STORAGE_KEYS.USUARIO);
-    let usuLocal = localStorage.getItem(STORAGE_KEYS.USUARIO);
->>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
 
     if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
         const autos = document.getElementById("autos");
@@ -33,72 +28,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         await initRelevantProductsCarousel();
     }
-<<<<<<< HEAD
-=======
-    // Elegir usuario existente
-    const savedUser = usuLocal || usuSession;
-
-    // Agregar eventos a las categorías
-    document.getElementById("autos").addEventListener("click", function () {
-        localStorage.setItem(STORAGE_KEYS.CAT_ID, 101);
-        window.location = "products.html";
-    });
-    document.getElementById("juguetes").addEventListener("click", function () {
-        localStorage.setItem(STORAGE_KEYS.CAT_ID, 102);
-        window.location = "products.html";
-    });
-    document.getElementById("muebles").addEventListener("click", function () {
-        localStorage.setItem(STORAGE_KEYS.CAT_ID, 103);
-        window.location = "products.html";
-    });
->>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
 
     initDarkMode();
     initLanguageSelector();
 });
 
-<<<<<<< HEAD
-=======
-function initDarkMode() {
-    const themeToggle = document.getElementById('theme-toggle-checkbox');
-    if (themeToggle) {
-        // Sincronizar estado inicial
-        if (document.documentElement.classList.contains("dark-mode")) {
-            document.body.classList.add("dark-mode");
-            themeToggle.checked = true;
-        }
-        // Escuchar cambios
-        themeToggle.addEventListener("change", () => {
-            const isDark = themeToggle.checked;
-            if (isDark) {
-                document.documentElement.classList.add("dark-mode");
-                document.body.classList.add("dark-mode");
-            } else {
-                document.documentElement.classList.remove("dark-mode");
-                document.body.classList.remove("dark-mode");
-            }
-            localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark);
-        });
-    }
-}
-
-function initLanguageSelector() {
-    const langBtn = document.querySelector(".lang-btn");
-    const langSelect = document.getElementById("idioma");
-    if (langBtn && langSelect) {
-        langBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
-        });
-
-        langSelect.addEventListener("click", (e) => e.stopPropagation());
-        document.addEventListener("click", () => {
-            langSelect.style.display = "none";
-        });
-    }
-}
-
->>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
 async function initRelevantProductsCarousel() {
     const carousel = document.getElementById("relevant-products-carousel");
     if (!carousel) return;

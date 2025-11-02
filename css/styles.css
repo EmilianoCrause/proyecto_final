@@ -268,7 +268,6 @@ a.custom-card:hover {
         --related-scale: 0.92;
     }
 
-<<<<<<< HEAD
     #product-info-container {
         margin-top: 2rem;
     }
@@ -297,9 +296,3 @@ a.custom-card:hover {
   background: none !important;
   box-shadow: none !important;
 }
-=======
-  #product-info-container {
-    margin-top: 2rem;
-  }
-}
->>>>>>> 439a1e7417eefbe4ca7e3f1f56b5c18e097e7e8c
