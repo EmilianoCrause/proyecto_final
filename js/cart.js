@@ -16,6 +16,18 @@ document.addEventListener('DOMContentLoaded', async function () {
     const contenedorLista = document.getElementById("lista-art");
     const inputSubtot = document.getElementById("input-subtot");
     const badge = document.getElementById("cart-badge");
+    const subtotalLinea = document.getElementById("subtot-lin");
+    const btnComprar = document.getElementById("btn-comprar");
+
+    // Ocultar por defecto subtotal y botón de comprar
+    if (subtotalLinea) {
+        subtotalLinea.style.display = "none";
+        subtotalLinea.style.visibility = "hidden";
+    }
+    if (btnComprar) {
+        btnComprar.style.display = "none";
+        btnComprar.style.visibility = "hidden";
+    }
 
     // ======== LEER CARRITO DEL STORAGE ========
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -35,8 +47,26 @@ document.addEventListener('DOMContentLoaded', async function () {
             </div>
         `;
         if (badge) badge.textContent = "0";
-        if (inputSubtot) inputSubtot.textContent = "USD 0.00";
+        // Ocultar subtotal y botón de comprar
+        if (subtotalLinea) {
+            subtotalLinea.style.display = "none";
+            subtotalLinea.style.visibility = "hidden";
+        }
+        if (btnComprar) {
+            btnComprar.style.display = "none";
+            btnComprar.style.visibility = "hidden";
+        }
         return;
+    }
+
+    // Mostrar subtotal y botón de comprar cuando hay productos
+    if (subtotalLinea) {
+        subtotalLinea.style.display = "flex";
+        subtotalLinea.style.visibility = "visible";
+    }
+    if (btnComprar) {
+        btnComprar.style.display = "block";
+        btnComprar.style.visibility = "visible";
     }
 
     // ======== SPINNER SEGURO ========
@@ -237,7 +267,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                     </div>
                 `;
                 if (badge) badge.textContent = "0";
-                inputSubtot.textContent = "USD 0.00";
+                // Ocultar subtotal y botón de comprar
+                if (subtotalLinea) {
+                    subtotalLinea.style.display = "none";
+                    subtotalLinea.style.visibility = "hidden";
+                }
+                if (btnComprar) {
+                    btnComprar.style.display = "none";
+                    btnComprar.style.visibility = "hidden";
+                }
                 return;
             }
 
@@ -263,7 +301,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             </div>
         `;
         if (badge) badge.textContent = "0";
-        if (inputSubtot) inputSubtot.textContent = "USD 0.00";
+        // Ocultar subtotal y botón de comprar en caso de error
+        if (subtotalLinea) {
+            subtotalLinea.style.display = "none";
+            subtotalLinea.style.visibility = "hidden";
+        }
+        if (btnComprar) {
+            btnComprar.style.display = "none";
+            btnComprar.style.visibility = "hidden";
+        }
     } finally {
         safeHideSpinner();
     }
