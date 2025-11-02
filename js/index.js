@@ -37,6 +37,14 @@ async function initRelevantProductsCarousel() {
     const carousel = document.getElementById("relevant-products-carousel");
     if (!carousel) return;
 
+    // Mapeo de IDs a nombres de categorías
+    const categoryInfo = {
+        101: "Autos",
+        102: "Juguetes",
+        103: "Muebles",
+        105: "Computadoras"
+    };
+
     const categoryIds = [101, 102, 103, 105];
 
     try {
@@ -44,9 +52,17 @@ async function initRelevantProductsCarousel() {
         const results = await Promise.all(promises);
 
         let products = [];
-        for (const result of results) {
+        for (let i = 0; i < results.length; i++) {
+            const result = results[i];
+            const catId = categoryIds[i];
             if (result.status === "ok" && result.data.products) {
-                products.push(...result.data.products);
+                // Agregar información de categoría a cada producto
+                const productsWithCategory = result.data.products.map(p => ({
+                    ...p,
+                    categoryId: catId,
+                    categoryName: categoryInfo[catId]
+                }));
+                products.push(...productsWithCategory);
             }
         }
 
@@ -97,7 +113,10 @@ function renderCarouselProducts(container, products) {
     }
 
     const productHtml = products.map(p => `
-        <div class="swiper-slide product-card cursor-pointer" data-id="${p.id}">
+        <div class="swiper-slide product-card cursor-pointer" 
+             data-id="${p.id}"
+             data-category-id="${p.categoryId || ''}"
+             data-category-name="${p.categoryName || ''}">
             <div class="product-image-wrapper">
                 <img src="${p.image || ''}" class="product-image">
             </div>
@@ -113,7 +132,18 @@ function renderCarouselProducts(container, products) {
     container.querySelectorAll(".product-card").forEach(card => {
         card.addEventListener("click", function () {
             const id = this.dataset.id;
+            const categoryId = this.dataset.categoryId;
+            const categoryName = this.dataset.categoryName;
+            
+            // Guardar toda la información necesaria
             localStorage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
+            if (categoryId) {
+                localStorage.setItem(STORAGE_KEYS.CAT_ID, categoryId);
+            }
+            if (categoryName) {
+                localStorage.setItem(STORAGE_KEYS.CAT_NAME, categoryName);
+            }
+            
             window.location = "product-info.html";
         });
     });
