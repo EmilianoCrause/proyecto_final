@@ -8,13 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	const productID = localStorage.getItem("productID");
 	if (!productID) {
-		productInfoContainer.innerHTML = '<div class="alert alert-warning">No se encontró productID en localStorage.</div>';
+		productInfoContainer.innerHTML = '<div class="alert alert-warning">No se encontró el producto.</div>';
 		return;
 	}
 
 	const infoURL = PRODUCT_INFO_URL + productID + EXT_TYPE;
-
-	// Cargar info del producto actual
 	getJSONData(infoURL).then(function (resultObj) {
 		if (resultObj.status !== "ok") {
 			productInfoContainer.innerHTML = '<div class="alert alert-danger">Error al cargar información del producto.</div>';
@@ -23,15 +21,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		const product = resultObj.data;
 
-		// Actualizar catID y catName basándose en la categoría del producto
-		// Si el producto tiene información de categoría, actualizarla
 		if (product.category) {
 			localStorage.setItem(STORAGE_KEYS.CAT_ID, product.category);
-			
-			// Mapeo de nombres de categorías comunes
+
 			const categoryNames = {
 				"101": "Autos",
-				"102": "Juguetes", 
+				"102": "Juguetes",
 				"103": "Muebles",
 				"104": "Herramientas",
 				"105": "Computadoras",
@@ -40,93 +35,117 @@ document.addEventListener("DOMContentLoaded", function () {
 				"108": "Deporte",
 				"109": "Celulares"
 			};
-			
+
 			const catNameToSave = categoryNames[product.category] || catName;
 			localStorage.setItem(STORAGE_KEYS.CAT_NAME, catNameToSave);
 		}
 
 		productInfoContainer.innerHTML = `
-      <div class="row align-items-start" style="margin-top:1.5rem; margin-bottom:2rem;">
-        <div class="col-lg-7">
-          <!-- contenedor imagen principal + miniaturas (mantén la tuya si ya la tenés) -->
-          <div class="d-flex border p-3" style="gap:1rem;">
-            <div style="flex:1; display:flex; align-items:center; justify-content:center; min-height:260px;">
-              <img id="main-image" src="${product.images && product.images[0] ? product.images[0] : ''}" class="img-fluid" style="max-height:350px; object-fit:contain;">
-            </div>
-            <div class="d-flex flex-column" style="width:90px; gap:8px;">
-              ${(product.images || []).map((img, i) => `
-                <div class="thumb-wrapper" style="width:90px; height:90px; border:1px solid #000; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-                  <img src="${img}" class="product-thumb" data-img="${img}" style="width:100%; height:100%; object-fit:cover; cursor:pointer;">
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        </div>
+			<div class="product-row">
+				<div class="product-images-column">
+				  <div class="image-area">
+					<div class="main-image-wrapper">
+					  <img id="main-image" src="${product.images && product.images[0] ? product.images[0] : ''}" class="main-image">
+					</div>
+					<div class="thumbs-col">
+					  ${(product.images || []).map((img, i) => `
+						<div class="thumb-wrapper">
+						  <img src="${img}" class="product-thumb" data-img="${img}">
+						</div>
+					  `).join('')}
+					</div>
+				  </div>
+				</div>
 
-        <div class="col-lg-5 d-flex flex-column" style="min-height:350px;">
-          <small class="text-muted mb-2">${product.soldCount || 0} vendidos</small>
-          <h2 class="mb-3">${product.name || ''}</h2>
-          <div class="mb-3" style="max-height:90px; overflow:hidden;">
-            <p class="mb-0">${product.description || ''}</p>
-          </div>
-          <h4 class="text-success mb-3">${product.currency || ''} ${product.cost !== undefined ? product.cost : ''}</h4>
+				<div class="product-details-column">
+					<div class="product-detail-panel">
+						<small class="product-detail-soldCount">${product.soldCount || 0} vendidos</small>
+						<h2 class="product-detail-title">${product.name || ''}</h2>
+						<div class="product-detail-desc">
+							<p>${product.description || ''}</p>
+						</div>
+						<h4 class="product-detail-price">${product.currency || ''} ${product.cost !== undefined ? product.cost : ''}</h4>
+						<div class="botones">
+							<button id="addToCartBtn" class="product-btn">Agregar al carrito</button>
+							<button id="buyBtnTop" class="comprar-btn">Comprar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	    `;
 
-          <!-- Si NO querés cambiar la parte superior, sacá este botón o ajustalo -->
-          <button id="buyBtnTop" class="btn btn-buy align-self-start mt-auto">Comprar</button>
-        </div>
-      </div>
-    `;
-
-		// Funcionalidad del botón "Comprar" 
 		const buyBtn = document.getElementById("buyBtnTop");
+		const addBtn = document.getElementById("addToCartBtn");
+
+		function addProductToCart(redirect = false) {
+			let cart = JSON.parse(localStorage.getItem("cart")) || [];
+			const productToBuy = {
+				id: product.id,
+				name: product.name,
+				cost: product.cost,
+				currency: product.currency,
+				image: (product.images && product.images[0]) || "",
+				count: 1
+			};
+			const existingProduct = cart.find(item => item.id === productToBuy.id);
+			if (existingProduct) {
+				existingProduct.count += 1;
+			} else {
+				cart.push(productToBuy);
+			};
+			localStorage.setItem("cart", JSON.stringify(cart));
+
+			const badge = document.getElementById("cart-badge");
+			if (badge) {
+				const totalCantidad = cart.reduce((acc, item) => acc + (item.count || 0), 0);
+				badge.textContent = totalCantidad;
+			}
+
+			if (redirect) {
+				window.location.href = "cart.html";
+			}
+		}
+
+		if (addBtn) {
+			addBtn.addEventListener("click", function (e) {
+				e.preventDefault();
+				addProductToCart(false);
+				Swal.fire({
+                    toast: true,
+                    position: 'top',
+                    icon: 'success',
+                    title: 'Producto agregado',
+                    text: 'Podrás ver tus productos en el carrito de compras.',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+					background: getComputedStyle(document.documentElement)
+                		.getPropertyValue('--card-bg'),
+  					color: getComputedStyle(document.documentElement)
+                		.getPropertyValue('--font-color')
+                });
+				setTimeout(() => addBtn.textContent = "Agregar al carrito", 1200);
+			});
+		}
 
 		if (buyBtn) {
-  			buyBtn.addEventListener("click", function () {
-    			// Recupera carrito actual (si no existe, crea uno vacío)
-    			let cart = JSON.parse(localStorage.getItem("cart")) || [];
+			buyBtn.addEventListener("click", function (e) {
+				e.preventDefault();
+				addProductToCart(true);
+			});
+		}
 
-    			// Crear objeto del producto a guardar
-    			const productToBuy = {
-      				id: product.id,
-      				name: product.name,
-      				cost: product.cost,
-      				currency: product.currency,
-      				image: (product.images && product.images[0]) || "",
-      				count: 1
-    			};
-
-    			// Verificar si ya está en el carrito
-    			const existingProduct = cart.find(item => item.id === productToBuy.id);
-    			if (existingProduct) {
-      				existingProduct.count += 1;
-    			} else {
-      				cart.push(productToBuy);
-    			}
-
-    			// Guardar carrito actualizado
-    			localStorage.setItem("cart", JSON.stringify(cart));
-
-    			// Redirigir a la pantalla del carrito
-    			window.location.href = "cart.html";
-  			});
-		}	
-
-		// Miniaturas: clic -> reemplaza imagen principal
 		document.querySelectorAll(".product-thumb").forEach((thumb) => {
 			thumb.addEventListener("click", function () {
 				const src = this.dataset.img;
 				const mainImg = document.getElementById("main-image");
 				if (mainImg) mainImg.src = src;
 
-				// marcar seleccionado
-				document.querySelectorAll(".thumb-wrapper").forEach(w => w.style.outline = "none");
-				this.parentElement.style.outline = "2px solid #efa639";
+				document.querySelectorAll(".thumb-wrapper").forEach(w => w.classList.remove('selected'));
+				this.parentElement.classList.add('selected');
 			});
 		});
 
-		// Productos relacionados
-		// Si tenemos catID en localStorage, pedimos todos los productos de la categoría y construimos
-		// una lista completa para mostrar precios y descripciones (evita campos faltantes).
 		const catID = localStorage.getItem("catID");
 
 		function renderRelated(relatedItems) {
@@ -135,44 +154,44 @@ document.addEventListener("DOMContentLoaded", function () {
 				return;
 			}
 
-			// Limitar cantidad muestra (ej.: hasta 10)
 			const toShow = relatedItems.slice(0, 10);
 			const html = toShow.map(p => `
-        <div class="col-10 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
-          <div class="card related-card h-100 cursor-pointer" data-id="${p.id}">
-            <img src="${p.image || ''}" class="card-img-top" style="height:100px; object-fit:cover;">
-            <div class="card-body p-2 d-flex flex-column">
-              <h6 class="card-title text-truncate mb-1">${p.name || ''}</h6>
-              <p class="card-text small text-muted text-truncate mb-2">${p.description ? p.description : ''}</p>
-              <div class="mt-auto"><span class="price">${p.currency ? p.currency + ' ' : ''}${p.cost !== undefined ? p.cost : ''}</span></div>
-            </div>
-          </div>
-        </div>
-      `).join("");
+					<div class="product-card" data-id="${p.id}">
+						<div class="product-image-wrapper">
+							<img src="${p.image || ''}" alt="${p.name || ''}" class="product-image">
+							<div class="sold-badge">${p.soldCount || ''} ${p.soldCount ? 'vendidos' : ''}</div>
+						</div>
+						<div class="product-content">
+							<div class="product-header">
+								<h4 class="product-title">${p.name || ''}</h4>
+								<p class="product-description">${p.description ? p.description : ''}</p>
+							</div>
+							<div class="product-price">${p.currency ? p.currency + ' ' : ''}${p.cost !== undefined ? p.cost : ''}</div>
+							<div class="product-action">
+								<button class="product-btn">Ver detalles</button>
+							</div>
+						</div>
+					</div>
+				`).join("");
 
 			relatedList.innerHTML = html;
 
-			// click en cada card -> abrir ese producto
-			document.querySelectorAll(".related-card").forEach(card => {
+			document.querySelectorAll(".product-card").forEach(card => {
 				card.addEventListener("click", function () {
 					const id = this.dataset.id;
 					localStorage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
-					// Mantener la categoría actual al navegar a productos relacionados
 					window.location = "product-info.html";
 				});
 			});
 		}
 
-		// Si hay catID pedimos la lista de la categoría (más info), si no, usamos product.relatedProducts
 		if (catID) {
 			getJSONData(PRODUCTS_URL + catID + EXT_TYPE).then(function (resCat) {
 				if (resCat.status === "ok") {
 					const all = resCat.data.products || [];
-					// Mapeo por id para buscar info completa
 					const map = {};
 					all.forEach(p => map[p.id] = p);
 
-					// product.relatedProducts puede venir con objetos o con ids; normalizamos:
 					const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
 					let relatedFull = [];
 
@@ -181,11 +200,10 @@ document.addEventListener("DOMContentLoaded", function () {
 						if (map[id]) {
 							relatedFull.push(map[id]);
 						} else if (typeof r === 'object') {
-							relatedFull.push(r); // fallback
+							relatedFull.push(r);
 						}
 					});
 
-					// Rellenamos con otros productos de la categoría (excluyendo el actual) hasta tener 10
 					for (let p of all) {
 						if (relatedFull.length >= 10) break;
 						if (p.id == product.id) continue;
@@ -194,27 +212,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 					renderRelated(relatedFull);
 				} else {
-					// fallback: usar lo que vino en product
 					const fallback = (product.relatedProducts || []).map(r => (typeof r === 'object' ? r : { id: r, name: '', image: '' }));
 					renderRelated(fallback);
 				}
 			});
 		} else {
-			// no catID: usar únicamente lo que trae product.relatedProducts
 			const fallback = (product.relatedProducts || []).map(r => (typeof r === 'object' ? r : { id: r, name: '', image: '' }));
 			renderRelated(fallback);
 		}
-		// Actualizar breadcrumb con la categoría actualizada
+
 		const updatedCatName = localStorage.getItem(STORAGE_KEYS.CAT_NAME) || "Categoría";
 		breadcrumb.innerHTML = `
-  <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-  <li class="breadcrumb-item"><a href="categories.html">Categorías</a></li>
-  <li class="breadcrumb-item"><a href="products.html">${updatedCatName}</a></li>
-  <li class="breadcrumb-item active" aria-current="page">${product.name}</li>
-`;
+	<li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+	<li class="breadcrumb-item"><a href="categories.html">Categorías</a></li>
+	<li class="breadcrumb-item"><a href="products.html">${updatedCatName}</a></li>
+	<li class="breadcrumb-item active" aria-current="page">${product.name}</li>
+	`;
 	});
 
 	const commentsContainer = document.getElementById("comments-container");
+	const ratingSummaryContainer = document.getElementById("rating-summary-container");
 	const commentsURL = PRODUCT_INFO_COMMENTS_URL + productID + EXT_TYPE;
 
 	getJSONData(commentsURL).then(function (res) {
@@ -230,10 +247,54 @@ document.addEventListener("DOMContentLoaded", function () {
 			return;
 		}
 
-		// Renderizar comentarios y formulario
+		function updateRatingSummary(commentsArray) {
+			const totalComments = commentsArray.length;
+			const scoreDistribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+			let totalScore = 0;
+
+			commentsArray.forEach(c => {
+				scoreDistribution[c.score]++;
+				totalScore += c.score;
+			});
+
+			const averageScore = (totalScore / totalComments).toFixed(1);
+
+			const rankingHTML = `
+				<div class="rating-summary">
+					<div class="rating-average">
+						<div class="average-score">${averageScore} <span class="star-icon">★</span></div>
+						<div class="average-label">De 5 estrellas</div>
+					</div>
+					<div class="rating-bars">
+						${[5, 4, 3, 2, 1].map(star => {
+							const count = scoreDistribution[star];
+							const percentage = totalComments > 0 ? (count / totalComments * 100) : 0;
+							return `
+								<div class="rating-bar-row">
+									<span class="star-label">${'★'.repeat(star)}</span>
+									<div class="rating-bar-bg">
+										<div class="rating-bar-fill" style="width: ${percentage}%"></div>
+									</div>
+									<span class="rating-count">${count}</span>
+								</div>
+							`;
+						}).join('')}
+					</div>
+				</div>
+			`;
+
+			if (ratingSummaryContainer) {
+				ratingSummaryContainer.innerHTML = rankingHTML;
+			}
+		}
+
+		let allComments = [...comments];
+
+		updateRatingSummary(allComments);
+
 		let commentsHTML = '<p class="text-muted">No hay comentarios para este producto.</p>';
-		if (comments.length) {
-			commentsHTML = comments.map(c => `
+		if (allComments.length) {
+			commentsHTML = allComments.map(c => `
         <div class="comment">
           <div class="comment-header">
             <span class="comment-user">${c.user}</span>
@@ -248,13 +309,9 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 
 		commentsContainer.innerHTML = `
-      <div class="comments-layout">
-        <div class="comments-list">
-          <h4 class="mb-3">Comentarios</h4>
-          <div id="cont-comment">
-            ${commentsHTML}
-          </div>
-        </div>
+      <div class="comments-list">
+        <div id="cont-comment">
+          ${commentsHTML}
         </div>
       </div>
     `;
@@ -276,14 +333,12 @@ document.addEventListener("DOMContentLoaded", function () {
 				return;
 			}
 
-			// Crear fecha actual 
 			const now = new Date();
 			const formattedDate = now.toLocaleString("es-ES", {
 				year: "numeric", month: "2-digit", day: "2-digit",
 				hour: "2-digit", minute: "2-digit"
 			});
 
-			// Crear nuevo comentario
 			const newCommentHTML = `
     <div class="comment">
       <div class="comment-header">
@@ -297,16 +352,21 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   `;
 
-			// Insertar al final de la lista de comentarios
 			commentsList.insertAdjacentHTML("beforeend", newCommentHTML);
 
-			// Limpiar formulario
+			allComments.push({
+				user: user,
+				dateTime: formattedDate,
+				score: score,
+				description: text
+			});
+			updateRatingSummary(allComments);
+
 			commentText.value = "";
 			const allRadios = commentForm.querySelectorAll('.comment-score');
 			allRadios.forEach(r => r.checked = false);
 		});
 
-		// Función para mostrar estrellas según score
 		function renderStars(score) {
 			let stars = "";
 			for (let i = 1; i <= 5; i++) {

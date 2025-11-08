@@ -218,6 +218,7 @@ body.dark-mode .categoria-card__count-badge {
     border: 1px solid var(--primary-hover);
     color: var(--primary-hover);
 }
+/* product-info styles moved to css/product-info.css */
 
 body.dark-mode .product-card {
     border-color: rgba(255, 255, 255, 0.1);
@@ -232,77 +233,7 @@ body.dark-mode .product-image-wrapper {
     background: #2a2a2a;
 }
 
-/* Comentarios */
-#comments-container {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--input-border);
-}
-
-#comments-container h4 {
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--input-border);
-}
-
-.comment {
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--input-border);
-}
-
-.comment:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.comment-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.comment-user {
-    font-weight: 600;
-    font-size: 0.95rem;
-}
-
-.comment-date {
-    font-size: 0.8rem;
-    color: #888;
-}
-
-body.dark-mode .comment-date {
-    color: #aaa;
-}
-
-.comment-body p {
-    margin: 0.5rem 0 0 0;
-    line-height: 1.6;
-    font-size: 0.9rem;
-}
-
-.comment .text-warning {
-    color: var(--primary-color) !important;
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-}
-
-.comments-layout {
-    display: flex;
-    gap: 2rem;
-}
-
-.comments-list {
-    flex: 1;
-}
-
-.add-comment-form {
-    flex: 1;
-}
+/* product-info styles have been moved to css/product-info.css */
 
 /* Carousel de productos relevantes */
 .relevant-products-container {

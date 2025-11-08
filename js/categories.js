@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const breadcrumb = document.getElementById("breadcrumb-container");
     if (breadcrumb) {
         breadcrumb.innerHTML = `
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
             <li class="breadcrumb-item active" aria-current="page">Categorías</li>
         `;
     }
