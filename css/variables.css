@@ -29,6 +29,8 @@
     --mode-icons: black;
     --info-perfil-bg: #e7e7e7;
     --img-banner: url('../img/light-banner.png');
+    --img-banner-tablet: url('../img/img_tablet_modo_claro.png');
+    --img-banner-mobile: url('../img/img_mobile_modo_claro.png');
 }
 
 /* Modo oscuro */
@@ -51,4 +53,6 @@ body.dark-mode {
     --mode-icons: #fff;
     --info-perfil-bg: rgba(40, 40, 40, 0.7);
     --img-banner: url('../img/dark-banner.png');
+    --img-banner-tablet: url('../img/img_tablet_modo_oscuro.png');
+    --img-banner-mobile: url('../img/img_mobile_modo_oscuro.png');
 }

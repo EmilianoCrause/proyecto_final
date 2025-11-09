@@ -1,8 +1,3 @@
-// ===========================
-// UTILIDADES COMPARTIDAS
-// ===========================
-
-// Verificación de usuario logueado - Redirige a login si no hay sesión
 function verificarUsuario() {
     const usuSession = sessionStorage.getItem(STORAGE_KEYS.USUARIO);
     const usuLocal = localStorage.getItem(STORAGE_KEYS.USUARIO);
@@ -14,25 +9,21 @@ function verificarUsuario() {
     return true;
 }
 
-// Función compartida para agregar event listeners de manera segura
 function addClick(id, handler) {
     const el = document.getElementById(id);
     if (el) el.addEventListener("click", handler);
 }
 
-// Función compartida para guardar el ID de un producto y redirigir
 function setProductID(id) {
     localStorage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
     window.location = "product-info.html";
 }
 
-// Función compartida para guardar el ID de una categoría y redirigir
 function setCatID(id) {
     localStorage.setItem(STORAGE_KEYS.CAT_ID, id);
     window.location = "products.html";
 }
 
-// Funciones de Dark Mode e idioma compartidas entre páginas
 function initDarkMode() {
     const themeToggle = document.getElementById('theme-toggle-checkbox');
     if (themeToggle) {
@@ -69,3 +60,7 @@ function initLanguageSelector() {
         });
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    initDarkMode();
+});

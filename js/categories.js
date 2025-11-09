@@ -80,29 +80,6 @@ function initEventListeners() {
     }
 }
 
-function initDarkMode() {
-    const themeToggle = document.getElementById('theme-toggle-checkbox');
-    if (themeToggle) {
-        // Sincronizar estado inicial
-        if (document.documentElement.classList.contains("dark-mode")) {
-            document.body.classList.add("dark-mode");
-            themeToggle.checked = true;
-        }
-        // Escuchar cambios
-        themeToggle.addEventListener("change", () => {
-            const isDark = themeToggle.checked;
-            if (isDark) {
-                document.documentElement.classList.add("dark-mode");
-                document.body.classList.add("dark-mode");
-            } else {
-                document.documentElement.classList.remove("dark-mode");
-                document.body.classList.remove("dark-mode");
-            }
-            localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark);
-        });
-    }
-}
-
 function initLanguageSelector() {
     const langBtn = document.querySelector(".lang-btn");
     const langSelect = document.getElementById("idioma");

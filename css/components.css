@@ -11,6 +11,7 @@
     margin: 0 1rem;
     align-items: center;
     visibility: hidden;
+    min-width: 0;
 }
 
 .search-form input {
@@ -24,6 +25,8 @@
     transition: all 0.2s ease;
     background-color: var(--bg-color);
     color: var(--font-color);
+    width: 100%;
+    min-width: 0;
 }
 
 .search-form input:focus {
@@ -47,7 +50,7 @@
     color: var(--primary-hover);
 }
 
-/* Fix autofill */
+/* Autocompletado del navegador */
 .search-form input:-webkit-autofill,
 .search-form textarea:-webkit-autofill,
 .search-form select:-webkit-autofill {
@@ -276,5 +279,32 @@ aside h6 {
     .search-form {
         margin: 0.5rem 0;
         width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .search-form {
+        margin: 0;
+        max-width: 100%;
+        flex-shrink: 1;
+    }
+    
+    .search-form input {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+        padding-right: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-form {
+        min-width: 100px;
+    }
+    
+    .search-form input {
+        font-size: 0.85rem;
+        padding: 0.35rem 0.7rem;
+        padding-right: 32px;
     }
 }

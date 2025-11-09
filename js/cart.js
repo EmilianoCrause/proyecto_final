@@ -1,25 +1,10 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    // ======== MODO OSCURO ========
-    const darkToggle = document.getElementById('theme-toggle-checkbox');
-    if (darkToggle && localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        darkToggle.checked = true;
-    }
-    if (darkToggle) {
-        darkToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode', darkToggle.checked);
-            localStorage.setItem('darkMode', darkToggle.checked);
-        });
-    }
-
-    // ======== ELEMENTOS DEL DOM ========
     const contenedorLista = document.getElementById("lista-art");
     const inputSubtot = document.getElementById("input-subtot");
     const badge = document.getElementById("cart-badge");
     const subtotalLinea = document.getElementById("subtot-lin");
     const btnComprar = document.getElementById("btn-comprar");
 
-    // Ocultar por defecto subtotal y botón de comprar
     if (subtotalLinea) {
         subtotalLinea.style.display = "none";
         subtotalLinea.style.visibility = "hidden";
@@ -29,10 +14,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         btnComprar.style.visibility = "hidden";
     }
 
-    // ======== LEER CARRITO DEL STORAGE ========
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Carrito vacío
     if (!cart.length) {
         contenedorLista.innerHTML = `
             <div class="text-center py-5">
@@ -47,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             </div>
         `;
         if (badge) badge.textContent = "0";
-        // Ocultar subtotal y botón de comprar
         if (subtotalLinea) {
             subtotalLinea.style.display = "none";
             subtotalLinea.style.visibility = "hidden";
@@ -59,7 +41,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         return;
     }
 
-    // Mostrar subtotal y botón de comprar cuando hay productos
     if (subtotalLinea) {
         subtotalLinea.style.display = "flex";
         subtotalLinea.style.visibility = "visible";
@@ -69,7 +50,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         btnComprar.style.visibility = "visible";
     }
 
-    // ======== SPINNER SEGURO ========
     const safeShowSpinner = () => {
         const spinner = document.getElementById("spinner-wrapper");
         if (spinner) spinner.style.display = "block";
@@ -91,14 +71,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             })
         );
 
-      
         const lista = document.createElement("ul");
         lista.classList.add("list-group", "mb-3");
 
-        // Tasa de cambio UYU a USD
         const TASA_CAMBIO_UYU_A_USD = 40;
 
-        // Función para convertir a dólares
         function convertirADolares(precio, moneda) {
             if (moneda === "UYU") {
                 return precio / TASA_CAMBIO_UYU_A_USD;
@@ -106,13 +83,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             return precio;
         }
 
-        // Función para recalcular totales generales
         function recalcularTotales() {
             let totalCarrito = 0;
             let totalCantidad = 0;
             let hayDolares = false;
 
-            // Verificar si hay algún producto en dólares
             cart.forEach((cartItem, ids) => {
                 const prodInfo = detalles[ids].info;
                 if (prodInfo.currency === "USD") {
@@ -120,7 +95,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             });
 
-            // Calcular el total según la moneda predominante
             cart.forEach((cartItem, ids) => {
                 const prodInfo = detalles[ids].info;
                 const cantidad = cartItem.count;
@@ -136,19 +110,16 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             });
 
-            // Mostrar en la moneda correspondiente
             if (hayDolares) {
                 inputSubtot.textContent = `USD ${totalCarrito.toFixed(2)}`;
             } else {
                 inputSubtot.textContent = `UYU ${totalCarrito.toLocaleString()}`;
             }
-            
             if (badge) {
                 badge.textContent = totalCantidad;
             }
         }
 
-        //Render de cada producto en el carrito
         cart.forEach((cartItem, index) => {
             const prodInfo = detalles[index].info;
             const itemSubtotal = prodInfo.cost * cartItem.count;
@@ -209,7 +180,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         recalcularTotales();
 
-        //Cambiar cantidad en vivo
         lista.addEventListener("input", (e) => {
             if (!e.target.classList.contains("cantidad-input")) return;
 
@@ -237,7 +207,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             recalcularTotales();
         });
 
-        // ======== Eliminar producto ========
         lista.addEventListener("click", (e) => {
             const btn = e.target.closest(".btn-cerrar");
             if (!btn) return;

@@ -1,9 +1,7 @@
-// Variables Globales
 let currentProductsArray = [];
 let filteredProductsArray = [];
 const SORT_MAP = { asc: "priceAsc", desc: "priceDesc", count: "relevance" };
 
-// Muestra la lista de productos en el contenedor principal
 function showProductsList() {
     const productList = document.getElementById("products-list-container");
     if (!productList) return;
@@ -33,7 +31,6 @@ function showProductsList() {
     productList.innerHTML = htmlContentToAppend;
 }
 
-// Ordena los productos según un criterio y actualiza la vista
 function ordenarProductos(criterio) {
     if (criterio === "priceAsc") {
         filteredProductsArray.sort((a, b) => a.cost - b.cost);
@@ -45,7 +42,6 @@ function ordenarProductos(criterio) {
     showProductsList();
 }
 
-// Filtra los productos por un rango de precio
 function filtrarPorPrecio(minID, maxID) {
     let min = parseInt(document.getElementById(minID)?.value);
     let max = parseInt(document.getElementById(maxID)?.value);
@@ -58,7 +54,6 @@ function filtrarPorPrecio(minID, maxID) {
             (max === undefined || product.cost <= max);
     });
 
-    // Re-aplica el orden seleccionado
     const sortOption = document.querySelector('input[name="options"]:checked');
     if (sortOption) {
         ordenarProductos(SORT_MAP[sortOption.value] || "relevance");
@@ -67,7 +62,6 @@ function filtrarPorPrecio(minID, maxID) {
     }
 }
 
-// Limpia los filtros de precio y muestra todos los productos
 function limpiarFiltros(minID, maxID) {
     const minEl = document.getElementById(minID);
     const maxEl = document.getElementById(maxID);
@@ -77,8 +71,6 @@ function limpiarFiltros(minID, maxID) {
     filteredProductsArray = [...currentProductsArray];
     ordenarProductos("relevance");
 }
-
-// Inicializaciones
 
 function initSort() {
     const sortOptions = document.querySelector(".sort-options");
@@ -131,7 +123,6 @@ function initSearchBar() {
     }
 }
 
-// Carga de productos
 function loadProducts() {
     const catID = localStorage.getItem(STORAGE_KEYS.CAT_ID);
     const productListContainer = document.getElementById("products-list-container");
@@ -220,7 +211,6 @@ function loadProducts() {
     });
 }
 
-// --- INICIO ---
 document.addEventListener("DOMContentLoaded", () => {
     if (!verificarUsuario()) return;
 

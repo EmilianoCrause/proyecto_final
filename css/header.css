@@ -1,15 +1,303 @@
-/* ===============================
-   HEADER Y NAVEGACIÓN
-   =============================== */
+/* ESTILOS PARA HEADER Y NAVEGACIÓN */
 
+/* Navegación Principal */
 header nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
     border-bottom: 1px solid #cdcfd1;
+    position: relative;
+    max-width: 100%;
+    overflow: visible;
 }
 
+header nav > a {
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+/* Menú Hamburguesa */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1002;
+    border-radius: 4px;
+    transition: opacity 0.2s ease;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    gap: 5px;
+}
+
+.menu-toggle:hover {
+    opacity: 0.7;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--font-color);
+    transition: all 0.2s ease;
+    border-radius: 1px;
+}
+
+.menu-toggle.active span {
+    position: absolute;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg);
+}
+
+body.dark-mode .menu-toggle:hover {
+    opacity: 0.6;
+}
+
+/* Menú Móvil - Overlay */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    background: var(--card-bg);
+    box-shadow: -3px 0 15px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 5rem 1.5rem 2rem;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-menu .selectores {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+    width: 100%;
+}
+
+.mobile-menu .selectores:not(:last-child) {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.mobile-menu .light-btn,
+.mobile-menu .lang-btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    gap: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.mobile-menu .light-btn:hover,
+.mobile-menu .lang-btn:hover {
+    background: var(--primary-color);
+    color: rgb(0, 0, 0);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu .light-btn svg,
+.mobile-menu .lang-btn svg {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.mobile-menu .light-btn:hover svg,
+.mobile-menu .lang-btn:hover svg {
+    transform: scale(1.1);
+}
+
+/* Forzar que los SVG sean visibles */
+.mobile-menu .light-btn svg path,
+.mobile-menu .lang-btn svg path {
+    fill: currentColor;
+}
+
+.mobile-menu .light-btn:hover svg path,
+.mobile-menu .lang-btn:hover svg path {
+    fill: rgb(0, 0, 0) !important;
+}
+
+.mobile-menu .light-btn span:not(.position-absolute) {
+    display: inline-block !important;
+    font-size: 0.95rem;
+    color: var(--font-color);
+}
+
+.mobile-menu .light-btn:hover span:not(.position-absolute) {
+    color: rgb(0, 0, 0) !important;
+}
+
+.mobile-menu #User-display {
+    display: inline-block !important;
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.mobile-menu .light-btn:hover #User-display {
+    color: rgb(0, 0, 0) !important;
+}
+
+/* Menú Móvil - Badge del Carrito */
+.mobile-menu .light-btn .position-absolute {
+    position: static !important;
+    background: var(--primary-color) !important;
+    color: rgb(0, 0, 0) !important;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: auto;
+}
+
+/* Menú Móvil - Selector de Idioma */
+.mobile-menu .lang-btn span {
+    display: inline-block !important;
+    font-size: 0.95rem;
+}
+
+.mobile-menu .lang-dropdown {
+    position: static;
+    margin-top: 0.5rem;
+    box-shadow: none;
+    border-radius: 8px;
+}
+
+/* Menú Móvil - Toggle de Tema */
+.mobile-menu .theme-toggle {
+    width: 100%;
+    height: auto;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu .theme-toggle:hover {
+    background: rgba(var(--primary-color-rgb, 0, 123, 255), 0.05);
+}
+
+.mobile-menu .theme-toggle label {
+    position: relative;
+    margin: 0;
+}
+
+.mobile-menu .theme-toggle span {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* Menú Móvil - Modo Oscuro */
+body.dark-mode .mobile-menu {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .mobile-menu .selectores:not(:last-child) {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .mobile-menu .light-btn,
+body.dark-mode .mobile-menu .lang-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .mobile-menu .light-btn span:not(.position-absolute),
+body.dark-mode .mobile-menu #User-display {
+    color: var(--font-color);
+}
+
+body.dark-mode .mobile-menu .light-btn:hover,
+body.dark-mode .mobile-menu .lang-btn:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: rgb(0, 0, 0);
+}
+
+body.dark-mode .mobile-menu .light-btn:hover span:not(.position-absolute),
+body.dark-mode .mobile-menu .light-btn:hover #User-display {
+    color: rgb(0, 0, 0);
+}
+
+body.dark-mode .mobile-menu .theme-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .mobile-menu .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .lang-dropdown {
+    background: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .lang-dropdown button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Logo */
 .e-commerce {
     display: flex;
     flex-direction: column;
@@ -29,7 +317,7 @@ header nav {
 }
 
 .subtitulo .bold {
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .resaltar {
@@ -37,27 +325,14 @@ header nav {
     font-weight: 700;
 }
 
-/* Selectores (tema e idioma) */
+/* Contenedores de Controles */
 .selectores {
     display: flex;
     gap: 0.5rem;
     align-items: center;
 }
 
-body.dark-mode .theme-toggle {
-    background: var(--input-bg);
-    border-color: var(--input-border);
-}
-
-body.dark-mode .theme-toggle label {
-    background: #666;
-}
-
-body.dark-mode .theme-toggle input:checked+label {
-    background: var(--primary-color);
-}
-
-/* Botones de header */
+/* Botones del Header */
 .light-btn,
 .lang-btn {
     background: transparent;
@@ -96,11 +371,7 @@ body.dark-mode .theme-toggle input:checked+label {
     font-weight: 500;
 }
 
-/* ===============================
-   Theme Toggle (Sol/Luna)
-   =============================== */
-
-/* Toggle para modo oscuro */
+/* Toggle de Tema */
 .theme-toggle {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
@@ -128,7 +399,7 @@ body.dark-mode .theme-toggle input:checked+label {
     transition: all 0.3s ease;
 }
 
-.theme-toggle input:checked+label {
+.theme-toggle input:checked + label {
     margin-left: 26px;
 }
 
@@ -136,11 +407,10 @@ body.dark-mode .theme-toggle input:checked+label {
     width: 20px;
     height: 20px;
     transition: opacity 0.3s ease;
-    fill: var(--mode-icons);
+    fill: black;
     position: absolute;
 }
 
-/* Por defecto (modo claro): mostrar sol, ocultar luna */
 .theme-toggle .sun-icon {
     opacity: 1;
 }
@@ -149,7 +419,6 @@ body.dark-mode .theme-toggle input:checked+label {
     opacity: 0;
 }
 
-/* Cuando está checked (modo oscuro): ocultar sol, mostrar luna */
 .theme-toggle input:checked ~ label .sun-icon {
     opacity: 0;
 }
@@ -158,12 +427,20 @@ body.dark-mode .theme-toggle input:checked+label {
     opacity: 1;
 }
 
-/* ===============================
-   Selector de idioma
-   =============================== */
-   
+body.dark-mode .theme-toggle {
+    background: var(--input-bg);
+    border-color: var(--input-border);
+}
 
-/* Selector de idioma */
+body.dark-mode .theme-toggle label {
+    background: #666;
+}
+
+body.dark-mode .theme-toggle input:checked + label {
+    background: var(--primary-color);
+}
+
+/* Selector de Idioma */
 .lang-container {
     position: relative;
 }
@@ -200,40 +477,40 @@ body.dark-mode .theme-toggle input:checked+label {
 }
 
 .lang-dropdown {
-  display: none;
-  position: absolute;
-  top: 110%;
-  left: 0;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  flex-direction: column;
-  z-index: 9999;
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    z-index: 9999;
 }
 
 .lang-dropdown button {
-  background: none;
-  border: none;
-  padding: 8px 12px;
-  text-align: left;
-  width: 100%;
-  cursor: pointer;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    color: var(--font-color)
 }
 
 .lang-dropdown button:hover {
-  background: #f5f5f5;
+    background: #f5f5f5;
 }
 
 .lang-container.show .lang-dropdown {
-  display: flex;
+    display: flex;
 }
 
-/* Ocultar completamente el widget original de Google */
 .goog-te-banner-frame,
 .goog-te-gadget,
 .goog-te-combo {
-  display: none !important;
+    display: none;
 }
 
 /* Breadcrumb */
@@ -251,31 +528,215 @@ body.dark-mode .theme-toggle input:checked+label {
     color: var(--font-color);
 }
 
-/* Responsive */
+/* Diseño Responsivo */
+
+/* Tablets y pantallas medianas (hasta 1024px) */
 @media (max-width: 1024px) {
     header nav {
-        padding: 0.5rem 1.5rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .selectores {
+        gap: 0.3rem;
+    }
+
+    .light-btn,
+    .lang-btn {
+        padding: 0.4rem;
+    }
+
+    .light-img,
+    .lang-svg {
+        width: 1.75rem;
+    }
+
+    #User-display {
+        font-size: 0.85rem;
     }
 }
 
-@media (max-width: 768px) {
-    header nav {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    header nav {
-        padding: 0.5rem 1rem;
+/* Tablets pequeñas (hasta 900px) */
+@media (max-width: 900px) {
+    .subtitulo {
+        display: none;
     }
 
     #e-mercado {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+    }
+}
+
+/* Tablets pequeñas y móviles grandes (hasta 768px) */
+@media (max-width: 768px) {
+    header nav {
+        padding: 0.75rem 1rem;
     }
 
-    .subtitulo {
-        font-size: 0.8rem;
+    .light-btn span:not(#User-display),
+    .d-none.d-sm-inline {
+        display: none;
+    }
+
+    #User-display {
+        display: none;
+    }
+
+    #e-mercado {
+        font-size: 1.3rem;
+    }
+
+    .theme-toggle {
+        width: 55px;
+        height: 28px;
+    }
+
+    .theme-toggle label {
+        width: 20px;
+        height: 20px;
+    }
+
+    .theme-toggle input:checked + label {
+        margin-left: 24px;
+    }
+
+    .theme-toggle label svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* Móviles (hasta 640px) - Menú Hamburguesa Activo */
+@media (max-width: 640px) {
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        order: 3;
+        flex-shrink: 0;
+    }
+
+    .mobile-menu,
+    .mobile-menu-overlay {
+        display: block;
+    }
+
+    header nav > .selectores {
+        display: none;
+    }
+
+    header nav {
+        padding: 0.75rem 1rem;
+        gap: 0.75rem;
+        flex-wrap: nowrap;
+    }
+
+    header nav > a {
+        order: 1;
+        flex: 0 0 auto;
+        min-width: 0;
+    }
+
+    .search-form {
+        order: 2;
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: calc(100% - 200px);
+    }
+
+    #e-mercado {
+        font-size: 1.25rem;
+    }
+
+    .e-commerce {
+        align-items: flex-start;
+    }
+
+    .light-img,
+    .lang-svg {
+        width: 1.5rem;
+    }
+}
+
+/* Móviles pequeños (hasta 480px) */
+@media (max-width: 480px) {
+    header nav {
+        padding: 0.65rem 0.85rem;
+        gap: 0.5rem;
+    }
+
+    #e-mercado {
+        font-size: 1.15rem;
+    }
+
+    .menu-toggle {
+        width: 38px;
+        height: 38px;
+        padding: 0.45rem;
+        gap: 4px;
+    }
+
+    .menu-toggle span {
+        width: 22px;
+        height: 2px;
+    }
+
+    .mobile-menu {
+        width: 260px;
+        max-width: 80vw;
+        padding: 3.5rem 1.25rem 1.5rem;
+    }
+
+    .mobile-menu .light-btn,
+    .mobile-menu .lang-btn {
+        padding: 0.65rem 0.85rem;
+        font-size: 0.9rem;
+    }
+
+    .search-form {
+        max-width: calc(100% - 150px);
+    }
+}
+
+/* Móviles muy pequeños (hasta 360px) */
+@media (max-width: 360px) {
+    header nav {
+        padding: 0.6rem 0.75rem;
+        gap: 0.4rem;
+    }
+
+    #e-mercado {
+        font-size: 1.05rem;
+    }
+
+    .menu-toggle {
+        width: 36px;
+        height: 36px;
+        padding: 0.4rem;
+        gap: 4px;
+    }
+
+    .menu-toggle span {
+        width: 20px;
+        height: 2px;
+    }
+
+    .mobile-menu {
+        width: 240px;
+        max-width: 75vw;
+        padding: 3rem 1rem 1.25rem;
+    }
+
+    .mobile-menu .light-btn,
+    .mobile-menu .lang-btn {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.85rem;
+        gap: 0.5rem;
+    }
+
+    .mobile-menu .theme-toggle {
+        padding: 0.6rem 0.75rem;
+    }
+
+    .search-form {
+        max-width: calc(100% - 120px);
     }
 }
