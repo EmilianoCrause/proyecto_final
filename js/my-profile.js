@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', function(){
     const emailSaved =  localStorage.getItem('usuario') || sessionStorage.getItem('usuario')
     const telSaved = localStorage.getItem('telefono') || sessionStorage.getItem('telefono')
 
+    // Variables temporales para la imagen
+    let tempImageData = null;
+    let imageToDelete = false;
+
     infoEmail.textContent = emailSaved
     infoNom.textContent = nomSaved ?? '-'
     infoApell.textContent = apellSaved ?? '-'
@@ -31,11 +35,28 @@ document.addEventListener('DOMContentLoaded', function(){
         apellPerfil.value = apellSaved
         emailPerfil.value = emailSaved
         telPerfil.value = telSaved
+        
+        // Resetear cambios temporales de imagen
+        tempImageData = null;
+        imageToDelete = false;
     })
 
     document.getElementById('btn-cerrar').addEventListener('click', () => {
         formEditar.style.display = 'none'
         btnEditar.style.display = 'block'
+        
+        // Restaurar imagen original si se canceló
+        const savedImg = localStorage.getItem('profileImage');
+        const profileImg = document.getElementById('profile-img');
+        if (savedImg && profileImg) {
+            profileImg.src = savedImg;
+        } else if (profileImg) {
+            profileImg.src = 'img/extra/icono-perfil.png';
+        }
+        
+        // Resetear cambios temporales
+        tempImageData = null;
+        imageToDelete = false;
     })
 
     document.getElementById('form-edit').addEventListener('submit', (e) => {
@@ -46,25 +67,70 @@ document.addEventListener('DOMContentLoaded', function(){
             localStorage.setItem('apellido', apellPerfil.value)
             localStorage.setItem('usuario', emailPerfil.value)
             localStorage.setItem('telefono', telPerfil.value)
+            
+            // Guardar o eliminar imagen según corresponda
+            if (imageToDelete) {
+                localStorage.removeItem('profileImage');
+            } else if (tempImageData) {
+                localStorage.setItem('profileImage', tempImageData);
+            }
         } else {
             sessionStorage.setItem('nombre', nomPerfil.value)
             sessionStorage.setItem('apellido', apellPerfil.value)
             sessionStorage.setItem('usuario', emailPerfil.value)
             sessionStorage.setItem('telefono', telPerfil.value)
+            
+            // Guardar o eliminar imagen según corresponda
+            if (imageToDelete) {
+                localStorage.removeItem('profileImage');
+            } else if (tempImageData) {
+                localStorage.setItem('profileImage', tempImageData);
+            }
         }
+        
         formEditar.style.display = 'none'
         btnEditar.style.display = 'block'
+        
+        // Resetear cambios temporales
+        tempImageData = null;
+        imageToDelete = false;
+        
         location.reload()
     })
 
-    document.getElementById('btn-borrar-img').addEventListener('click', ()=>{
-        localStorage.removeItem('profileImage')
+    document.getElementById('btn-borrar-img').addEventListener('click', (e) => {
+        e.preventDefault();
+        imageToDelete = true;
+        tempImageData = null;
+        const profileImg = document.getElementById('profile-img');
+        if (profileImg) {
+            profileImg.src = 'img/extra/icono-perfil.png';
+        }
     })
+
+    // Manejar cambio de imagen (solo vista previa)
+    const imgInput = document.getElementById('img-input');
+    if (imgInput) {
+        imgInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const profileImg = document.getElementById('profile-img');
+                    if (profileImg) {
+                        profileImg.src = evt.target.result;
+                        tempImageData = evt.target.result;
+                        imageToDelete = false;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 
 })
 
 const profileImg = document.getElementById('profile-img');
-const imgInput = document.getElementById('img-input');
 
 window.addEventListener('DOMContentLoaded', () => {
   const savedImg = localStorage.getItem('profileImage');
@@ -72,20 +138,6 @@ window.addEventListener('DOMContentLoaded', () => {
     profileImg.src = savedImg;
   }
 });
-
-if (imgInput) {
-  imgInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        profileImg.src = evt.target.result;
-        localStorage.setItem('profileImage', evt.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-}
 
 // Inicializar dark mode y selector de idioma
 initDarkMode();

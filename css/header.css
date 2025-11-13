@@ -518,13 +518,45 @@ body.dark-mode .theme-toggle input:checked + label {
     margin: 0;
     padding: 0;
     align-items: center;
+    font-size: 0.9rem;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.breadcrumb::-webkit-scrollbar {
+    display: none;
+}
+
+.breadcrumb-item {
+    flex-shrink: 0;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .breadcrumb-item a {
     color: #6c757d;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-block;
 }
 
 .breadcrumb-item a:hover {
+    color: var(--font-color);
+}
+
+.breadcrumb-item.active {
+    color: var(--font-color);
+}
+
+body.dark-mode .breadcrumb-item a {
+    color: #adb5bd;
+}
+
+body.dark-mode .breadcrumb-item.active {
     color: var(--font-color);
 }
 
@@ -603,6 +635,25 @@ body.dark-mode .theme-toggle input:checked + label {
         width: 16px;
         height: 16px;
     }
+
+    /* Breadcrumb responsive */
+    .breadcrumb {
+        font-size: 0.8rem;
+        flex-wrap: nowrap;
+        gap: 0;
+        overflow-x: auto;
+        padding: 0.25rem 0;
+    }
+
+    .breadcrumb-item {
+        max-width: 120px;
+        flex-shrink: 0;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        padding-right: 0.3rem;
+        padding-left: 0.3rem;
+    }
 }
 
 /* Móviles (hasta 640px) - Menú Hamburguesa Activo */
@@ -654,6 +705,23 @@ body.dark-mode .theme-toggle input:checked + label {
     .lang-svg {
         width: 1.5rem;
     }
+
+    /* Breadcrumb en móvil */
+    .breadcrumb {
+        font-size: 0.75rem;
+        padding: 0.4rem 0;
+        overflow-x: auto;
+    }
+
+    .breadcrumb-item {
+        max-width: 100px;
+        flex-shrink: 0;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        padding-right: 0.3rem;
+        padding-left: 0.3rem;
+    }
 }
 
 /* Móviles pequeños (hasta 480px) */
@@ -693,6 +761,22 @@ body.dark-mode .theme-toggle input:checked + label {
 
     .search-form {
         max-width: calc(100% - 150px);
+    }
+
+    /* Breadcrumb en móviles pequeños */
+    .breadcrumb {
+        font-size: 0.7rem;
+        padding: 0.35rem 0;
+    }
+
+    .breadcrumb-item {
+        max-width: 85px;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        padding-right: 0.25rem;
+        padding-left: 0.25rem;
+        font-size: 0.65rem;
     }
 }
 
@@ -738,5 +822,21 @@ body.dark-mode .theme-toggle input:checked + label {
 
     .search-form {
         max-width: calc(100% - 120px);
+    }
+
+    /* Breadcrumb en móviles muy pequeños */
+    .breadcrumb {
+        font-size: 0.65rem;
+        padding: 0.3rem 0;
+    }
+
+    .breadcrumb-item {
+        max-width: 70px;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        padding-right: 0.2rem;
+        padding-left: 0.2rem;
+        font-size: 0.6rem;
     }
 }

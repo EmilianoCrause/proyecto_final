@@ -494,6 +494,7 @@ body.dark-mode .rating input:checked ~ label {
 @media (max-width: 991px) {
     .product-row {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .product-images-column,
@@ -503,6 +504,7 @@ body.dark-mode .rating input:checked ~ label {
 
     .contenedor-comentarios-calif {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .contenedor-comentarios-calif > div:first-child,
@@ -511,7 +513,7 @@ body.dark-mode .rating input:checked ~ label {
     }
 
     .comments-list {
-        max-height: 300px;
+        max-height: 350px;
     }
 
     .rating-summary {
@@ -532,5 +534,431 @@ body.dark-mode .rating input:checked ~ label {
 
     .average-score .star-icon {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-row {
+        gap: 1.25rem;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-detail-panel {
+        padding: 1rem;
+    }
+
+    .product-detail-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .product-detail-price {
+        font-size: 1.5rem;
+        margin: 0.75rem 0 1.5rem 0;
+    }
+
+    .product-detail-desc p {
+        font-size: 0.9rem;
+    }
+
+    .botones {
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    .product-btn,
+    .comprar-btn {
+        width: 100%;
+        padding: 0.65rem 1rem;
+    }
+
+    .contenedor-comentarios-calif {
+        gap: 1.25rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .comments-list {
+        max-height: 300px;
+    }
+
+    .comment {
+        padding: 10px 12px;
+        margin-bottom: 10px;
+    }
+
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .comment-user {
+        font-size: 0.9rem;
+    }
+
+    .comment-date {
+        font-size: 0.75rem;
+    }
+
+    .comment-body p {
+        font-size: 0.85rem;
+    }
+
+    #form-calif {
+        padding-top: 1.5rem;
+    }
+
+    #reviewForm {
+        gap: 1rem;
+    }
+
+    #reviewForm textarea {
+        min-height: 100px;
+        padding: 0.75rem;
+    }
+
+    .rating label {
+        font-size: 1.6rem;
+    }
+
+    #rating-and-submit {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
+    }
+
+    #rating-and-submit .rating {
+        justify-content: center;
+    }
+
+    #rating-and-submit .product-btn {
+        width: 100%;
+    }
+
+    .related-products-section {
+        margin-top: 2rem;
+    }
+
+    .related-products-section h4 {
+        margin-bottom: 1.25rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .image-area {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+
+    .thumbs-col {
+        width: 100%;
+        flex-direction: row;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+
+    .thumbs-col::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .thumbs-col::-webkit-scrollbar-thumb {
+        background-color: var(--scroll-hover);
+        border-radius: 10px;
+    }
+
+    .thumb-wrapper {
+        width: 70px;
+        height: 70px;
+        flex-shrink: 0;
+    }
+
+    .main-image-wrapper {
+        min-height: 220px;
+    }
+
+    .product-detail-panel {
+        padding: 0.85rem;
+    }
+
+    .product-detail-title {
+        font-size: 1.3rem;
+    }
+
+    .product-detail-price {
+        font-size: 1.3rem;
+        margin: 0.65rem 0 1.25rem 0;
+    }
+
+    .product-detail-desc p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .botones {
+        gap: 12px;
+    }
+
+    .product-btn,
+    .comprar-btn {
+        padding: 0.6rem 0.85rem;
+        font-size: 0.9rem;
+    }
+
+    .rating-summary {
+        padding: 0.85rem;
+        gap: 0.85rem;
+    }
+
+    .average-score {
+        font-size: 1.75rem;
+    }
+
+    .average-score .star-icon {
+        font-size: 1.35rem;
+    }
+
+    .rating-bars {
+        gap: 0.35rem;
+    }
+
+    .star-label {
+        font-size: 0.7rem;
+        min-width: 40px;
+        width: 3.5rem;
+    }
+
+    .rating-bar-bg {
+        height: 5px;
+    }
+
+    .rating-count {
+        font-size: 0.7rem;
+        min-width: 20px;
+    }
+
+    .comments-list {
+        max-height: 280px;
+    }
+
+    .comment {
+        padding: 9px 10px;
+        margin-bottom: 9px;
+        border-radius: 6px;
+    }
+
+    .comment-user {
+        font-size: 0.85rem;
+    }
+
+    .comment-date {
+        font-size: 0.7rem;
+    }
+
+    .comment-body p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+
+    .comment .text-warning {
+        font-size: 1rem;
+    }
+
+    #form-calif {
+        padding-top: 1.25rem;
+    }
+
+    #reviewForm {
+        gap: 0.85rem;
+    }
+
+    #reviewForm textarea {
+        min-height: 90px;
+        padding: 0.65rem;
+        font-size: 0.85rem;
+    }
+
+    .rating label {
+        font-size: 1.5rem;
+        gap: 6px;
+    }
+
+    .related-products-section {
+        margin-top: 1.5rem;
+    }
+
+    .related-products-section h4 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-row {
+        gap: 1rem;
+        margin-top: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .main-image-wrapper {
+        min-height: 200px;
+    }
+
+    .thumbs-col {
+        gap: 6px;
+    }
+
+    .thumb-wrapper {
+        width: 60px;
+        height: 60px;
+        border-radius: 6px;
+    }
+
+    .product-detail-panel {
+        padding: 0.75rem;
+    }
+
+    .product-detail-soldCount {
+        font-size: 0.8rem;
+    }
+
+    .product-detail-title {
+        font-size: 1.15rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .product-detail-price {
+        font-size: 1.2rem;
+        margin: 0.5rem 0 1rem 0;
+    }
+
+    .product-detail-desc p {
+        font-size: 0.8rem;
+    }
+
+    .botones {
+        gap: 10px;
+    }
+
+    .product-btn,
+    .comprar-btn {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .contenedor-comentarios-calif {
+        gap: 1rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .contenedor-comentarios-calif h4 {
+        font-size: 1rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .rating-summary {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .average-score {
+        font-size: 1.5rem;
+    }
+
+    .average-score .star-icon {
+        font-size: 1.2rem;
+    }
+
+    .average-label {
+        font-size: 0.75rem;
+    }
+
+    .star-label {
+        font-size: 0.65rem;
+        min-width: 35px;
+        width: 3rem;
+    }
+
+    .rating-bar-bg {
+        height: 4px;
+    }
+
+    .rating-count {
+        font-size: 0.65rem;
+    }
+
+    .comments-list {
+        max-height: 250px;
+    }
+
+    .comment {
+        padding: 8px 9px;
+        margin-bottom: 8px;
+    }
+
+    .comment-user {
+        font-size: 0.8rem;
+    }
+
+    .comment-date {
+        font-size: 0.68rem;
+    }
+
+    .comment-body p {
+        font-size: 0.75rem;
+        margin-top: 6px;
+    }
+
+    .comment .text-warning {
+        font-size: 0.9rem;
+    }
+
+    #form-calif {
+        padding-top: 1rem;
+    }
+
+    #reviewForm {
+        gap: 0.75rem;
+    }
+
+    #reviewForm > div:not(#rating-and-submit) label {
+        font-size: 0.9rem;
+    }
+
+    #reviewForm textarea {
+        min-height: 80px;
+        padding: 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .rating {
+        gap: 6px;
+    }
+
+    .rating label {
+        font-size: 1.4rem;
+    }
+
+    #rating-and-submit {
+        gap: 0.65rem;
+    }
+
+    #rating-and-submit .product-btn {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.8rem;
+    }
+
+    .related-products-section {
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .related-products-section h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.85rem;
     }
 }
