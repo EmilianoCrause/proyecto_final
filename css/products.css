@@ -410,6 +410,15 @@ body.dark-mode .relevant-products-container .swiper-button-prev:hover {
         gap: 0.5rem;
     }
 
+    .categories-grid {
+        gap: 1.5rem;
+    }
+
+    /* Espacio entre las cards de categorías en el index */
+    .container > .row > [class*="col-"] {
+        margin-bottom: 1.5rem;
+    }
+
     .relevant-products-container {
         padding: 0 0.5rem;
     }
@@ -429,8 +438,11 @@ body.dark-mode .relevant-products-container .swiper-button-prev:hover {
     .relevant-products-container .swiper-button-prev:after {
         font-size: 16px;
     }
-}
 
+    .product-content{
+        margin-bottom: 2rem;
+    }
+}
 @media (max-width: 640px) {
     .relevant-products-container .swiper {
         padding-left: 35px;
@@ -450,6 +462,11 @@ body.dark-mode .relevant-products-container .swiper-button-prev:hover {
 }
 
 @media (max-width: 480px) {
+    .categories-grid {
+        gap: 1rem;
+        grid-template-columns: 1fr;
+    }
+
     .relevant-products-container {
         margin-top: 2rem;
         margin-bottom: 2rem;

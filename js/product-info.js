@@ -242,11 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 		const comments = res.data;
 
-		if (!comments.length) {
-			commentsContainer.innerHTML = '<p class="text-muted">No hay comentarios para este producto.</p>';
-			return;
-		}
-
 		function updateRatingSummary(commentsArray) {
 			const totalComments = commentsArray.length;
 			const scoreDistribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
@@ -257,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				totalScore += c.score;
 			});
 
-			const averageScore = (totalScore / totalComments).toFixed(1);
+			const averageScore = totalComments > 0 ? (totalScore / totalComments).toFixed(1) : '0.0';
 
 			const rankingHTML = `
 				<div class="rating-summary">
@@ -352,7 +347,12 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   `;
 
-			commentsList.insertAdjacentHTML("beforeend", newCommentHTML);
+			// Si es el primer comentario, reemplazar el mensaje de "No hay comentarios"
+			if (allComments.length === 0) {
+				commentsList.innerHTML = newCommentHTML;
+			} else {
+				commentsList.insertAdjacentHTML("beforeend", newCommentHTML);
+			}
 
 			allComments.push({
 				user: user,
