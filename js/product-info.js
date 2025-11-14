@@ -146,7 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 		});
 
-		const catID = localStorage.getItem("catID");
+		const catID = localStorage.getItem(STORAGE_KEYS.CAT_ID);
+		console.log("Category ID:", catID);
 
 		function renderRelated(relatedItems) {
 			if (!relatedItems || relatedItems.length === 0) {
@@ -155,7 +156,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 
 			const toShow = relatedItems.slice(0, 10);
-			const html = toShow.map(p => `
+			console.log("Productos relacionados a renderizar:", toShow);
+			const html = toShow.map(p => {
+				console.log("Producto:", p.name, "Tiene description:", !!p.description);
+				return `
 					<div class="product-card" data-id="${p.id}">
 						<div class="product-image-wrapper">
 							<img src="${p.image || ''}" alt="${p.name || ''}" class="product-image">
@@ -164,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						<div class="product-content">
 							<div class="product-header">
 								<h4 class="product-title">${p.name || ''}</h4>
-								<p class="product-description">${p.description ? p.description : ''}</p>
+								<p class="product-description">${p.description || ''}</p>
 							</div>
 							<div class="product-price">${p.currency ? p.currency + ' ' : ''}${p.cost !== undefined ? p.cost : ''}</div>
 							<div class="product-action">
@@ -172,7 +176,8 @@ document.addEventListener("DOMContentLoaded", function () {
 							</div>
 						</div>
 					</div>
-				`).join("");
+				`;
+			}).join("");
 
 			relatedList.innerHTML = html;
 
@@ -186,39 +191,118 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 
 		if (catID) {
+			console.log("Cargando productos de la categoría:", PRODUCTS_URL + catID + EXT_TYPE);
 			getJSONData(PRODUCTS_URL + catID + EXT_TYPE).then(function (resCat) {
 				if (resCat.status === "ok") {
 					const all = resCat.data.products || [];
+					console.log("Productos cargados de la categoría:", all.length);
 					const map = {};
 					all.forEach(p => map[p.id] = p);
 
 					const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
+					console.log("Productos relacionados originales:", relFromProduct);
 					let relatedFull = [];
 
-					relFromProduct.forEach(r => {
+					// Crear promesas para cargar la información completa de productos relacionados
+					const promises = relFromProduct.map(r => {
 						const id = (typeof r === 'object') ? r.id : r;
+						console.log("Procesando producto relacionado ID:", id, "¿Está en map?", !!map[id]);
+						// Si ya está en el map de la categoría actual, usarlo
 						if (map[id]) {
-							relatedFull.push(map[id]);
-						} else if (typeof r === 'object') {
-							relatedFull.push(r);
+							console.log("Producto encontrado en map:", map[id]);
+							return Promise.resolve(map[id]);
 						}
+						// Si no está, cargar su información completa desde la API
+						console.log("Cargando producto desde API:", PRODUCT_INFO_URL + id + EXT_TYPE);
+						return getJSONData(PRODUCT_INFO_URL + id + EXT_TYPE).then(res => {
+							if (res.status === "ok") {
+								const productData = res.data;
+								console.log("Producto cargado desde API:", productData);
+								// Adaptar la estructura del detalle al formato del listado
+								return {
+									id: productData.id,
+									name: productData.name,
+									description: productData.description,
+									cost: productData.cost,
+									currency: productData.currency,
+									soldCount: productData.soldCount,
+									image: productData.images && productData.images[0] ? productData.images[0] : ''
+								};
+							}
+							// Si falla, usar el objeto básico
+							return (typeof r === 'object') ? r : { id: id, name: '', image: '' };
+						});
 					});
 
-					for (let p of all) {
-						if (relatedFull.length >= 10) break;
-						if (p.id == product.id) continue;
-						if (!relatedFull.find(x => x.id == p.id)) relatedFull.push(p);
-					}
+					// Esperar a que se carguen todos los productos relacionados
+					Promise.all(promises).then(loadedProducts => {
+						console.log("Todos los productos relacionados cargados:", loadedProducts);
+						relatedFull = loadedProducts;
 
-					renderRelated(relatedFull);
+						// Agregar más productos de la misma categoría si hacen falta
+						for (let p of all) {
+							if (relatedFull.length >= 10) break;
+							if (p.id == product.id) continue;
+							if (!relatedFull.find(x => x.id == p.id)) relatedFull.push(p);
+						}
+
+						renderRelated(relatedFull);
+					});
 				} else {
-					const fallback = (product.relatedProducts || []).map(r => (typeof r === 'object' ? r : { id: r, name: '', image: '' }));
-					renderRelated(fallback);
+					console.log("Error al cargar productos de la categoría");
+					// Si falla la carga de la categoría, cargar cada producto relacionado individualmente
+					const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
+					const promises = relFromProduct.map(r => {
+						const id = (typeof r === 'object') ? r.id : r;
+						return getJSONData(PRODUCT_INFO_URL + id + EXT_TYPE).then(res => {
+							if (res.status === "ok") {
+								const productData = res.data;
+								return {
+									id: productData.id,
+									name: productData.name,
+									description: productData.description,
+									cost: productData.cost,
+									currency: productData.currency,
+									soldCount: productData.soldCount,
+									image: productData.images && productData.images[0] ? productData.images[0] : ''
+								};
+							}
+							return (typeof r === 'object') ? r : { id: id, name: '', image: '' };
+						});
+					});
+					Promise.all(promises).then(loadedProducts => {
+						renderRelated(loadedProducts);
+					});
 				}
 			});
 		} else {
-			const fallback = (product.relatedProducts || []).map(r => (typeof r === 'object' ? r : { id: r, name: '', image: '' }));
-			renderRelated(fallback);
+			console.log("No hay catID, cargando productos relacionados individualmente");
+			// Si no hay catID, cargar cada producto relacionado individualmente
+			const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
+			const promises = relFromProduct.map(r => {
+				const id = (typeof r === 'object') ? r.id : r;
+				console.log("Cargando producto individual:", id);
+				return getJSONData(PRODUCT_INFO_URL + id + EXT_TYPE).then(res => {
+					if (res.status === "ok") {
+						const productData = res.data;
+						console.log("Producto individual cargado:", productData.name, "con description:", productData.description);
+						return {
+							id: productData.id,
+							name: productData.name,
+							description: productData.description,
+							cost: productData.cost,
+							currency: productData.currency,
+							soldCount: productData.soldCount,
+							image: productData.images && productData.images[0] ? productData.images[0] : ''
+						};
+					}
+					return (typeof r === 'object') ? r : { id: id, name: '', image: '' };
+				});
+			});
+			Promise.all(promises).then(loadedProducts => {
+				console.log("Productos individuales cargados:", loadedProducts);
+				renderRelated(loadedProducts);
+			});
 		}
 
 		const updatedCatName = localStorage.getItem(STORAGE_KEYS.CAT_NAME) || "Categoría";
