@@ -7,11 +7,10 @@
     <title>eMercado - Todo lo que busques está aquí</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 
-    
-    <link href="css/font-awesome.min.css" rel="stylesheet"> 
+
+    <link href="css/font-awesome.min.css" rel="stylesheet">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
@@ -39,7 +38,7 @@
             <div></div>
         </div>
     </div>
-  <header>
+    <header>
         <nav>
             <!-- Logo del e_commerce -->
             <a href="index.html">
@@ -60,10 +59,13 @@
             <!-- Controles -->
             <div class="selectores">
                 <!-- Botón carrito con badge -->
-                <button id="btn-cart" class="btn light-btn position-relative" onclick="window.location.href='cart.html'">
+                <button id="btn-cart" class="btn light-btn position-relative"
+                    onclick="window.location.href='cart.html'">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                         viewBox="0 0 256 256">
-                        <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
+                        <path
+                            d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z">
+                        </path>
                     </svg>
                     <span id="cart-badge" class="position-absolute"
                         style="top:-4px; right:-4px; background:#F09100; color:white; border-radius:999px; font-size:12px; line-height:1; padding:2px 6px; min-width:20px; text-align:center;">
@@ -84,8 +86,11 @@
 
                 <!-- Botón Cerrar sesión -->
                 <button class="light-btn" id="btn-logout">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256">
-                        <path d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z"></path>
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000"
+                        viewBox="0 0 256 256">
+                        <path
+                            d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z">
+                        </path>
                     </svg>
                     <span class="d-none d-sm-inline">Cerrar sesión</span>
                 </button>
@@ -98,37 +103,40 @@
                     <label for="theme-toggle-checkbox">
                         <!-- Sol (modo claro) -->
                         <svg class="sun-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 17.01c2.76 0 5.01-2.25 5.01-5.01S14.76 6.99 12 6.99 6.99 9.24 6.99 12s2.25 5.01 5.01 5.01M12 9c1.66 0 3.01 1.35 3.01 3.01s-1.35 3.01-3.01 3.01-3.01-1.35-3.01-3.01S10.34 9 12 9M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z"/>
+                            <path
+                                d="M12 17.01c2.76 0 5.01-2.25 5.01-5.01S14.76 6.99 12 6.99 6.99 9.24 6.99 12s2.25 5.01 5.01 5.01M12 9c1.66 0 3.01 1.35 3.01 3.01s-1.35 3.01-3.01 3.01-3.01-1.35-3.01-3.01S10.34 9 12 9M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z" />
                         </svg>
                         <!-- Luna (modo oscuro) -->
                         <svg class="moon-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="m12.2,22c4.53,0,8.45-2.91,9.76-7.24.11-.35.01-.74-.25-1-.26-.26-.64-.36-1-.25-.78.23-1.58.35-2.38.35-4.52,0-8.2-3.68-8.2-8.2,0-.8.12-1.6.35-2.38.11-.35.01-.74-.25-1s-.64-.36-1-.25C4.91,3.35,2,7.28,2,11.8c0,5.62,4.57,10.2,10.2,10.2ZM8.18,4.65c-.03.34-.05.68-.05,1.02,0,5.62,4.57,10.2,10.2,10.2.34,0,.68-.02,1.02-.05-1.42,2.56-4.12,4.18-7.15,4.18-4.52,0-8.2-3.68-8.2-8.2,0-3.03,1.63-5.73,4.18-7.15Z"/>
+                            <path
+                                d="m12.2,22c4.53,0,8.45-2.91,9.76-7.24.11-.35.01-.74-.25-1-.26-.26-.64-.36-1-.25-.78.23-1.58.35-2.38.35-4.52,0-8.2-3.68-8.2-8.2,0-.8.12-1.6.35-2.38.11-.35.01-.74-.25-1s-.64-.36-1-.25C4.91,3.35,2,7.28,2,11.8c0,5.62,4.57,10.2,10.2,10.2ZM8.18,4.65c-.03.34-.05.68-.05,1.02,0,5.62,4.57,10.2,10.2,10.2.34,0,.68-.02,1.02-.05-1.42,2.56-4.12,4.18-7.15,4.18-4.52,0-8.2-3.68-8.2-8.2,0-3.03,1.63-5.73,4.18-7.15Z" />
                         </svg>
                     </label>
                 </div>
-                <!-- Selector de idioma --> 
-                 <div class="lang-container"> 
-                    <button id="btnIdioma" class="lang-btn" aria-label="Seleccionar idioma"> 
-                        <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> 
-                            <path 
-                            d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z"> 
-                        </path> 
-                        <path 
-                        d="m12.25,14.97l.49-1.94c-.13-.03-1.6-.43-3.17-1.42,1.4-1.41,2.49-3.26,2.74-5.61h1.68v-2h-5v-2h-2v2H2v2h8.3c-.25,1.91-1.19,3.34-2.31,4.4-.69-.65-1.31-1.44-1.74-2.4h-2.13c.5,1.44,1.33,2.63,2.3,3.61-1.57.99-3.04,1.39-3.17,1.42l.49,1.94c1.18-.3,2.76-.96,4.26-2.02,1.49,1.06,3.08,1.72,4.25,2.02Z"> 
-                    </path> 
-                </svg> 
-            </button> 
-            
-            <!-- Menú desplegable --> 
-             <div class="lang-dropdown" id="langDropdown"> 
-                <button data-lang="es">ES</button> 
-                <button data-lang="en">EN</button> 
-                <button data-lang="fr">FR</button> 
-                <button data-lang="pt">PT</button> 
-                <button data-lang="de">DE</button> 
-            </div> 
-            <div id="google_translate_element" style="opacity:0; height:0; overflow:hidden;"></div> </div>
+                <!-- Selector de idioma -->
+                <div class="lang-container">
+                    <button id="btnIdioma" class="lang-btn" aria-label="Seleccionar idioma">
+                        <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path
+                                d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z">
+                            </path>
+                            <path
+                                d="m12.25,14.97l.49-1.94c-.13-.03-1.6-.43-3.17-1.42,1.4-1.41,2.49-3.26,2.74-5.61h1.68v-2h-5v-2h-2v2H2v2h8.3c-.25,1.91-1.19,3.34-2.31,4.4-.69-.65-1.31-1.44-1.74-2.4h-2.13c.5,1.44,1.33,2.63,2.3,3.61-1.57.99-3.04,1.39-3.17,1.42l.49,1.94c1.18-.3,2.76-.96,4.26-2.02,1.49,1.06,3.08,1.72,4.25,2.02Z">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <!-- Menú desplegable -->
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button data-lang="es">ES</button>
+                        <button data-lang="en">EN</button>
+                        <button data-lang="fr">FR</button>
+                        <button data-lang="pt">PT</button>
+                        <button data-lang="de">DE</button>
+                    </div>
+                    <div id="google_translate_element" style="opacity:0; height:0; overflow:hidden;"></div>
                 </div>
+            </div>
             </div>
 
             </div>
@@ -238,39 +246,40 @@
     <script src="js/index.js"></script>
     <script src="js/user-display.js"></script>
     <script src="js/translate.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // ==== CERRAR SESIÓN ====
-  const logoutBtn = document.getElementById("btn-logout");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("user");
-      localStorage.removeItem("profileImage");
-      window.location.href = "login.html";
-    });
-  }
+    <script src="js/mobile-menu.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // ==== CERRAR SESIÓN ====
+            const logoutBtn = document.getElementById("btn-logout");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("profileImage");
+                    window.location.href = "login.html";
+                });
+            }
 
-  // ==== BADGE DEL CARRITO ====
-  const badge = document.getElementById("cart-badge");
-  if (!badge) return; 
+            // ==== BADGE DEL CARRITO ====
+            const badge = document.getElementById("cart-badge");
+            if (!badge) return;
 
-  let cart = [];
-  try {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
-  } catch (e) {
-    cart = [];
-  }
+            let cart = [];
+            try {
+                cart = JSON.parse(localStorage.getItem("cart")) || [];
+            } catch (e) {
+                cart = [];
+            }
 
-  const totalCantidad = cart.reduce(
-    (acc, item) => acc + (item.count || 0),
-    0
-  );
+            const totalCantidad = cart.reduce(
+                (acc, item) => acc + (item.count || 0),
+                0
+            );
 
-  badge.textContent = totalCantidad;
-});
-</script>
-<script src="js/translate.js"></script>
-  <!--Script de Google-->
+            badge.textContent = totalCantidad;
+        });
+    </script>
+    <script src="js/translate.js"></script>
+    <!--Script de Google-->
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
