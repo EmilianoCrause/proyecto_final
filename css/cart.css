@@ -34,19 +34,22 @@
     right: -10px;
 }
 
-/* Botón “fuera del borde” del producto */
-.btn-cerrar {
-    position: absolute;
-    top: 50%;
-    right: -50px; /* aumenta el valor para sacarlo fuera del borde */
-    transform: translateY(-50%);
-    padding: 0.25rem 0.35rem;
-    font-size: 0.8rem;
-    color: var(--mode-icons); 
-}
-
 .cart-item{
+    position: relative;
     background-color: var(--card-bg);
+}
+/* Botón “fuera del borde” del producto */
+.cart-item .btn-cerrar {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 2px 6px;
+    line-height: 1;
+    z-index: 5;
+    font-size: 0.8rem;
+    color: var(--mode-icons);
+    background: transparent;
+    border: none;
 }
 
 li p{

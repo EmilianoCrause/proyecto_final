@@ -16,6 +16,164 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    const shippingSelect = document.getElementById("shipping-type");
+    const depInput = document.getElementById("dep");
+    const locInput = document.getElementById("loc");
+    const calleInput = document.getElementById("calle");
+    const numeroInput = document.getElementById("numero");
+    const esquinaInput = document.getElementById("esquina");
+
+    const paymentMethod = document.getElementById("payment-method");
+    const paymentFieldsBox = document.getElementById("payment-fields");
+    const btnFinalizar = document.getElementById("btn-finalizar");
+    const listaArt = document.getElementById("lista-art");
+
+    // Feedback en el Tab Resumen
+    const resumenTab = document.getElementById("resumenTab");
+    const feedbackDiv = document.createElement("div");
+    feedbackDiv.id = "checkout-feedback";
+    feedbackDiv.className = "mt-3";
+    resumenTab.appendChild(feedbackDiv);
+
+    function showFeedback(type, msg) {
+        feedbackDiv.innerHTML = "";
+        const alert = document.createElement("div");
+        alert.className = "alert alert-" + type;
+        alert.textContent = msg;
+        feedbackDiv.appendChild(alert);
+    }
+
+    function renderPaymentFields() {
+        paymentFieldsBox.innerHTML = "";
+
+        if (paymentMethod.value === "card") {
+            paymentFieldsBox.innerHTML = `
+                <input id="card-name"   class="form-control mb-2" placeholder="Nombre completo">
+                <input id="card-number" class="form-control mb-2" placeholder="Número de tarjeta">
+                <div class="d-flex gap-2 mb-2">
+                    <input id="card-cvv"  class="form-control" placeholder="CVV">
+                    <input id="card-exp"  class="form-control" placeholder="Vencimiento">
+                </div>
+            `;
+        } else {
+            paymentFieldsBox.innerHTML = `
+                <input id="transfer-name" class="form-control mb-2" placeholder="Titular de la cuenta">
+                <input id="transfer-bank" class="form-control mb-2" placeholder="Banco">
+                <input id="transfer-cbu"  class="form-control mb-2" placeholder="Número de cuenta / CBU">
+            `;
+        }
+    }
+
+    paymentMethod.addEventListener("change", renderPaymentFields);
+    renderPaymentFields(); 
+
+    // 1) Dirección no vacía
+    function validateAddress() {
+        const campos = [depInput, locInput, calleInput, numeroInput, esquinaInput];
+        return campos.every(input => input && input.value.trim() !== "");
+    }
+
+    // 2) Forma de envío seleccionada
+    function validateShipping() {
+        return shippingSelect.value !== "" && !isNaN(Number(shippingSelect.value));
+    }
+
+    // 3) Cantidad para cada producto definida y > 0
+    function validateQuantities() {
+        const ctnInputs = listaArt.querySelectorAll("input[type='number']");
+
+        if (ctnInputs.length === 0) {
+            return { ok: false, msg: "Tu carrito está vacío. Agregá productos antes de finalizar la compra." };
+        }
+
+        for (const input of ctnInputs) {
+            const val = Number(input.value);
+            if (!val || val <= 0) {
+                return { ok: false, msg: "La cantidad para cada producto debe estar definida y ser mayor a 0." };
+            }
+        }
+
+        return { ok: true };
+    }
+
+    // 4 y 5) Forma de pago seleccionada + campos llenos
+    function validatePayment() {
+        if (!paymentMethod.value) {
+            return { ok: false, msg: "Seleccioná una forma de pago." };
+        }
+        const inputs = paymentFieldsBox.querySelectorAll("input");
+        if (inputs.length === 0) {
+            return { ok: false, msg: "Completá los datos de la forma de pago seleccionada." };
+        }
+        for (const input of inputs) {
+            if (input.value.trim() === "") {
+                return { ok: false, msg: "Completá todos los campos de la forma de pago seleccionada." };
+            }
+        }
+        return { ok: true };
+    }
+if (btnFinalizar) {
+    btnFinalizar.addEventListener("click", () => {
+        const errores = [];
+
+        if (!validateAddress()) {
+            errores.push("Los campos asociados a la dirección no pueden estar vacíos.");
+        }
+
+        if (!validateShipping()) {
+            errores.push("Debe estar seleccionada la forma de envío.");
+        }
+
+        const ctnCheck = validateQuantities();
+        if (!ctnCheck.ok) {
+            errores.push(ctnCheck.msg);
+        }
+
+        const payCheck = validatePayment();
+        if (!payCheck.ok) {
+            errores.push(payCheck.msg);
+        }
+
+        if (errores.length > 0) {
+            showFeedback("danger", errores.join(" "));
+        } else {
+            showFeedback("success", "¡Compra realizada con éxito!");
+
+            cart = [];
+
+            localStorage.removeItem("cart");
+
+            if (badge) badge.textContent = "0";
+            if (inputSubtot) inputSubtot.textContent = "";
+
+            if (contenedorLista) {
+                contenedorLista.innerHTML = `
+                    <div class="text-center py-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="text-muted mb-3" viewBox="0 0 256 256">
+                            <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
+                        </svg>
+                        <h4 class="mb-2">Tu carrito está vacío</h4>
+                        <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
+                        <a href="index.html" class="btn btn-buy">
+                            <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                        </a>
+                    </div>
+                `;
+            }
+
+            if (subtotalLinea) {
+                subtotalLinea.style.display = "none";
+                subtotalLinea.style.visibility = "hidden";
+            }
+            if (btnComprar) {
+                btnComprar.style.display = "none";
+                btnComprar.style.visibility = "hidden";
+            }
+        }
+    });
+}
+
+
     if (!cart.length) {
         contenedorLista.innerHTML = `
             <div class="text-center py-5">
@@ -282,4 +440,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     } finally {
         safeHideSpinner();
     }
+
 });
+
+
+
