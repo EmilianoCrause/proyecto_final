@@ -66,3 +66,38 @@ li p{
 #subtot-lin{
     margin-left: 15vw;
 }
+
+/* ============================= */
+/* FORMULARIOS ADAPTADOS A MODO OSCURO */
+/* ============================= */
+.form-control,
+.form-select,
+textarea {
+    background-color: var(--card-bg) !important;
+    color: var(--font-color) !important;
+    border-color: var(--border-color, #666) !important;
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+    color: var(--font-color-muted, #aaa) !important;
+}
+
+/* ============================= */
+/* CONTENEDOR DE TABS (ENVÍO / PAGO / RESUMEN) */
+/* ============================= */
+.theme-section {
+    background-color: var(--card-bg);
+    color: var(--font-color);
+    border-radius: 10px;
+    padding: 1rem;
+}
+.nav-tabs .nav-link {
+    color: var(--font-color);
+}
+
+.nav-tabs .nav-link.active {
+    background-color: var(--primary-color);
+    color: var(--font-color);
+    border-color: transparent;
+}

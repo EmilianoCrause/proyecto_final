@@ -125,33 +125,123 @@
         </nav>
     </header>
   <main class="py-5">
-    <div class="container">
-      <div class="row align-items-start g-4" id="principal-container">
+  <div class="container">
+    <h2 class="mb-4">Carrito de compra</h2>
 
-        <!-- Columna de Navegacion -->
-        <div class="col-md-3">
-          <h6 class="fw-bold mb-3">Acceder a</h6>
-          <ul class="list-unstyled">
-            <li><a href="my-profile.html" class="menu-link"><i class="bi bi-person-circle"></i> Mi perfil</a></li>
-            <li><a href="cart.html" class="menu-link active"><i class="bi bi-cart"></i> Carrito</a></li>
-            <li><a href="sell.html" class="menu-link"><i class="bi bi-tag"></i> Vender</a></li>
-            <li><a href="#" class="menu-link"><i class="bi bi-gear"></i> Avanzado</a></li>
-          </ul>
+    <div class="row g-4 justify-content-center">
+
+      <!-- Lista de productos -->
+      <div class="col-lg-7">
+        <h5 class="fw-bold mb-3">Detalle del pedido</h5>
+        <div id="lista-art"></div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 p-2 border-top">
+          <p class="mb-0 fw-bold">Subtotal:</p>
+          <p id="input-subtot" class="mb-0 fw-semibold"></p>
         </div>
+      </div>
 
-        <!--Columna de Informacion-->
-        <div class="col-md-9" id="column-info">
-          <h2>Carrito de compra</h2>
-          <div id="lista-art"></div>
-          <div class="d-flex justify-content-between align-items-center mt-3 p-2" id="subtot-lin">
-            <p class="mb-0 fw-bold">Subtotal:</p>
-            <p id="input-subtot" class="mb-0 fw-semibold"></p>
+      <!-- Panel de información / Tabs -->
+      <div class="col-lg-5">
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-3" id="checkoutTabs">
+          <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#envioTab">Envío</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pagoTab">Pago</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#resumenTab">Resumen</button>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+
+          <!-- TAB ENVÍO -->
+          <div class="tab-pane fade show active theme-section" id="envioTab">
+
+            <h6 class="fw-bold">Tipo de envío</h6>
+            <select id="shipping-type" class="form-select mb-3">
+              <option value="0.15">Premium 2 a 5 días (15%)</option>
+              <option value="0.07">Express 5 a 8 días (7%)</option>
+              <option value="0.05">Standard 12 a 15 días (5%)</option>
+            </select>
+
+            <h6 class="fw-bold">Dirección de envío</h6>
+            <input class="form-control mb-2" id="dep" placeholder="Departamento">
+            <input class="form-control mb-2" id="loc" placeholder="Localidad">
+            <input class="form-control mb-2" id="calle" placeholder="Calle">
+            <div class="d-flex gap-2 mb-2">
+              <input class="form-control" id="numero" placeholder="Número">
+              <input class="form-control" id="esquina" placeholder="Esquina">
+            </div>
+
+            <button class="btn btn-primary w-100 mt-2" data-bs-toggle="tab" data-bs-target="#pagoTab">
+              Continuar
+            </button>
           </div>
-          <button id="btn-comprar">Comprar</utton>
+
+          <!-- TAB PAGO -->
+          <div class="tab-pane fade theme-section" id="pagoTab">
+
+            <h6 class="fw-bold">Forma de pago</h6>
+            <select id="payment-method" class="form-select mb-3">
+              <option value="card">Tarjeta de crédito</option>
+              <option value="transfer">Transferencia bancaria</option>
+            </select>
+
+            <div id="payment-fields">
+
+              <!-- Por defecto tarjeta -->
+              <input class="form-control mb-2" placeholder="Nombre completo">
+              <input class="form-control mb-2" placeholder="Número de tarjeta">
+              <div class="d-flex gap-2 mb-2">
+                <input class="form-control" placeholder="CVV">
+                <input class="form-control" placeholder="Vencimiento">
+              </div>
+
+            </div>
+
+            <button class="btn btn-secondary w-100 mt-2" data-bs-toggle="tab" data-bs-target="#envioTab">Volver</button>
+            <button class="btn btn-primary w-100 mt-2" data-bs-toggle="tab" data-bs-target="#resumenTab">
+              Continuar
+            </button>
+
+          </div>
+
+          <!-- TAB RESUMEN -->
+          <div class="tab-pane fade theme-section" id="resumenTab">
+            <h6 class="fw-bold">Costos</h6>
+
+            <div class="d-flex justify-content-between">
+              <span>Subtotal:</span>
+              <span id="resumen-subtotal"></span>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <span>Costo de envío:</span>
+              <span id="resumen-envio"></span>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between fw-bold">
+              <span>Total:</span>
+              <span id="resumen-total"></span>
+            </div>
+
+            <button class="btn btn-secondary w-100 mt-3" data-bs-toggle="tab" data-bs-target="#pagoTab">Volver</button>
+            <button id="btn-finalizar" class="btn btn-success w-100 mt-2">Finalizar compra</button>
+          </div>
+
         </div>
       </div>
     </div>
-  </main>
+  </div>
+</main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
