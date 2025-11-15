@@ -1,38 +1,55 @@
 document.addEventListener('DOMContentLoaded', async function () {
-    // ======== MODO OSCURO ========
-    const darkToggle = document.getElementById('theme-toggle-checkbox');
-    if (darkToggle && localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        darkToggle.checked = true;
-    }
-    if (darkToggle) {
-        darkToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode', darkToggle.checked);
-            localStorage.setItem('darkMode', darkToggle.checked);
-        });
-    }
-
-    // ======== ELEMENTOS DEL DOM ========
     const contenedorLista = document.getElementById("lista-art");
     const inputSubtot = document.getElementById("input-subtot");
     const badge = document.getElementById("cart-badge");
+    const subtotalLinea = document.getElementById("subtot-lin");
+    const btnComprar = document.getElementById("btn-comprar");
 
-    // ======== LEER CARRITO DEL STORAGE ========
+    if (subtotalLinea) {
+        subtotalLinea.style.display = "none";
+        subtotalLinea.style.visibility = "hidden";
+    }
+    if (btnComprar) {
+        btnComprar.style.display = "none";
+        btnComprar.style.visibility = "hidden";
+    }
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Carrito vacío
     if (!cart.length) {
         contenedorLista.innerHTML = `
-            <div class="alert alert-info text-center" role="alert">
-                No hay artículos disponibles.
+            <div class="text-center py-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="text-muted mb-3" viewBox="0 0 256 256">
+                    <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
+                </svg>
+                <h4 class="mb-2">Tu carrito está vacío</h4>
+                <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
+                <a href="index.html" class="btn btn-buy">
+                    <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                </a>
             </div>
         `;
         if (badge) badge.textContent = "0";
-        if (inputSubtot) inputSubtot.textContent = "0";
+        if (subtotalLinea) {
+            subtotalLinea.style.display = "none";
+            subtotalLinea.style.visibility = "hidden";
+        }
+        if (btnComprar) {
+            btnComprar.style.display = "none";
+            btnComprar.style.visibility = "hidden";
+        }
         return;
     }
 
-    // ======== SPINNER SEGURO ========
+    if (subtotalLinea) {
+        subtotalLinea.style.display = "flex";
+        subtotalLinea.style.visibility = "visible";
+    }
+    if (btnComprar) {
+        btnComprar.style.display = "block";
+        btnComprar.style.visibility = "visible";
+    }
+
     const safeShowSpinner = () => {
         const spinner = document.getElementById("spinner-wrapper");
         if (spinner) spinner.style.display = "block";
@@ -54,29 +71,55 @@ document.addEventListener('DOMContentLoaded', async function () {
             })
         );
 
-      
         const lista = document.createElement("ul");
         lista.classList.add("list-group", "mb-3");
 
-        // Función para recalcular totales generales
+        const TASA_CAMBIO_UYU_A_USD = 40;
+
+        function convertirADolares(precio, moneda) {
+            if (moneda === "UYU") {
+                return precio / TASA_CAMBIO_UYU_A_USD;
+            }
+            return precio;
+        }
+
         function recalcularTotales() {
             let totalCarrito = 0;
             let totalCantidad = 0;
+            let hayDolares = false;
+
+            cart.forEach((cartItem, ids) => {
+                const prodInfo = detalles[ids].info;
+                if (prodInfo.currency === "USD") {
+                    hayDolares = true;
+                }
+            });
 
             cart.forEach((cartItem, ids) => {
                 const prodInfo = detalles[ids].info;
                 const cantidad = cartItem.count;
                 totalCantidad += cantidad;
-                totalCarrito += prodInfo.cost * cantidad;
+                
+                if (hayDolares) {
+                    // Si hay dólares, convertir todo a USD
+                    const precioEnDolares = convertirADolares(prodInfo.cost, prodInfo.currency);
+                    totalCarrito += precioEnDolares * cantidad;
+                } else {
+                    // Si solo hay pesos, sumar en pesos
+                    totalCarrito += prodInfo.cost * cantidad;
+                }
             });
 
-            inputSubtot.textContent = totalCarrito.toLocaleString();
+            if (hayDolares) {
+                inputSubtot.textContent = `USD ${totalCarrito.toFixed(2)}`;
+            } else {
+                inputSubtot.textContent = `UYU ${totalCarrito.toLocaleString()}`;
+            }
             if (badge) {
                 badge.textContent = totalCantidad;
             }
         }
 
-        //Render de cada producto en el carrito
         cart.forEach((cartItem, index) => {
             const prodInfo = detalles[index].info;
             const itemSubtotal = prodInfo.cost * cartItem.count;
@@ -137,7 +180,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         recalcularTotales();
 
-        //Cambiar cantidad en vivo
         lista.addEventListener("input", (e) => {
             if (!e.target.classList.contains("cantidad-input")) return;
 
@@ -165,7 +207,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             recalcularTotales();
         });
 
-        // ======== Eliminar producto ========
         lista.addEventListener("click", (e) => {
             const btn = e.target.closest(".btn-cerrar");
             if (!btn) return;
@@ -183,12 +224,27 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             if (!cart.length) {
                 contenedorLista.innerHTML = `
-                    <div class="alert alert-info text-center" role="alert">
-                        No hay artículos disponibles.
+                    <div class="text-center py-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="text-muted mb-3" viewBox="0 0 256 256">
+                            <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
+                        </svg>
+                        <h4 class="mb-2">Tu carrito está vacío</h4>
+                        <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
+                        <a href="index.html" class="btn btn-buy">
+                            <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                        </a>
                     </div>
                 `;
                 if (badge) badge.textContent = "0";
-                inputSubtot.textContent = "0";
+                // Ocultar subtotal y botón de comprar
+                if (subtotalLinea) {
+                    subtotalLinea.style.display = "none";
+                    subtotalLinea.style.visibility = "hidden";
+                }
+                if (btnComprar) {
+                    btnComprar.style.display = "none";
+                    btnComprar.style.visibility = "hidden";
+                }
                 return;
             }
 
@@ -214,7 +270,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             </div>
         `;
         if (badge) badge.textContent = "0";
-        if (inputSubtot) inputSubtot.textContent = "0";
+        // Ocultar subtotal y botón de comprar en caso de error
+        if (subtotalLinea) {
+            subtotalLinea.style.display = "none";
+            subtotalLinea.style.visibility = "hidden";
+        }
+        if (btnComprar) {
+            btnComprar.style.display = "none";
+            btnComprar.style.visibility = "hidden";
+        }
     } finally {
         safeHideSpinner();
     }

@@ -63,22 +63,19 @@
 
             <!-- Controles -->
             <div class="selectores">
-                <!-- Botón del carrito con badge -->
-                <button class="light-btn position-relative" id="btn-cart" onclick="window.location.href='cart.html'">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
+                <!-- Botón carrito con badge -->
+                <button id="btn-cart" class="btn light-btn position-relative" onclick="window.location.href='cart.html'">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                         viewBox="0 0 256 256">
-                        <path
-                            d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z">
-                        </path>
+                        <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
                     </svg>
-
                     <span id="cart-badge" class="position-absolute"
                         style="top:-4px; right:-4px; background:#F09100; color:white; border-radius:999px; font-size:12px; line-height:1; padding:2px 6px; min-width:20px; text-align:center;">
                         0
                     </span>
                 </button>
 
-                <!-- Botón perfil-->
+                <!-- Botón perfil  -->
                 <button class="light-btn" id="btn-perfil">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
@@ -113,7 +110,6 @@
                         </svg>
                     </label>
                 </div>
-
                 <!-- Selector de idioma --> 
                  <div class="lang-container"> 
                     <button id="btnIdioma" class="lang-btn" aria-label="Seleccionar idioma"> 
@@ -152,7 +148,6 @@
           <h6 class="fw-bold mb-3">Acceder a</h6>
           <ul class="list-unstyled">
             <li><a href="my-profile.html" class="menu-link active"><i class="bi bi-person-circle"></i> Mi perfil</a></li>
-            <li><a href="cart.html" class="menu-link"><i class="bi bi-cart"></i> Carrito</a></li>
             <li><a href="sell.html" class="menu-link"><i class="bi bi-tag"></i> Vender</a></li>
             <li><a href="#" class="menu-link"><i class="bi bi-gear"></i> Avanzado</a></li>
           </ul>
@@ -161,85 +156,88 @@
         <!--Columna de Informacion-->
         <div class="col-md-9">
           <!-- Columna Central -->
-          <div class="row">
-            <div class="col-md-5 text-center">
-              <h2 class="fw-bold mb-3">Mi perfil</h2>
-              <img src="img/extra/icono-perfil.png" alt="Imagen Perfil" class="img-fluid rounded-circle bg-light p-3" width="200"  id="profile-img">
+          <div class="profile-header">
+            <h2 class="profile-title">Mi perfil</h2>
+          </div>
+          
+          <div class="profile-content">
+            <div class="profile-image-section">
+              <img src="img/extra/icono-perfil.png" alt="Imagen Perfil" class="profile-img" id="profile-img">
             </div>
 
             <!-- Columna de Informacion -->
-            <div class="col-md-6">
-              <div class="info-box p-4 mb-3">
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <p class="fw-bold mb-1">Nombre</p>
-                    <p class="mb-0" id="info-nom"></p>
+            <div class="profile-info-section">
+              <div class="info-box">
+                <div class="info-row">
+                  <div class="info-item">
+                    <p class="info-label">Nombre</p>
+                    <p class="info-value" id="info-nom"></p>
                   </div>
-                  <div class="col-md-6">
-                    <p class="fw-bold mb-1">Apellido</p>
-                    <p class="mb-0" id="info-apell"></p>
+                  <div class="info-item">
+                    <p class="info-label">Apellido</p>
+                    <p class="info-value" id="info-apell"></p>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <p class="fw-bold mb-1">E-mail</p>
-                    <p class="mb-0" id="info-email"></p>
+                <div class="info-row">
+                  <div class="info-item">
+                    <p class="info-label">E-mail</p>
+                    <p class="info-value" id="info-email"></p>
                   </div>
-                  <div class="col-md-6">
-                    <p class="fw-bold mb-1">Teléfono</p>
-                    <p class="mb-0" id="info-tel"></p>
+                  <div class="info-item">
+                    <p class="info-label">Teléfono</p>
+                    <p class="info-value" id="info-tel"></p>
                   </div>
                 </div>
               </div>
 
-              <button class="btn btn-edit px-3 py-1" id="editar" type="submit">Editar perfil</button>
+              <button class="product-btn btn-edit-profile" id="editar" type="button">Editar perfil</button>
               
             </div>
           </div>
-          <form class="mx-auto form-edit-perfil" id="form-edit">
+          <form class="form-edit-perfil" id="form-edit">
 
               <!-- Botones de acción -->
-              <div class="mb-3 d-flex gap-2">
-                <div class="btn-edit-img">
-                  <button id="btn-borrar-img" class="btn btn-sm btn-input-img">
+              <div class="form-actions">
+                <div class="btn-edit-img-group">
+                  <button id="btn-borrar-img" class="btn-icon" type="button" title="Eliminar imagen">
                     <i class="bi bi-trash3"></i>
                   </button>
-                  <label for="img-input" class="btn btn-sm btn-input-img">
+                  <label for="img-input" class="btn-icon" title="Cambiar imagen">
                     <i class="bi bi-image"></i> 
                   </label>
                   <input type="file" id="img-input" accept="image/*">
                 </div>
-                <button id="btn-cerrar" class="btn btn-sm">
+                <button id="btn-cerrar" class="btn-icon btn-close-form" type="button" title="Cerrar">
                   <i class="bi bi-x-lg"></i>
                 </button>
               </div>
 
               <!-- Nombre y Apellido -->
-              <div class="row mb-3">
-                <div class="col">
+              <div class="form-row">
+                <div class="form-group">
                   <label for="input-nom" class="form-label">Nombre:</label>
-                  <input type="text" name="nombre" id="input-nom" class="form-control form-control-sm" placeholder="Ingresar nombre">
+                  <input type="text" name="nombre" id="input-nom" class="form-input" placeholder="Ingresar nombre">
                 </div>
-                <div class="col">
+                <div class="form-group">
                   <label for="input-apell" class="form-label">Apellido:</label>
-                  <input type="text" name="apellido" id="input-apell" class="form-control form-control-sm" placeholder="Ingresar apellido">
+                  <input type="text" name="apellido" id="input-apell" class="form-input" placeholder="Ingresar apellido">
                 </div>
               </div>
 
               <!-- E-mail y Teléfono -->
-              <div class="row mb-3">
-                <div class="col">
+              <div class="form-row">
+                <div class="form-group">
                   <label for="input-mail" class="form-label">E-mail:</label>
-                  <input type="email" name="email" id="input-email" class="form-control form-control-sm" placeholder="Ingresar correo">
+                  <input type="email" name="email" id="input-email" class="form-input" placeholder="Ingresar correo">
                 </div>
-                <div class="col">
+                <div class="form-group">
                   <label for="input-tel" class="form-label">Teléfono:</label>
-                  <input type="text" name="telefono" id="input-tel" class="form-control form-control-sm" placeholder="Ingresar telefono">
+                  <input type="text" name="telefono" id="input-tel" class="form-input" placeholder="Ingresar telefono">
                 </div>
               </div>
 
               <!-- Botón Guardar -->
-              <button type="submit" class="btn btn-edit" id="btn-guardar">Guardar</button>
+              <button type="submit" class="product-btn btn-save">Guardar cambios</button>
             </form>
           </div>
       </div>
@@ -260,6 +258,7 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/mobile-menu.js"></script>
   <script src="js/my-profile.js"></script>
   <script src="js/user-display.js"></script>
   <script>

@@ -1,70 +1,738 @@
-    #principal-container{
-        margin-left: 7vw;
-    }
+    /* ===============================
+   MI PERFIL - ESTILOS
+   =============================== */
 
-    .menu-link.active {
-        background-color: var(--primary-color);
-        color: var(--font-color) !important;
-    }
+main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
 
-    .menu-link {
-        color: var(--font-color);
-        text-decoration: none;
-        display: flex;
+main .container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#principal-container {
+    margin: 0 auto;
+    max-width: 1400px;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.menu-link {
+    color: var(--font-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    margin: 0.5rem;
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    max-width: 180px;
+}
+
+.menu-link:hover {
+    background-color: var(--card-bg);
+    color: var(--font-color);
+}
+
+.menu-link.active {
+    background-color: var(--primary-color);
+    color: black;
+    font-weight: 500;
+}
+
+.menu-link.active:hover {
+    background-color: var(--primary-hover);
+}
+
+.menu-link i {
+    font-size: 1.1rem;
+}
+
+.profile-header {
+    margin-bottom: 2rem;
+}
+
+.profile-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--font-color);
+    margin: 0;
+}
+
+.profile-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.profile-image-section {
+    flex-shrink: 0;
+}
+
+.profile-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border: 2px solid var(--input-border);
+}
+
+.profile-info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.info-box {
+    background-color: var(--card-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.info-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--font-color);
+    margin: 0;
+    opacity: 0.8;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: var(--font-color);
+    margin: 0;
+    word-break: break-word;
+}
+
+.btn-edit-profile {
+    width: auto;
+    align-self: flex-end;
+}
+
+.btn-edit-profile:hover {
+    border-color: var(--primary-hover);
+    color: var(--primary-hover);
+}
+
+.form-edit-perfil {
+    display: none;
+    margin-top: 2rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.btn-edit-img-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--font-color);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.btn-icon:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: black;
+}
+
+.btn-close-form {
+    margin-left: auto;
+}
+
+#img-input {
+    display: none;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--font-color);
+    margin: 0;
+}
+
+.form-input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--font-color);
+    border-radius: var(--border-radius);
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--card-bg);
+}
+
+.form-input::placeholder {
+    color: var(--font-color);
+    opacity: 0.5;
+}
+
+.btn-save {
+    align-self: flex-end;
+    width: auto;
+}
+
+/* Dark Mode */
+body.dark-mode .profile-img {
+    background-color: #2a2a2a;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .info-box {
+    background-color: #1f1f1f;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .form-edit-perfil {
+    background-color: #1f1f1f;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .form-input {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .form-input:focus {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .btn-icon {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .btn-icon:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: black;
+}
+
+body.dark-mode .form-actions {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .profile-content {
+        flex-direction: column;
         align-items: center;
-        gap: 8px;
-        padding: 8px 12px;
-        border-radius: var(--border-radius);
-        transition: background 0.2s;
     }
 
-    .menu-link.active:hover {
-        background-color: var(--primary-hover);
+    .profile-image-section {
+        text-align: center;
     }
 
-    .menu-link:hover {
-        background-color: var(--card-bg);
+    .profile-info-section {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    #principal-container {
+        padding: 0 1.5rem;
+    }
+
+    .profile-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .profile-title {
+        font-size: 1.75rem;
+    }
+
+    .profile-content {
+        gap: 1.5rem;
+    }
+
+    .profile-img {
+        width: 160px;
+        height: 160px;
+        padding: 0.75rem;
+    }
+
+    .info-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
     }
 
     .info-box {
-        background-color: var(--info-perfil-bg);
-        border-radius: 15px;
+        padding: 1.25rem;
     }
 
-    .btn-edit {
-        background-color: var(--primary-color);
-        color: var(--font-color);
-        border: none;
-        display: block;       
-        margin-left: auto;    
+    .form-edit-perfil {
+        padding: 1.25rem;
     }
 
-    #btn-cerrar{
-        display: block;       
-        margin-left: auto; 
+    .menu-link {
+        padding: 10px 14px;
+        font-size: 0.9rem;
     }
 
-    .btn-edit-img{
-        margin-left: 15vw;
+    .menu-link i {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    main {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 
-    .btn-input-img{
-        margin-right: 1vw;
-        background-color: var(--bg-color);
-        border-radius: var(--border-radius);
-    }
-    .btn-edit:hover {
-        background-color: var(--primary-hover);
+    #principal-container {
+        padding: 0 1.25rem;
     }
 
-    .form-edit-perfil{
-        display: none;
+    .profile-header {
+        margin-bottom: 1.25rem;
     }
 
-    .form-edit-perfil input{
-        border-color: var(--primary-color);
+    .profile-title {
+        font-size: 1.5rem;
     }
 
-    #img-input{
-        display: none;
+    .profile-content {
+        gap: 1.25rem;
     }
+
+    .profile-img {
+        width: 140px;
+        height: 140px;
+        padding: 0.65rem;
+        border-width: 1.5px;
+    }
+
+    .info-box {
+        padding: 1rem;
+    }
+
+    .info-row {
+        gap: 0.85rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .info-label {
+        font-size: 0.85rem;
+    }
+
+    .info-value {
+        font-size: 0.95rem;
+    }
+
+    .btn-edit-profile {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+        width: 100%;
+        align-self: stretch;
+    }
+
+    .form-edit-perfil {
+        padding: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .form-actions {
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.85rem;
+    }
+
+    .btn-icon {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.95rem;
+    }
+
+    .form-input {
+        padding: 0.65rem;
+        font-size: 0.9rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    .btn-save {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    .menu-link {
+        padding: 9px 12px;
+        font-size: 0.85rem;
+        gap: 8px;
+    }
+
+    .menu-link i {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    #principal-container {
+        padding: 0 1rem;
+    }
+
+    .profile-header {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .profile-title {
+        font-size: 1.35rem;
+    }
+
+    .profile-content {
+        gap: 1rem;
+    }
+
+    .profile-img {
+        width: 130px;
+        height: 130px;
+        padding: 0.6rem;
+    }
+
+    .info-box {
+        padding: 0.85rem;
+    }
+
+    .info-row {
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+    }
+
+    .info-value {
+        font-size: 0.9rem;
+    }
+
+    .btn-edit-profile {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .form-edit-perfil {
+        padding: 0.85rem;
+        margin-top: 1.25rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 0.65rem;
+        align-items: stretch;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .btn-edit-img-group {
+        justify-content: center;
+    }
+
+    .btn-close-form {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .btn-icon {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .form-row {
+        gap: 0.85rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .form-input {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .form-label {
+        font-size: 0.8rem;
+    }
+
+    .btn-save {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        width: 100%;
+        align-self: stretch;
+    }
+
+    .menu-link {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        gap: 7px;
+    }
+
+    .menu-link i {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    #principal-container {
+        padding: 0 1rem;
+    }
+
+    .profile-title {
+        font-size: 1.25rem;
+        align-self: center;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+        padding: 0.5rem;
+    }
+
+    .info-box {
+        padding: 0.75rem;
+        border-radius: 8px;
+    }
+
+    .info-row {
+        gap: 0.65rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .info-label {
+        font-size: 0.75rem;
+    }
+
+    .info-value {
+        font-size: 0.85rem;
+    }
+
+    .btn-edit-profile {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    .form-edit-perfil {
+        padding: 0.75rem;
+        border-radius: 8px;
+    }
+
+    .form-actions {
+        gap: 0.6rem;
+        margin-bottom: 0.85rem;
+        padding-bottom: 0.65rem;
+    }
+
+    .btn-icon {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.85rem;
+    }
+
+    .form-row {
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .form-input {
+        padding: 0.55rem;
+        font-size: 0.8rem;
+    }
+
+    .form-label {
+        font-size: 0.75rem;
+    }
+
+    .btn-save {
+        padding: 0.55rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    .menu-link {
+        padding: 7px 9px;
+        font-size: 0.75rem;
+        gap: 6px;
+    }
+
+    .menu-link i {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 360px) {
+    main {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    #principal-container {
+        padding: 0 0.85rem;
+    }
+
+    .profile-header {
+        margin-bottom: 0.85rem;
+    }
+
+    .profile-title {
+        font-size: 1.15rem;
+    }
+
+    .profile-content {
+        gap: 0.85rem;
+    }
+
+    .profile-img {
+        width: 110px;
+        height: 110px;
+        padding: 0.45rem;
+    }
+
+    .info-box {
+        padding: 0.65rem;
+    }
+
+    .info-row {
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .info-label {
+        font-size: 0.7rem;
+    }
+
+    .info-value {
+        font-size: 0.8rem;
+    }
+
+    .btn-edit-profile {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .form-edit-perfil {
+        padding: 0.65rem;
+        margin-top: 1rem;
+    }
+
+    .form-actions {
+        gap: 0.55rem;
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.6rem;
+    }
+
+    .btn-icon {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .form-row {
+        gap: 0.65rem;
+        margin-bottom: 0.65rem;
+    }
+
+    .form-input {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .form-label {
+        font-size: 0.7rem;
+    }
+
+    .btn-save {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .menu-link {
+        padding: 6px 8px;
+        font-size: 0.7rem;
+        gap: 5px;
+    }
+
+    .menu-link i {
+        font-size: 0.8rem;
+    }
+}

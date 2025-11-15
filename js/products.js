@@ -1,9 +1,7 @@
-// Variables Globales
 let currentProductsArray = [];
 let filteredProductsArray = [];
 const SORT_MAP = { asc: "priceAsc", desc: "priceDesc", count: "relevance" };
 
-// Muestra la lista de productos en el contenedor principal
 function showProductsList() {
     const productList = document.getElementById("products-list-container");
     if (!productList) return;
@@ -33,7 +31,6 @@ function showProductsList() {
     productList.innerHTML = htmlContentToAppend;
 }
 
-// Ordena los productos según un criterio y actualiza la vista
 function ordenarProductos(criterio) {
     if (criterio === "priceAsc") {
         filteredProductsArray.sort((a, b) => a.cost - b.cost);
@@ -45,7 +42,6 @@ function ordenarProductos(criterio) {
     showProductsList();
 }
 
-// Filtra los productos por un rango de precio
 function filtrarPorPrecio(minID, maxID) {
     let min = parseInt(document.getElementById(minID)?.value);
     let max = parseInt(document.getElementById(maxID)?.value);
@@ -58,7 +54,6 @@ function filtrarPorPrecio(minID, maxID) {
             (max === undefined || product.cost <= max);
     });
 
-    // Re-aplica el orden seleccionado
     const sortOption = document.querySelector('input[name="options"]:checked');
     if (sortOption) {
         ordenarProductos(SORT_MAP[sortOption.value] || "relevance");
@@ -67,7 +62,6 @@ function filtrarPorPrecio(minID, maxID) {
     }
 }
 
-// Limpia los filtros de precio y muestra todos los productos
 function limpiarFiltros(minID, maxID) {
     const minEl = document.getElementById(minID);
     const maxEl = document.getElementById(maxID);
@@ -77,8 +71,6 @@ function limpiarFiltros(minID, maxID) {
     filteredProductsArray = [...currentProductsArray];
     ordenarProductos("relevance");
 }
-
-// Inicializaciones
 
 function initSort() {
     const sortOptions = document.querySelector(".sort-options");
@@ -131,61 +123,97 @@ function initSearchBar() {
     }
 }
 
-// Carga de productos
 function loadProducts() {
     const catID = localStorage.getItem(STORAGE_KEYS.CAT_ID);
     const productListContainer = document.getElementById("products-list-container");
+    function fetchProductsForCatId(resolvedCatId) {
+        const API_URL = PRODUCTS_URL + resolvedCatId + EXT_TYPE;
+        getJSONData(API_URL).then(function (resultObj) {
+            if (resultObj.status === "ok") {
+                currentProductsArray = resultObj.data.products;
+                filteredProductsArray = [...currentProductsArray];
+
+                if (resultObj.data && resultObj.data.catName) {
+                    localStorage.setItem(STORAGE_KEYS.CAT_NAME, resultObj.data.catName);
+                }
+
+                const categoryTitleMobile = document.getElementById("category-title-mobile");
+                const categoryTitleDesktop = document.getElementById("category-title-desktop");
+                const categorySubtitleDesktop = document.getElementById("category-subtitle-desktop");
+
+                const catNameFromApi = resultObj.data.catName || localStorage.getItem(STORAGE_KEYS.CAT_NAME) || '';
+                if (categoryTitleMobile) categoryTitleMobile.textContent = catNameFromApi;
+                if (categoryTitleDesktop) categoryTitleDesktop.textContent = catNameFromApi;
+                if (categorySubtitleDesktop) {
+                    categorySubtitleDesktop.textContent = `Verás aquí todos los ${catNameFromApi.toLowerCase()} del sitio.`;
+                }
+
+                const breadcrumb = document.getElementById("breadcrumb-container");
+                if (breadcrumb) {
+                    breadcrumb.innerHTML = `
+                    <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="categories.html">Categorías</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">${catNameFromApi}</li>`;
+                }
+
+                ordenarProductos("relevance");
+                initSort();
+            } else {
+                console.error("Error al cargar productos:", resultObj.data);
+                productListContainer.innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    Error al cargar los productos. Intente nuevamente.
+                </div>`;
+            }
+        });
+    }
 
     if (!catID) {
         productListContainer.innerHTML = `
-      <div class="alert alert-danger" role="alert">
-        Error: No se seleccionó ninguna categoría.
-      </div>`;
+            <div class="alert alert-danger" role="alert">
+                Error: No se seleccionó ninguna categoría.
+            </div>`;
         return;
     }
 
-    const API_URL = PRODUCTS_URL + catID + EXT_TYPE;
-    getJSONData(API_URL).then(function (resultObj) {
-        if (resultObj.status === "ok") {
-            currentProductsArray = resultObj.data.products;
-            filteredProductsArray = [...currentProductsArray];
+    const maybeNumeric = Number(catID);
+    if (!isNaN(maybeNumeric) && String(maybeNumeric).trim() !== '') {
+        fetchProductsForCatId(maybeNumeric);
+        return;
+    }
 
-            localStorage.setItem(STORAGE_KEYS.CAT_NAME, resultObj.data.catName);
-
-            const categoryTitleMobile = document.getElementById("category-title-mobile");
-            const categoryTitleDesktop = document.getElementById("category-title-desktop");
-            const categorySubtitleDesktop = document.getElementById("category-subtitle-desktop");
-
-            if (categoryTitleMobile) categoryTitleMobile.textContent = resultObj.data.catName;
-            if (categoryTitleDesktop) categoryTitleDesktop.textContent = resultObj.data.catName;
-            if (categorySubtitleDesktop) {
-                categorySubtitleDesktop.textContent = `Verás aquí todos los ${resultObj.data.catName.toLowerCase()} del sitio.`;
+    const storedCatName = localStorage.getItem(STORAGE_KEYS.CAT_NAME) || catID;
+    getJSONData(CATEGORIES_URL).then(function (catRes) {
+        if (catRes.status === 'ok' && Array.isArray(catRes.data)) {
+            const found = catRes.data.find(c => {
+                const name = (c.name || c.catName || '').toString().toLowerCase();
+                return name === storedCatName.toString().toLowerCase();
+            });
+            if (found && (found.id !== undefined)) {
+                localStorage.setItem(STORAGE_KEYS.CAT_ID, String(found.id));
+                fetchProductsForCatId(found.id);
+                return;
             }
-
-            const breadcrumb = document.getElementById("breadcrumb-container");
-            if (breadcrumb) {
-                breadcrumb.innerHTML = `
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item"><a href="categories.html">Categorías</a></li>
-          <li class="breadcrumb-item active" aria-current="page">${resultObj.data.catName}</li>`;
-            }
-
-            ordenarProductos("relevance");
-            initSort();
-        } else {
-            console.error("Error al cargar productos:", resultObj.data);
-            productListContainer.innerHTML = `
-        <div class="alert alert-danger" role="alert">
-          Error al cargar los productos. Intente nuevamente.
-        </div>`;
         }
+
+        console.warn('No se pudo resolver catID a partir del valor guardado:', catID);
+        productListContainer.innerHTML = `
+            <div class="alert alert-warning" role="alert">
+                No se pudo cargar la categoría seleccionada. Serás redirigido a la página de categorías.
+            </div>`;
+        setTimeout(() => { window.location.href = 'categories.html'; }, 1800);
+    }).catch(err => {
+        console.error('Error al recuperar lista de categorías para resolver catID:', err);
+        productListContainer.innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                Error al cargar los productos. Intente nuevamente.
+            </div>`;
     });
 }
 
-// --- INICIO ---
 document.addEventListener("DOMContentLoaded", () => {
     if (!verificarUsuario()) return;
-    
+
     loadProducts();
     initFilters();
     initSearchBar();

@@ -14,6 +14,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
+    <link href="css/product-info.css" rel="stylesheet">
 
     <!-- Script para evitar flash al cargar modo oscuro -->
     <script>
@@ -46,8 +47,24 @@
                 <button type="button" class="clear-search" id="clear-search">×</button>
             </form>
 
-            <!-- Controles: perfil + carrito -->
+            <!-- Controles -->
             <div class="selectores">
+                <!-- Botón carrito con badge -->
+                <button id="btn-cart" class="btn light-btn position-relative"
+                    onclick="window.location.href='cart.html'">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                        viewBox="0 0 256 256">
+                        <path
+                            d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z">
+                        </path>
+                    </svg>
+                    <span id="cart-badge" class="position-absolute"
+                        style="top:-4px; right:-4px; background:#F09100; color:white; border-radius:999px; font-size:12px; line-height:1; padding:2px 6px; min-width:20px; text-align:center;">
+                        0
+                    </span>
+                </button>
+
+                <!-- Botón perfil  -->
                 <button class="light-btn" id="btn-perfil">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
@@ -58,31 +75,18 @@
                     <span id="User-display"></span>
                 </button>
 
-                <!-- botón del carrito con badge -->
-                <button id="btn-cart" class="light-btn position-relative" onclick="window.location.href='cart.html'">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
+                <!-- Botón Cerrar sesión -->
+                <button class="light-btn" id="btn-logout">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000"
                         viewBox="0 0 256 256">
                         <path
-                            d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z">
+                            d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z">
                         </path>
-                    </svg>
-
-                    <!-- badge dinámico con cantidad total -->
-                    <span id="cart-badge" class="position-absolute"
-                        style="top:-4px; right:-4px; background:#F09100; color:white; border-radius:999px; font-size:12px; line-height:1; padding:2px 6px; min-width:20px; text-align:center;">
-                        0
-                    </span>
-                </button>
-                 <!-- Botón Cerrar sesión -->
-                <button class="light-btn" id="btn-logout">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256">
-                        <path d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z"></path>
                     </svg>
                     <span class="d-none d-sm-inline">Cerrar sesión</span>
                 </button>
             </div>
 
-            <!-- Controles: tema e idioma -->
             <div class="selectores">
                 <!-- Modo claro/oscuro - Toggle -->
                 <div class="theme-toggle">
@@ -100,7 +104,6 @@
                         </svg>
                     </label>
                 </div>
-
                 <!-- Selector de idioma -->
                 <!-- Selector de idioma --> 
                  <div class="lang-container"> 
@@ -152,26 +155,32 @@
             </div>
         </div>
 
-        <!-- Fila de contenido -->
-        <div class="row">
-            <!-- Columna de info y prod. relacionados -->
-            <div class="col-md-8">
-                <div class="container" id="product-info-container">
+
+        <div class="">
+            <div class="container" id="product-info-container"></div>
+        </div>
+
+        <div class="container">
+            <div class="contenedor-comentarios-calif">
+                <div>
+                    <h4 class="mb-3">Opiniones del producto</h4>
+                    <!-- Contenedor de comentarios -->
+                    <div id="comments-container" class="">
+                        <!-- Los comentarios se inyectan aquí desde product-info.js -->
+                    </div>
                 </div>
-                <div class="container mt-5 mb-5">
-                    <h4 class="mb-4">Productos relacionados</h4>
-                    <div class="row justify-content-center" id="related-products-list"></div>
-                </div>
-            </div>
-            <!-- Columna de comentarios -->
-            <div class="col">
-                <div class="container mt-4" id="comments-container">
-                </div>
+
                 <div id="form-calif">
-                    <h4 class="mb-4">Dejar tu calificación</h4>
-                    <form id="reviewForm" class="border rounded p-4 shadow-sm w-100">
-                        <!-- Calificación con estrellas -->
-                        <div class="mb-3">
+                    <div id="rating-summary-container"></div>
+
+                    <form id="reviewForm">
+                        <div>
+                            <label for="comment" class="form-label fw-semibold">Agregar comentario:</label>
+                            <textarea id="comment-text" rows="3"
+                                placeholder="Escribe tu opinión aquí..." required></textarea>
+                        </div>
+
+                        <div id="rating-and-submit">
                             <div class="rating">
                                 <input type="radio" name="star" class="comment-score" id="star5" value="5"><label
                                     for="star5"><i></i></label>
@@ -184,24 +193,21 @@
                                 <input type="radio" name="star" class="comment-score" id="star1" value="1"><label
                                     for="star1"><i></i></label>
                             </div>
-                        </div>
 
-                        <!-- Comentario -->
-                        <div class="mb-3">
-                            <label for="comment" class="form-label fw-semibold">Comentario:</label>
-                            <textarea class="form-control" id="comment-text" rows="3"
-                                placeholder="Escribe tu opinión aquí..." required></textarea>
-                        </div>
-
-                        <!-- Botón -->
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-buy align-self-start mt-auto">
-                                <i class="fa fa-paper-plane me-1"></i> Enviar
+                            <button type="submit" class="product-btn">
+                                <i class=""></i> Enviar
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+        </div>
+
+        <div class="container">
+            <section class="related-products-section">
+                <h4 class="mb-4">Productos relacionados</h4>
+                <div class="products-grid" id="related-products-list"></div>
+            </section>
         </div>
     </main>
 
@@ -227,9 +233,11 @@
     </div>
 
     <!-- Scripts base -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/mobile-menu.js"></script>
     <script src="js/product-info.js"></script>
     <script src="js/user-display.js"></script>
 
@@ -266,6 +274,39 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <script src="js/translate.js"></script>
   <!--Script de Google-->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // ==== CERRAR SESIÓN ====
+            const logoutBtn = document.getElementById("btn-logout");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("profileImage");
+                    window.location.href = "login.html";
+                });
+            }
+
+            // ==== BADGE DEL CARRITO ====
+            const badge = document.getElementById("cart-badge");
+            if (!badge) return;
+
+            let cart = [];
+            try {
+                cart = JSON.parse(localStorage.getItem("cart")) || [];
+            } catch (e) {
+                cart = [];
+            }
+
+            const totalCantidad = cart.reduce(
+                (acc, item) => acc + (item.count || 0),
+                0
+            );
+
+            badge.textContent = totalCantidad;
+        });
+    </script>
+    <script src="js/translate.js"></script>
+    <!--Script de Google-->
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 

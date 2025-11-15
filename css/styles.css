@@ -30,6 +30,8 @@ nav a {
 
 .jumbotron {
     height: 50vh;
+    min-height: 300px;
+    max-height: 600px;
     margin-bottom: 2rem;
     background-image: var(--img-banner);
     background-size: cover;
@@ -37,13 +39,25 @@ nav a {
     background-repeat: no-repeat;
     color: black;
     font-weight: bold;
-    min-width: 100%;
+    width: 100%;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .jumbotron {
-        padding-top: 6rem;
-        padding-bottom: 6rem;
+        background-image: var(--img-banner-tablet);
+        background-size:cover;
+        background-position: center center;
+    }
+}
+
+@media (max-width: 480px) {
+    .jumbotron {
+        height: 30vh;
+        min-height: 200px;
+        max-height: 300px;
+        background-image: var(--img-banner-mobile);
+        background-size: contain;
+        background-position: center center;
     }
 }
 

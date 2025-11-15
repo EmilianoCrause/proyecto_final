@@ -10,10 +10,12 @@
     --font-color: #000;
     
     /* Estilos de componentes */
-    --border-radius: 12px;
+    --border-radius: 10px;
     --card-bg: rgba(255, 255, 255, 0.3);
     --input-bg: #fff;
     --input-border: #00000064;
+    --scroll-color: #00000064;
+    --scroll-hover: #464646b9;
     
     /* Sombras y efectos */
     --shadow-color: #ffe6cf;
@@ -27,6 +29,8 @@
     --mode-icons: black;
     --info-perfil-bg: #e7e7e7;
     --img-banner: url('../img/light-banner.png');
+    --img-banner-tablet: url('../img/img_tablet_modo_claro.png');
+    --img-banner-mobile: url('../img/img_mobile_modo_claro.png');
 }
 
 /* Modo oscuro */
@@ -34,16 +38,21 @@ html.dark-mode,
 body.dark-mode {
     --bg-color: #121212;
     --primary-color: #ffa217;
-    --primary-hover: #ffa217;
+    --primary-hover: #d58712;
     --font-color: #f5f5f5;
+
     --card-bg: rgba(40, 40, 40, 0.7);
     --input-bg: #1e1e1e;
     --input-border: #444;
     --shadow-color: #222;
+
     --footer-bg: #1a1a1a;
     --footer-font: #f5f5f5;
+
     --highlight-color: var(--primary-color);
     --mode-icons: #fff;
     --info-perfil-bg: rgba(40, 40, 40, 0.7);
     --img-banner: url('../img/dark-banner.png');
+    --img-banner-tablet: url('../img/img_tablet_modo_oscuro.png');
+    --img-banner-mobile: url('../img/img_mobile_modo_oscuro.png');
 }

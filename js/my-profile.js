@@ -1,38 +1,33 @@
 document.addEventListener('DOMContentLoaded', function(){
     if (!verificarUsuario()) return;
     
-    //Campos para mostrar informacion
-    const infoNom = document.getElementById('info-nom') // Campo nombre
-    const infoApell = document.getElementById('info-apell') // Campo apellido
-    const infoEmail = document.getElementById('info-email') // Campos email
-    const infoTel = document.getElementById('info-tel') // Campo telefono
+    const infoNom = document.getElementById('info-nom')
+    const infoApell = document.getElementById('info-apell')
+    const infoEmail = document.getElementById('info-email')
+    const infoTel = document.getElementById('info-tel')
 
-    // Botones de edicion
-    const btnEditar = document.getElementById('editar') // Boton para abrir edicion
-    const formEditar = document.getElementById('form-edit') // Boton para guardar edicion
+    const btnEditar = document.getElementById('editar')
+    const formEditar = document.getElementById('form-edit')
 
-    // Campos del formualrio
-    const nomPerfil = document.getElementById('input-nom') // Campo nombre
-    const apellPerfil = document.getElementById('input-apell') // Campo apellido
-    const emailPerfil = document.getElementById('input-email') // Campo email
-    const telPerfil = document.getElementById('input-tel') // Campo telefono
+    const nomPerfil = document.getElementById('input-nom')
+    const apellPerfil = document.getElementById('input-apell')
+    const emailPerfil = document.getElementById('input-email')
+    const telPerfil = document.getElementById('input-tel')
 
-    // Informacion guardada
-    const nomSaved = localStorage.getItem('nombre') || sessionStorage.getItem('nombre') // Nombre guardado
-    const apellSaved = localStorage.getItem('apellido') || sessionStorage.getItem('apellido') // Apellido guardado
-    const emailSaved =  localStorage.getItem('usuario') || sessionStorage.getItem('usuario') // Email guardado
-    const telSaved = localStorage.getItem('telefono') || sessionStorage.getItem('telefono') // Telefono guardado
+    const nomSaved = localStorage.getItem('nombre') || sessionStorage.getItem('nombre')
+    const apellSaved = localStorage.getItem('apellido') || sessionStorage.getItem('apellido')
+    const emailSaved =  localStorage.getItem('usuario') || sessionStorage.getItem('usuario')
+    const telSaved = localStorage.getItem('telefono') || sessionStorage.getItem('telefono')
 
-    //Modo oscuro
-    const darkToggle = document.getElementById('theme-toggle-checkbox');
+    // Variables temporales para la imagen
+    let tempImageData = null;
+    let imageToDelete = false;
 
-    //Mostrar informacion del perfil
     infoEmail.textContent = emailSaved
     infoNom.textContent = nomSaved ?? '-'
     infoApell.textContent = apellSaved ?? '-'
     infoTel.textContent = telSaved ??     '-'
 
-    // Mostrar y ocultar edicion de datos       
     btnEditar.addEventListener('click', function(){
         btnEditar.style.display = 'none'
         formEditar.style.display = 'block'
@@ -40,14 +35,30 @@ document.addEventListener('DOMContentLoaded', function(){
         apellPerfil.value = apellSaved
         emailPerfil.value = emailSaved
         telPerfil.value = telSaved
+        
+        // Resetear cambios temporales de imagen
+        tempImageData = null;
+        imageToDelete = false;
     })
 
     document.getElementById('btn-cerrar').addEventListener('click', () => {
         formEditar.style.display = 'none'
         btnEditar.style.display = 'block'
+        
+        // Restaurar imagen original si se canceló
+        const savedImg = localStorage.getItem('profileImage');
+        const profileImg = document.getElementById('profile-img');
+        if (savedImg && profileImg) {
+            profileImg.src = savedImg;
+        } else if (profileImg) {
+            profileImg.src = 'img/extra/icono-perfil.png';
+        }
+        
+        // Resetear cambios temporales
+        tempImageData = null;
+        imageToDelete = false;
     })
 
-    //Guardar informacion del perfil    
     document.getElementById('form-edit').addEventListener('submit', (e) => {
         e.preventDefault();
         
@@ -56,42 +67,70 @@ document.addEventListener('DOMContentLoaded', function(){
             localStorage.setItem('apellido', apellPerfil.value)
             localStorage.setItem('usuario', emailPerfil.value)
             localStorage.setItem('telefono', telPerfil.value)
+            
+            // Guardar o eliminar imagen según corresponda
+            if (imageToDelete) {
+                localStorage.removeItem('profileImage');
+            } else if (tempImageData) {
+                localStorage.setItem('profileImage', tempImageData);
+            }
         } else {
             sessionStorage.setItem('nombre', nomPerfil.value)
             sessionStorage.setItem('apellido', apellPerfil.value)
             sessionStorage.setItem('usuario', emailPerfil.value)
             sessionStorage.setItem('telefono', telPerfil.value)
+            
+            // Guardar o eliminar imagen según corresponda
+            if (imageToDelete) {
+                localStorage.removeItem('profileImage');
+            } else if (tempImageData) {
+                localStorage.setItem('profileImage', tempImageData);
+            }
         }
+        
         formEditar.style.display = 'none'
         btnEditar.style.display = 'block'
+        
+        // Resetear cambios temporales
+        tempImageData = null;
+        imageToDelete = false;
+        
         location.reload()
     })
 
-    // ======== MODO OSCURO ========
-    // Cargar preferencia inicial
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-        darkToggle.checked = true; // Mantener el checkbox activado
-    }
-
-    // Alternar modo oscuro/claro
-    darkToggle.addEventListener('change', () => {
-        if (darkToggle.checked) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
+    document.getElementById('btn-borrar-img').addEventListener('click', (e) => {
+        e.preventDefault();
+        imageToDelete = true;
+        tempImageData = null;
+        const profileImg = document.getElementById('profile-img');
+        if (profileImg) {
+            profileImg.src = 'img/extra/icono-perfil.png';
         }
-        localStorage.setItem('darkMode', darkToggle.checked);
-    });
-
-    document.getElementById('btn-borrar-img').addEventListener('click', ()=>{
-        localStorage.removeItem('profileImage')
     })
+
+    // Manejar cambio de imagen (solo vista previa)
+    const imgInput = document.getElementById('img-input');
+    if (imgInput) {
+        imgInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const profileImg = document.getElementById('profile-img');
+                    if (profileImg) {
+                        profileImg.src = evt.target.result;
+                        tempImageData = evt.target.result;
+                        imageToDelete = false;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 
 })
 
 const profileImg = document.getElementById('profile-img');
-const imgInput = document.getElementById('img-input');
 
 window.addEventListener('DOMContentLoaded', () => {
   const savedImg = localStorage.getItem('profileImage');
@@ -99,20 +138,6 @@ window.addEventListener('DOMContentLoaded', () => {
     profileImg.src = savedImg;
   }
 });
-
-if (imgInput) {
-  imgInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        profileImg.src = evt.target.result;
-        localStorage.setItem('profileImage', evt.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-}
 
 // Inicializar dark mode y selector de idioma
 initDarkMode();
