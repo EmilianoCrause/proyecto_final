@@ -451,6 +451,11 @@ if (btnFinalizar) {
             calcularEnvioYTotal();
         });
 
+        // Cambio de tipo de envío
+        document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+            radio.addEventListener("change", calcularEnvioYTotal);
+        });
+
     } catch (error) {
         console.error("Error al cargar productos:", error);
         contenedorLista.innerHTML = `
