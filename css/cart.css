@@ -37,23 +37,47 @@
 .cart-item{
     position: relative;
     background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
 }
-/* Botón “fuera del borde” del producto */
+
+.cart-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .cart-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 .cart-item .btn-cerrar {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 2px 6px;
-    line-height: 1;
-    z-index: 5;
-    font-size: 0.8rem;
-    color: var(--mode-icons);
-    background: transparent;
-    border: none;
+    padding: 6px 12px;
+    line-height: 1.2;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.cart-item .btn-cerrar:hover {
+    box-shadow: 0 0 6px rgba(220, 53, 69, 0.3);
+}
+
+.cart-item .btn-danger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: auto;
+    width: auto;
+    padding: 6px 12px;
 }
 
 li p{
     color: var(--font-color);
+}
+
+.cart-item .product-name {
+    color: var(--font-color) !important;
 }
 
 #btn-comprar{
@@ -68,6 +92,24 @@ li p{
 
 #subtot-lin{
     margin-left: 15vw;
+}
+
+/* ============================= */
+/* LAYOUT DEL CARRITO - DETALLE Y FORMULARIO */
+/* ============================= */
+.col-lg-7 {
+    display: flex;
+    flex-direction: column;
+}
+
+#lista-art {
+    flex: 1;
+    min-height: 300px;
+}
+
+/* Mantener el subtotal al final del contenedor */
+.col-lg-7 > .d-flex.border-top {
+    margin-top: auto !important;
 }
 
 /* ============================= */
@@ -87,20 +129,409 @@ textarea::placeholder {
 }
 
 /* ============================= */
-/* CONTENEDOR DE TABS (ENVÍO / PAGO / RESUMEN) */
+/* CONTENEDOR DE PASOS (ENVÍO / PAGO / RESUMEN) */
 /* ============================= */
 .theme-section {
     background-color: var(--card-bg);
     color: var(--font-color);
     border-radius: 10px;
     padding: 1rem;
-}
-.nav-tabs .nav-link {
-    color: var(--font-color);
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.nav-tabs .nav-link.active {
-    background-color: var(--primary-color);
-    color: var(--font-color);
-    border-color: transparent;
+.dark-mode .theme-section {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.checkout-step {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================= */
+/* BREADCRUMBS PARA INDICAR PROGRESO */
+/* ============================= */
+.breadcrumb {
+    background-color: var(--card-bg);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.dark-mode .breadcrumb {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.breadcrumb-item {
+    color: var(--font-color-muted, #999);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item.active {
+    color: black;
+    font-weight: 700;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    color: var(--font-color-muted, #999);
+    padding: 0 0.5rem;
+}
+
+.breadcrumb-item i {
+    font-size: 1rem;
+}
+
+/* ============================= */
+/* VALIDACIONES DE BOOTSTRAP */
+/* ============================= */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #dc3545 !important;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-valid,
+.form-select.is-valid {
+    border-color: #198754 !important;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #dc3545;
+}
+
+.form-control.is-invalid ~ .invalid-feedback,
+.form-select.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.valid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #198754;
+}
+
+.form-control.is-valid ~ .valid-feedback,
+.form-select.is-valid ~ .valid-feedback {
+    display: block;
+}
+
+/* ============================= */
+/* AJUSTES PARA MODO OSCURO */
+/* ============================= */
+.dark-mode .breadcrumb {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .breadcrumb-item {
+    color: #aaa;
+}
+
+.dark-mode .breadcrumb-item.active {
+    color: var(--primary-color);
+}
+
+.dark-mode .breadcrumb-item + .breadcrumb-item::before {
+    color: #666;
+}
+
+/* ============================= */
+/* SWEETALERT2 - MODO OSCURO */
+/* ============================= */
+.dark-mode .swal2-popup {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .swal2-title {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .swal2-html-container,
+.dark-mode .swal2-content {
+    color: #c0c0c0 !important;
+}
+
+.dark-mode .swal2-icon.swal2-warning {
+    border-color: #F09100 !important;
+    color: #F09100 !important;
+}
+
+.dark-mode .swal2-icon.swal2-error {
+    border-color: #dc3545 !important;
+}
+
+.dark-mode .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+    background-color: #dc3545 !important;
+}
+
+.dark-mode .swal2-icon.swal2-success {
+    border-color: #198754 !important;
+}
+
+.dark-mode .swal2-icon.swal2-success [class^='swal2-success-line'] {
+    background-color: #198754 !important;
+}
+
+.dark-mode .swal2-icon.swal2-success .swal2-success-ring {
+    border-color: rgba(25, 135, 84, 0.3) !important;
+}
+
+.dark-mode .swal2-icon.swal2-question {
+    border-color: #0d6efd !important;
+    color: #0d6efd !important;
+}
+
+/* ============================= */
+/* SWEETALERT2 - BOTONES NARANJAS CON TEXTO NEGRO */
+/* ============================= */
+/* Botón naranja con texto negro para mejor contraste */
+.swal2-confirm.swal2-styled[style*="#F09100"],
+.swal2-confirm.swal2-styled[style*="#f09100"] {
+    color: #000 !important;
+    font-weight: 600 !important;
+}
+
+/* Hover para botones naranjas */
+.swal2-confirm.swal2-styled[style*="#F09100"]:hover,
+.swal2-confirm.swal2-styled[style*="#f09100"]:hover {
+    background-color: #d98200 !important;
+    color: #000 !important;
+}
+
+/* Botón de continuar comprando */
+.btn-buy {
+    color: #000 !important;
+}
+
+.dark-mode .btn-buy {
+    color: #000 !important;
+}
+
+/* ============================= */
+/* PREVENIR DESBORDAMIENTO AL MOSTRAR SWEETALERT */
+/* ============================= */
+/* Cuando SweetAlert está activo, prevenir el scroll horizontal */
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+    overflow-y: hidden !important;
+    padding-right: 0 !important;
+}
+
+/* Prevenir que el contenedor se desborde */
+.swal2-container {
+    overflow-y: auto !important;
+    padding: 0 !important;
+}
+
+/* Asegurar que el popup no cause desbordamiento */
+.swal2-popup {
+    max-width: calc(100vw - 2rem) !important;
+    margin: 1rem !important;
+}
+
+/* ============================= */
+/* RESPONSIVE DESIGN */
+/* ============================= */
+
+/* Tablets y dispositivos medianos */
+@media (max-width: 991px) {
+    #principal-container {
+        margin-left: 3vw;
+        margin-right: 3vw;
+    }
+    
+    /* Reducir altura mínima de lista para que el subtotal esté más arriba */
+    #lista-art {
+        min-height: 150px !important;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    /* Ajustar subtotal para que no quede muy abajo */
+    #subtotal-section {
+        margin-top: 1rem !important;
+        position: relative;
+    }
+}
+
+/* Móviles */
+@media (max-width: 576px) {
+    #principal-container {
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+    
+    /* Reducir altura de lista en móviles */
+    #lista-art {
+        min-height: auto !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+    }
+    
+    /* Hacer que los productos sean más compactos */
+    .cart-item {
+        font-size: 0.85rem;
+        padding: 0.75rem !important;
+        flex-direction: column !important;
+        gap: 0.75rem;
+    }
+    
+    .cart-item img {
+        max-width: 100px !important;
+        height: 100px !important;
+        object-fit: cover;
+        align-self: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Reorganizar layout en móviles */
+    .cart-item > div {
+        width: 100% !important;
+    }
+    
+    .cart-item .product-name {
+        font-size: 0.95rem !important;
+    }
+    
+    .cart-item .product-description {
+        font-size: 0.8rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Precios en móvil */
+    .cart-item > div > div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.5rem !important;
+    }
+    
+    .cart-item > div > div:first-child > div:last-child {
+        margin-left: 0 !important;
+        text-align: left !important;
+    }
+    
+    /* Controles en móvil */
+    .cart-item > div > div:last-child {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+    
+    .cart-item > div > div:last-child > div {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .cart-item .btn-cerrar {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 8px 12px !important;
+    }
+    
+    .cart-item .btn-cerrar span {
+        display: inline !important;
+    }
+    
+    /* Ajustar input de cantidad */
+    .cantidad-input {
+        width: 70px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    /* Subtotal más arriba y visible */
+    #subtotal-section {
+        margin-top: 0.5rem !important;
+        margin-bottom: 1rem;
+        padding: 0.75rem 1rem !important;
+        position: relative;
+    }
+    
+    /* Ajustar breadcrumbs en móvil - más compacto y letras más pequeñas */
+    .breadcrumb {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .breadcrumb-item {
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+    }
+    
+    .breadcrumb-item i {
+        font-size: 0.7rem;
+    }
+    
+    .breadcrumb-item + .breadcrumb-item::before {
+        padding: 0 0.3rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Hacer más compactos los formularios */
+    .theme-section {
+        padding: 0.75rem;
+    }
+    
+    /* Títulos más pequeños */
+    #pedido-titulo {
+        font-size: 1rem;
+    }
+}
+
+/* Móviles extra pequeños */
+@media (max-width: 400px) {
+    .breadcrumb {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.4rem;
+    }
+    
+    .breadcrumb-item i {
+        font-size: 0.65rem;
+    }
+    
+    .breadcrumb-item + .breadcrumb-item::before {
+        padding: 0 0.25rem;
+    }
+    
+    .cart-item {
+        font-size: 0.8rem;
+    }
+    
+    .cart-item .product-name {
+        font-size: 0.85rem;
+    }
+    
+    .cantidad-input {
+        width: 50px !important;
+        font-size: 0.8rem;
+    }
 }

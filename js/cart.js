@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const badge = document.getElementById("cart-badge");
     const subtotalLinea = document.getElementById("subtot-lin");
     const btnComprar = document.getElementById("btn-comprar");
+    const pedidoTitulo = document.getElementById("pedido-titulo");
+    const subtotalSection = document.getElementById("subtotal-section");
 
     if (subtotalLinea) {
         subtotalLinea.style.display = "none";
@@ -13,9 +15,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         btnComprar.style.display = "none";
         btnComprar.style.visibility = "hidden";
     }
+    // Ocultar inicialmente título y subtotal
+    if (pedidoTitulo) {
+        pedidoTitulo.style.display = "none";
+    }
+    if (subtotalSection) {
+        subtotalSection.style.display = "none";
+    }
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    const checkoutPanel = document.getElementById("checkout-panel");
     const shippingSelect = document.getElementById("shipping-type");
     const depInput = document.getElementById("dep");
     const locInput = document.getElementById("loc");
@@ -28,12 +38,24 @@ document.addEventListener('DOMContentLoaded', async function () {
     const btnFinalizar = document.getElementById("btn-finalizar");
     const listaArt = document.getElementById("lista-art");
 
-    // Feedback en el Tab Resumen
+    // Pasos del checkout
+    const envioTab = document.getElementById("envioTab");
+    const pagoTab = document.getElementById("pagoTab");
     const resumenTab = document.getElementById("resumenTab");
+
+    // Breadcrumbs
+    const breadcrumbEnvio = document.getElementById("breadcrumb-envio");
+    const breadcrumbPago = document.getElementById("breadcrumb-pago");
+    const breadcrumbResumen = document.getElementById("breadcrumb-resumen");
+
+    // Estado actual del checkout
+    let currentStep = 'envio';
+
+    // Feedback en el paso Resumen
     const feedbackDiv = document.createElement("div");
     feedbackDiv.id = "checkout-feedback";
     feedbackDiv.className = "mt-3";
-    resumenTab.appendChild(feedbackDiv);
+    resumenTab.insertBefore(feedbackDiv, resumenTab.firstChild);
 
     function showFeedback(type, msg) {
         feedbackDiv.innerHTML = "";
@@ -43,42 +65,200 @@ document.addEventListener('DOMContentLoaded', async function () {
         feedbackDiv.appendChild(alert);
     }
 
+    // Función para cambiar de paso
+    function showStep(step) {
+        // Ocultar todos los pasos
+        envioTab.style.display = 'none';
+        pagoTab.style.display = 'none';
+        resumenTab.style.display = 'none';
+
+        // Resetear breadcrumbs
+        breadcrumbEnvio.classList.remove('active');
+        breadcrumbPago.classList.remove('active');
+        breadcrumbResumen.classList.remove('active');
+
+        // Mostrar el paso correspondiente
+        if (step === 'envio') {
+            envioTab.style.display = 'block';
+            breadcrumbEnvio.classList.add('active');
+            currentStep = 'envio';
+        } else if (step === 'pago') {
+            pagoTab.style.display = 'block';
+            breadcrumbPago.classList.add('active');
+            currentStep = 'pago';
+        } else if (step === 'resumen') {
+            resumenTab.style.display = 'block';
+            breadcrumbResumen.classList.add('active');
+            currentStep = 'resumen';
+            calcularEnvioYTotal();
+        }
+    }
+
+    // Cargar datos guardados del formulario
+    function loadFormData() {
+        const savedData = JSON.parse(localStorage.getItem('checkoutFormData') || '{}');
+        
+        if (savedData.shipping) shippingSelect.value = savedData.shipping;
+        if (savedData.dep) depInput.value = savedData.dep;
+        if (savedData.loc) locInput.value = savedData.loc;
+        if (savedData.calle) calleInput.value = savedData.calle;
+        if (savedData.numero) numeroInput.value = savedData.numero;
+        if (savedData.esquina) esquinaInput.value = savedData.esquina;
+        if (savedData.paymentMethod) paymentMethod.value = savedData.paymentMethod;
+    }
+
+    // Guardar datos del formulario
+    function saveFormData() {
+        const formData = {
+            shipping: shippingSelect.value,
+            dep: depInput.value,
+            loc: locInput.value,
+            calle: calleInput.value,
+            numero: numeroInput.value,
+            esquina: esquinaInput.value,
+            paymentMethod: paymentMethod.value
+        };
+
+        // Guardar campos de pago según el método
+        const paymentInputs = paymentFieldsBox.querySelectorAll('input');
+        paymentInputs.forEach(input => {
+            formData[input.id] = input.value;
+        });
+
+        localStorage.setItem('checkoutFormData', JSON.stringify(formData));
+    }
+
+    // Auto-guardar cuando cambian los campos
+    [shippingSelect, depInput, locInput, calleInput, numeroInput, esquinaInput].forEach(input => {
+        if (input) {
+            input.addEventListener('input', saveFormData);
+            input.addEventListener('change', saveFormData);
+        }
+    });
+
+    // Validar un campo individual
+    function validateField(field) {
+        if (!field.value || field.value.trim() === '') {
+            field.classList.add('is-invalid');
+            field.classList.remove('is-valid');
+            return false;
+        } else {
+            field.classList.remove('is-invalid');
+            field.classList.add('is-valid');
+            return true;
+        }
+    }
+
     function renderPaymentFields() {
         paymentFieldsBox.innerHTML = "";
 
+        const savedData = JSON.parse(localStorage.getItem('checkoutFormData') || '{}');
+
         if (paymentMethod.value === "card") {
             paymentFieldsBox.innerHTML = `
-                <input id="card-name"   class="form-control mb-2" placeholder="Nombre completo">
-                <input id="card-number" class="form-control mb-2" placeholder="Número de tarjeta">
+                <div class="mb-2">
+                    <input id="card-name" class="form-control" placeholder="Nombre completo" required 
+                           value="${savedData['card-name'] || ''}">
+                    <div class="invalid-feedback">
+                        El nombre es requerido.
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <input id="card-number" class="form-control" placeholder="Número de tarjeta" required
+                           value="${savedData['card-number'] || ''}">
+                    <div class="invalid-feedback">
+                        El número de tarjeta es requerido.
+                    </div>
+                </div>
                 <div class="d-flex gap-2 mb-2">
-                    <input id="card-cvv"  class="form-control" placeholder="CVV">
-                    <input id="card-exp"  class="form-control" placeholder="Vencimiento">
+                    <div class="flex-fill">
+                        <input id="card-cvv" class="form-control" placeholder="CVV" required
+                               value="${savedData['card-cvv'] || ''}">
+                        <div class="invalid-feedback">
+                            CVV requerido.
+                        </div>
+                    </div>
+                    <div class="flex-fill">
+                        <input id="card-exp" class="form-control" placeholder="Vencimiento (MM/AA)" required
+                               value="${savedData['card-exp'] || ''}">
+                        <div class="invalid-feedback">
+                            Vencimiento requerido.
+                        </div>
+                    </div>
                 </div>
             `;
         } else {
             paymentFieldsBox.innerHTML = `
-                <input id="transfer-name" class="form-control mb-2" placeholder="Titular de la cuenta">
-                <input id="transfer-bank" class="form-control mb-2" placeholder="Banco">
-                <input id="transfer-cbu"  class="form-control mb-2" placeholder="Número de cuenta / CBU">
+                <div class="mb-2">
+                    <input id="transfer-name" class="form-control" placeholder="Titular de la cuenta" required
+                           value="${savedData['transfer-name'] || ''}">
+                    <div class="invalid-feedback">
+                        El titular es requerido.
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <input id="transfer-bank" class="form-control" placeholder="Banco" required
+                           value="${savedData['transfer-bank'] || ''}">
+                    <div class="invalid-feedback">
+                        El banco es requerido.
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <input id="transfer-cbu" class="form-control" placeholder="Número de cuenta / CBU" required
+                           value="${savedData['transfer-cbu'] || ''}">
+                    <div class="invalid-feedback">
+                        El número de cuenta es requerido.
+                    </div>
+                </div>
             `;
         }
+
+        // Agregar listeners de auto-guardado a los nuevos campos
+        paymentFieldsBox.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', saveFormData);
+        });
     }
 
-    paymentMethod.addEventListener("change", renderPaymentFields);
+    paymentMethod.addEventListener("change", () => {
+        saveFormData();
+        renderPaymentFields();
+    });
+    
+    // Cargar datos guardados al inicio
+    loadFormData();
     renderPaymentFields(); 
 
-    // 1) Dirección no vacía
     function validateAddress() {
-        const campos = [depInput, locInput, calleInput, numeroInput, esquinaInput];
-        return campos.every(input => input && input.value.trim() !== "");
+        const campos = [
+            { field: depInput, name: 'Departamento' },
+            { field: locInput, name: 'Localidad' },
+            { field: calleInput, name: 'Calle' },
+            { field: numeroInput, name: 'Número' },
+            { field: esquinaInput, name: 'Esquina' }
+        ];
+        
+        let allValid = true;
+        campos.forEach(({ field }) => {
+            if (!validateField(field)) {
+                allValid = false;
+            }
+        });
+        
+        return allValid;
     }
 
-    // 2) Forma de envío seleccionada
     function validateShipping() {
-        return shippingSelect.value !== "" && !isNaN(Number(shippingSelect.value));
+        const isValid = shippingSelect.value !== "" && !isNaN(Number(shippingSelect.value));
+        if (!isValid) {
+            shippingSelect.classList.add('is-invalid');
+            shippingSelect.classList.remove('is-valid');
+        } else {
+            shippingSelect.classList.remove('is-invalid');
+            shippingSelect.classList.add('is-valid');
+        }
+        return isValid;
     }
 
-    // 3) Cantidad para cada producto definida y > 0
     function validateQuantities() {
         const ctnInputs = listaArt.querySelectorAll("input[type='number']");
 
@@ -96,82 +276,115 @@ document.addEventListener('DOMContentLoaded', async function () {
         return { ok: true };
     }
 
-    // 4 y 5) Forma de pago seleccionada + campos llenos
     function validatePayment() {
         if (!paymentMethod.value) {
             return { ok: false, msg: "Seleccioná una forma de pago." };
         }
+        
         const inputs = paymentFieldsBox.querySelectorAll("input");
         if (inputs.length === 0) {
             return { ok: false, msg: "Completá los datos de la forma de pago seleccionada." };
         }
+        
+        let allValid = true;
         for (const input of inputs) {
-            if (input.value.trim() === "") {
-                return { ok: false, msg: "Completá todos los campos de la forma de pago seleccionada." };
+            if (!validateField(input)) {
+                allValid = false;
             }
         }
+        
+        if (!allValid) {
+            return { ok: false, msg: "Completá todos los campos de la forma de pago seleccionada." };
+        }
+        
         return { ok: true };
     }
-   //  Botones "Continuar" de Envío y Pago
-  const btnEnvioContinuar = document.getElementById("btn-envio-continuar");
-  const btnPagoContinuar  = document.getElementById("btn-pago-continuar");
 
-  if (btnEnvioContinuar) {
-    btnEnvioContinuar.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    // Botón continuar de Envío
+    const btnEnvioContinuar = document.getElementById("btn-envio-continuar");
+    if (btnEnvioContinuar) {
+        btnEnvioContinuar.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-      const errores = [];
+            const errores = [];
 
-      if (!validateAddress()) {
-        errores.push("Completá todos los campos de la dirección de envío.");
-      }
+            // Validar cantidades primero
+            const qtyCheck = validateQuantities();
+            if (!qtyCheck.ok) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Carrito vacío',
+                    text: qtyCheck.msg,
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#F09100'
+                });
+                return;
+            }
 
-      if (!validateShipping()) {
-        errores.push("Seleccioná un tipo de envío.");
-      }
+            // Validar tipo de envío
+            if (!validateShipping()) {
+                errores.push("Seleccioná un tipo de envío.");
+            }
 
-      const qtyCheck = validateQuantities();
-      if (!qtyCheck.ok) {
-        errores.push(qtyCheck.msg);
-      }
+            // Validar dirección
+            if (!validateAddress()) {
+                errores.push("Completá todos los campos de la dirección de envío.");
+            }
 
-      if (errores.length > 0) {
-        alert(errores.join("\n"));
-        return;
-      }
+            if (errores.length > 0) {
+                return;
+            }
 
-      const pagoTabBtn = document.querySelector('button[data-bs-target="#pagoTab"]');
-      if (pagoTabBtn) {
-        const tab = new bootstrap.Tab(pagoTabBtn);
-        tab.show();
-      }
-    });
-  }
+            // Todo válido, pasar al siguiente paso
+            saveFormData();
+            showStep('pago');
+        });
+    }
 
-  if (btnPagoContinuar) {
-    btnPagoContinuar.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    // Botón volver de Pago
+    const btnPagoVolver = document.getElementById("btn-pago-volver");
+    if (btnPagoVolver) {
+        btnPagoVolver.addEventListener("click", (e) => {
+            e.preventDefault();
+            saveFormData();
+            showStep('envio');
+        });
+    }
 
-      const payCheck = validatePayment();
-      if (!payCheck.ok) {
-        alert(payCheck.msg);
-        return;
-      }
+    // Botón continuar de Pago
+    const btnPagoContinuar = document.getElementById("btn-pago-continuar");
+    if (btnPagoContinuar) {
+        btnPagoContinuar.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-      const resumenTabBtn = document.querySelector('button[data-bs-target="#resumenTab"]');
-      if (resumenTabBtn) {
-        const tab = new bootstrap.Tab(resumenTabBtn);
-        tab.show();
-      }
-    });
-  }
+            const payCheck = validatePayment();
+            if (!payCheck.ok) {
+                return;
+            }
+
+            // Todo válido, pasar al resumen
+            saveFormData();
+            showStep('resumen');
+        });
+    }
+
+    // Botón volver de Resumen
+    const btnResumenVolver = document.getElementById("btn-resumen-volver");
+    if (btnResumenVolver) {
+        btnResumenVolver.addEventListener("click", (e) => {
+            e.preventDefault();
+            feedbackDiv.innerHTML = "";
+            showStep('pago');
+        });
+    }
 
 if (btnFinalizar) {
     btnFinalizar.addEventListener("click", () => {
         const errores = [];
 
+        // Validar todo nuevamente antes de finalizar
         if (!validateAddress()) {
             errores.push("Los campos asociados a la dirección no pueden estar vacíos.");
         }
@@ -191,13 +404,27 @@ if (btnFinalizar) {
         }
 
         if (errores.length > 0) {
-            showFeedback("danger", errores.join(" "));
+            return;
         } else {
-            showFeedback("success", "¡Compra realizada con éxito!");
+            Swal.fire({
+                icon: 'success',
+                title: '¡Compra realizada con éxito!',
+                text: 'Tu pedido ha sido procesado correctamente.',
+                confirmButtonText: 'Continuar comprando',
+                confirmButtonColor: '#198754',
+                timer: 3000,
+                timerProgressBar: true
+            }).then(() => {
+                // Redirigir después de cerrar la alerta
+                window.location.href = 'index.html';
+            });
 
+            // Limpiar carrito
             cart = [];
-
             localStorage.removeItem("cart");
+            
+            // Limpiar datos del formulario
+            localStorage.removeItem("checkoutFormData");
 
             if (badge) badge.textContent = "0";
             if (inputSubtot) inputSubtot.textContent = "";
@@ -211,7 +438,7 @@ if (btnFinalizar) {
                         <h4 class="mb-2">Tu carrito está vacío</h4>
                         <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
                         <a href="index.html" class="btn btn-buy">
-                            <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                            <i class="bi bi-arrow-left me-2"></i>Empezar a comprar
                         </a>
                     </div>
                 `;
@@ -239,7 +466,7 @@ if (btnFinalizar) {
                 <h4 class="mb-2">Tu carrito está vacío</h4>
                 <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
                 <a href="index.html" class="btn btn-buy">
-                    <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                    <i class="bi bi-arrow-left me-2"></i>Empezar a comprar
                 </a>
             </div>
         `;
@@ -252,7 +479,30 @@ if (btnFinalizar) {
             btnComprar.style.display = "none";
             btnComprar.style.visibility = "hidden";
         }
+        // Ocultar el panel de checkout
+        if (checkoutPanel) {
+            checkoutPanel.style.display = "none";
+        }
+        // Ocultar título y sección de subtotal
+        if (pedidoTitulo) {
+            pedidoTitulo.style.display = "none";
+        }
+        if (subtotalSection) {
+            subtotalSection.style.display = "none";
+        }
         return;
+    }
+
+    // Mostrar el panel de checkout si hay productos
+    if (checkoutPanel) {
+        checkoutPanel.style.display = "block";
+    }
+    // Mostrar título y sección de subtotal
+    if (pedidoTitulo) {
+        pedidoTitulo.style.display = "block";
+    }
+    if (subtotalSection) {
+        subtotalSection.style.display = "flex";
     }
 
     if (subtotalLinea) {
@@ -341,13 +591,12 @@ if (btnFinalizar) {
             let subtotal = parseFloat(subtotalTexto.replace(/[^\d.-]/g, ""));
             const esUSD = subtotalTexto.includes("USD");
 
-            const envio = document.querySelector('input[name="shipping"]:checked');
+            // Obtener el valor del select de envío
             let costoEnvio = 0;
-
-            if (envio) {
-                if (envio.value === "premium") costoEnvio = subtotal * 0.15;
-                if (envio.value === "express") costoEnvio = subtotal * 0.07;
-                if (envio.value === "standard") costoEnvio = subtotal * 0.05;
+            const shippingRate = parseFloat(shippingSelect.value);
+            
+            if (!isNaN(shippingRate)) {
+                costoEnvio = subtotal * shippingRate;
             }
 
             const total = subtotal + costoEnvio;
@@ -367,8 +616,8 @@ if (btnFinalizar) {
             const itemSubtotal = prodInfo.cost * cartItem.count;
 
             const descripcionCorta =
-                prodInfo.description.length > 40
-                    ? prodInfo.description.slice(0, 40) + "…"
+                prodInfo.description.length > 80
+                    ? prodInfo.description.slice(0, 80) + "…"
                     : prodInfo.description;
 
             const li = document.createElement("li");
@@ -383,35 +632,39 @@ if (btnFinalizar) {
 
             li.innerHTML = `
                 <img src="${prodInfo.images[0]}" alt="${prodInfo.name}"
-                    style="width:80px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #ddd;">
+                    style="width:100px; height:100px; object-fit:cover; border-radius:8px; border:1px solid #ddd;">
 
-                <div class="flex-grow-1 d-flex flex-column w-100">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <p class="mb-1">${prodInfo.name}</p>
+                <div class="flex-grow-1 d-flex flex-column justify-content-between w-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1 product-name">${prodInfo.name}</h6>
+                            <p class="mb-0 text-muted small product-description">${descripcionCorta}</p>
+                        </div>
+                        <div class="text-end ms-3" style="min-width: 120px;">
+                            <p class="mb-1 text-muted" style="font-size: 0.85rem;">Unidad: ${prodInfo.currency} ${prodInfo.cost.toLocaleString()}</p>
+                            <p class="mb-0 fw-bold item-subtotal" data-index="${index}" style="font-size: 1rem;">
+                                ${prodInfo.currency} ${itemSubtotal.toLocaleString()}
+                            </p>
+                        </div>
+                    </div>
 
+                    <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-2">
-                            <label class="mb-0 small">Cant:</label>
+                            <label class="mb-0 small text-muted">Cantidad:</label>
                             <input
                                 type="number"
                                 min="1"
                                 value="${cartItem.count}"
                                 class="form-control form-control-sm cantidad-input"
-                                style="width:70px"
+                                style="width:60px"
                                 data-index="${index}">
                         </div>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <p class="mb-0" style="max-width:280px;">${descripcionCorta}</p>
-                        <p class="mb-0 item-subtotal" data-index="${index}">
-                            ${prodInfo.currency} ${itemSubtotal.toLocaleString()}
-                        </p>
+                        <button class="btn btn-sm btn-danger btn-cerrar d-flex align-items-center gap-1" data-index="${index}" title="Eliminar producto">
+                            <i class="bi bi-x-lg"></i>
+                            <span class="d-none d-sm-inline">Eliminar</span>
+                        </button>
                     </div>
                 </div>
-
-                <button class="btn btn-sm btn-cerrar" data-index="${index}">
-                    <i class="bi bi-x-lg"></i>
-                </button>
             `;
 
             lista.appendChild(li);
@@ -451,11 +704,27 @@ if (btnFinalizar) {
             calcularEnvioYTotal();
         });
 
-        lista.addEventListener("click", (e) => {
+        lista.addEventListener("click", async (e) => {
             const btn = e.target.closest(".btn-cerrar");
             if (!btn) return;
 
             const ids = parseInt(btn.dataset.index, 10);
+            const prodInfo = detalles[ids].info;
+
+            // Confirmar eliminación
+            const result = await Swal.fire({
+                title: '¿Eliminar producto?',
+                html: `<p>¿Estás seguro de que querés eliminar <strong>${prodInfo.name}</strong> del carrito?</p>`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                reverseButtons: true
+            });
+
+            if (!result.isConfirmed) return;
 
             cart.splice(ids, 1);
 
@@ -465,6 +734,17 @@ if (btnFinalizar) {
             localStorage.setItem("cart", JSON.stringify(cart));
 
             btn.closest("li").remove();
+            
+            // Mostrar mensaje de confirmación
+            Swal.fire({
+                icon: 'success',
+                title: 'Producto eliminado',
+                text: 'El producto ha sido eliminado del carrito.',
+                timer: 1500,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
 
             if (!cart.length) {
                 contenedorLista.innerHTML = `
@@ -475,11 +755,12 @@ if (btnFinalizar) {
                         <h4 class="mb-2">Tu carrito está vacío</h4>
                         <p class="text-muted mb-4">¡Agrega productos para comenzar tu compra!</p>
                         <a href="index.html" class="btn btn-buy">
-                            <i class="bi bi-arrow-left me-2"></i>Continuar comprando
+                            <i class="bi bi-arrow-left me-2"></i>Empezar a comprar
                         </a>
                     </div>
                 `;
                 if (badge) badge.textContent = "0";
+                if (inputSubtot) inputSubtot.textContent = "";
                 // Ocultar subtotal y botón de comprar
                 if (subtotalLinea) {
                     subtotalLinea.style.display = "none";
@@ -488,6 +769,17 @@ if (btnFinalizar) {
                 if (btnComprar) {
                     btnComprar.style.display = "none";
                     btnComprar.style.visibility = "hidden";
+                }
+                // Ocultar el panel de checkout
+                if (checkoutPanel) {
+                    checkoutPanel.style.display = "none";
+                }
+                // Ocultar título y sección de subtotal
+                if (pedidoTitulo) {
+                    pedidoTitulo.style.display = "none";
+                }
+                if (subtotalSection) {
+                    subtotalSection.style.display = "none";
                 }
                 return;
             }
@@ -508,8 +800,9 @@ if (btnFinalizar) {
         });
 
         // Cambio de tipo de envío
-        document.querySelectorAll('input[name="shipping"]').forEach(radio => {
-            radio.addEventListener("change", calcularEnvioYTotal);
+        shippingSelect.addEventListener("change", () => {
+            saveFormData();
+            calcularEnvioYTotal();
         });
 
     } catch (error) {
