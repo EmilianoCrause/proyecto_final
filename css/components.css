@@ -275,6 +275,39 @@ aside h6 {
 }
 
 /* Responsive */
+@media (min-width: 768px) and (max-width: 991px) {
+    .filters-aside {
+        padding: 1rem;
+    }
+    
+    .sort-options label {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    .sort-options label span::before {
+        width: 10px;
+        height: 10px;
+        margin-right: 6px;
+    }
+    
+    aside h6 {
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .filter-input input {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    
+    .filter-btn,
+    .clear-btn {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 768px) {
     .search-form {
         margin: 0.5rem 0;

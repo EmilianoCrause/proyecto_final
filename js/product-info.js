@@ -203,22 +203,18 @@ document.addEventListener("DOMContentLoaded", function () {
 					console.log("Productos relacionados originales:", relFromProduct);
 					let relatedFull = [];
 
-					// Crear promesas para cargar la información completa de productos relacionados
-					const promises = relFromProduct.map(r => {
+							const promises = relFromProduct.map(r => {
 						const id = (typeof r === 'object') ? r.id : r;
 						console.log("Procesando producto relacionado ID:", id, "¿Está en map?", !!map[id]);
-						// Si ya está en el map de la categoría actual, usarlo
 						if (map[id]) {
 							console.log("Producto encontrado en map:", map[id]);
 							return Promise.resolve(map[id]);
 						}
-						// Si no está, cargar su información completa desde la API
 						console.log("Cargando producto desde API:", PRODUCT_INFO_URL + id + EXT_TYPE);
 						return getJSONData(PRODUCT_INFO_URL + id + EXT_TYPE).then(res => {
 							if (res.status === "ok") {
 								const productData = res.data;
 								console.log("Producto cargado desde API:", productData);
-								// Adaptar la estructura del detalle al formato del listado
 								return {
 									id: productData.id,
 									name: productData.name,
@@ -229,17 +225,14 @@ document.addEventListener("DOMContentLoaded", function () {
 									image: productData.images && productData.images[0] ? productData.images[0] : ''
 								};
 							}
-							// Si falla, usar el objeto básico
 							return (typeof r === 'object') ? r : { id: id, name: '', image: '' };
 						});
 					});
 
-					// Esperar a que se carguen todos los productos relacionados
 					Promise.all(promises).then(loadedProducts => {
 						console.log("Todos los productos relacionados cargados:", loadedProducts);
 						relatedFull = loadedProducts;
 
-						// Agregar más productos de la misma categoría si hacen falta
 						for (let p of all) {
 							if (relatedFull.length >= 10) break;
 							if (p.id == product.id) continue;
@@ -250,7 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
 					});
 				} else {
 					console.log("Error al cargar productos de la categoría");
-					// Si falla la carga de la categoría, cargar cada producto relacionado individualmente
 					const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
 					const promises = relFromProduct.map(r => {
 						const id = (typeof r === 'object') ? r.id : r;
@@ -277,7 +269,6 @@ document.addEventListener("DOMContentLoaded", function () {
 			});
 		} else {
 			console.log("No hay catID, cargando productos relacionados individualmente");
-			// Si no hay catID, cargar cada producto relacionado individualmente
 			const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
 			const promises = relFromProduct.map(r => {
 				const id = (typeof r === 'object') ? r.id : r;
@@ -431,7 +422,6 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
   `;
 
-			// Si es el primer comentario, reemplazar el mensaje de "No hay comentarios"
 			if (allComments.length === 0) {
 				commentsList.innerHTML = newCommentHTML;
 			} else {
@@ -445,6 +435,20 @@ document.addEventListener("DOMContentLoaded", function () {
 				description: text
 			});
 			updateRatingSummary(allComments);
+
+			Swal.fire({
+				toast: true,
+				position: 'top',
+				icon: 'success',
+				title: 'Comentario enviado con éxito',
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				background: getComputedStyle(document.documentElement)
+					.getPropertyValue('--card-bg'),
+				color: getComputedStyle(document.documentElement)
+					.getPropertyValue('--font-color')
+			});
 
 			commentText.value = "";
 			const allRadios = commentForm.querySelectorAll('.comment-score');

@@ -221,14 +221,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     paymentMethod.addEventListener("change", () => {
         saveFormData();
-        renderPaymentFields();
-    });
-    
-    // Cargar datos guardados al inicio
-    loadFormData();
-    renderPaymentFields(); 
-
-    function validateAddress() {
+		renderPaymentFields();
+	});
+	
+	loadFormData();
+	renderPaymentFields();    function validateAddress() {
         const campos = [
             { field: depInput, name: 'Departamento' },
             { field: locInput, name: 'Localidad' },
@@ -421,12 +418,9 @@ if (btnFinalizar) {
 
             // Limpiar carrito
             cart = [];
-            localStorage.removeItem("cart");
-            
-            // Limpiar datos del formulario
-            localStorage.removeItem("checkoutFormData");
-
-            if (badge) badge.textContent = "0";
+				localStorage.removeItem("cart");
+				
+				localStorage.removeItem("checkoutFormData");            if (badge) badge.textContent = "0";
             if (inputSubtot) inputSubtot.textContent = "";
 
             if (contenedorLista) {
@@ -539,6 +533,8 @@ if (btnFinalizar) {
         lista.classList.add("list-group", "mb-3");
 
         const TASA_CAMBIO_UYU_A_USD = 40;
+        let subtotalNumerico = 0;
+        let esMonedaUSD = false;
 
         function convertirADolares(precio, moneda) {
             if (moneda === "UYU") {
@@ -565,19 +561,20 @@ if (btnFinalizar) {
                 totalCantidad += cantidad;
                 
                 if (hayDolares) {
-                    // Si hay dólares, convertir todo a USD
                     const precioEnDolares = convertirADolares(prodInfo.cost, prodInfo.currency);
                     totalCarrito += precioEnDolares * cantidad;
                 } else {
-                    // Si solo hay pesos, sumar en pesos
                     totalCarrito += prodInfo.cost * cantidad;
                 }
             });
 
+            subtotalNumerico = totalCarrito;
+            esMonedaUSD = hayDolares;
+
             if (hayDolares) {
                 inputSubtot.textContent = `USD ${totalCarrito.toFixed(2)}`;
             } else {
-                inputSubtot.textContent = `UYU ${totalCarrito.toLocaleString()}`;
+                inputSubtot.textContent = `UYU ${Math.round(totalCarrito).toLocaleString()}`;
             }
             if (badge) {
                 badge.textContent = totalCantidad;
@@ -585,30 +582,26 @@ if (btnFinalizar) {
         }
 
         function calcularEnvioYTotal() {
-            const subtotalTexto = inputSubtot.textContent.trim();
-            if (!subtotalTexto) return;
+            if (!subtotalNumerico) return;
 
-            let subtotal = parseFloat(subtotalTexto.replace(/[^\d.-]/g, ""));
-            const esUSD = subtotalTexto.includes("USD");
-
-            // Obtener el valor del select de envío
             let costoEnvio = 0;
             const shippingRate = parseFloat(shippingSelect.value);
             
             if (!isNaN(shippingRate)) {
-                costoEnvio = subtotal * shippingRate;
+                costoEnvio = subtotalNumerico * shippingRate;
             }
 
-            const total = subtotal + costoEnvio;
+            const total = subtotalNumerico + costoEnvio;
 
-            document.getElementById("resumen-subtotal").textContent =
-                esUSD ? `USD ${subtotal.toFixed(2)}` : `UYU ${subtotal.toLocaleString()}`;
-
-            document.getElementById("resumen-envio").textContent =
-                esUSD ? `USD ${costoEnvio.toFixed(2)}` : `UYU ${costoEnvio.toLocaleString()}`;
-
-            document.getElementById("resumen-total").textContent =
-                esUSD ? `USD ${total.toFixed(2)}` : `UYU ${total.toLocaleString()}`;
+            if (esMonedaUSD) {
+                document.getElementById("resumen-subtotal").textContent = `USD ${subtotalNumerico.toFixed(2)}`;
+                document.getElementById("resumen-envio").textContent = `USD ${costoEnvio.toFixed(2)}`;
+                document.getElementById("resumen-total").textContent = `USD ${total.toFixed(2)}`;
+            } else {
+                document.getElementById("resumen-subtotal").textContent = `UYU ${Math.round(subtotalNumerico).toLocaleString()}`;
+                document.getElementById("resumen-envio").textContent = `UYU ${Math.round(costoEnvio).toLocaleString()}`;
+                document.getElementById("resumen-total").textContent = `UYU ${Math.round(total).toLocaleString()}`;
+            }
         }
 
         cart.forEach((cartItem, index) => {
@@ -728,23 +721,23 @@ if (btnFinalizar) {
 
             cart.splice(ids, 1);
 
-            detalles.splice(ids, 1);
+			detalles.splice(ids, 1);
 
-            //guardar carrito actualizado
-            localStorage.setItem("cart", JSON.stringify(cart));
-
-            btn.closest("li").remove();
+			localStorage.setItem("cart", JSON.stringify(cart));            btn.closest("li").remove();
             
-            // Mostrar mensaje de confirmación
             Swal.fire({
-                icon: 'success',
-                title: 'Producto eliminado',
-                text: 'El producto ha sido eliminado del carrito.',
-                timer: 1500,
-                showConfirmButton: false,
-                toast: true,
-                position: 'top-end'
-            });
+				toast: true,
+				position: 'top-end',
+				icon: 'success',
+				title: 'El producto ha sido eliminado del carrito.',
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				background: getComputedStyle(document.documentElement)
+					.getPropertyValue('--card-bg'),
+				color: getComputedStyle(document.documentElement)
+					.getPropertyValue('--font-color')
+			});
 
             if (!cart.length) {
                 contenedorLista.innerHTML = `

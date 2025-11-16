@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    // Verificar que el usuario esté logueado
     if (!verificarUsuario()) return;
 
     if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
@@ -37,7 +36,6 @@ async function initRelevantProductsCarousel() {
     const carousel = document.getElementById("relevant-products-carousel");
     if (!carousel) return;
 
-    // Mapeo de IDs a nombres de categorías
     const categoryInfo = {
         101: "Autos",
         102: "Juguetes",
@@ -56,7 +54,6 @@ async function initRelevantProductsCarousel() {
             const result = results[i];
             const catId = categoryIds[i];
             if (result.status === "ok" && result.data.products) {
-                // Agregar información de categoría a cada producto
                 const productsWithCategory = result.data.products.map(p => ({
                     ...p,
                     categoryId: catId,
@@ -135,7 +132,6 @@ function renderCarouselProducts(container, products) {
             const categoryId = this.dataset.categoryId;
             const categoryName = this.dataset.categoryName;
             
-            // Guardar toda la información necesaria
             localStorage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
             if (categoryId) {
                 localStorage.setItem(STORAGE_KEYS.CAT_ID, categoryId);
