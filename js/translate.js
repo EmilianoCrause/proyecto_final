@@ -63,6 +63,19 @@ document.addEventListener('DOMContentLoaded', () => {
   dropdown.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
       const lang = button.dataset.lang;
+      
+      // Si selecciona español (idioma original), recarga la página sin traducción
+      if (lang === 'es') {
+        // Elimina las cookies de Google Translate
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+        
+        // Recarga la página limpiando parámetros
+        const url = window.location.href.split('#')[0].split('?')[0];
+        window.location.href = url;
+        return;
+      }
+      
       const interval = setInterval(() => {
         const select = document.querySelector('.goog-te-combo');
         if (select) {

@@ -1,3 +1,12 @@
+/**
+ * cart.js
+ * Maneja toda la funcionalidad del carrito de compras:
+ * - Visualización y edición de productos
+ * - Proceso de checkout en 3 pasos (envío, pago, resumen)
+ * - Cálculo de totales y conversión de monedas
+ * - Validaciones de formularios
+ */
+
 document.addEventListener('DOMContentLoaded', async function () {
     const contenedorLista = document.getElementById("lista-art");
     const inputSubtot = document.getElementById("input-subtot");
@@ -65,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         feedbackDiv.appendChild(alert);
     }
 
-    // Función para cambiar de paso
+    // Cambia entre los diferentes pasos del checkout (envío, pago, resumen)
     function showStep(step) {
         // Ocultar todos los pasos
         envioTab.style.display = 'none';
@@ -94,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // Cargar datos guardados del formulario
+    // Carga los datos guardados del formulario desde localStorage
     function loadFormData() {
         const savedData = JSON.parse(localStorage.getItem('checkoutFormData') || '{}');
         
@@ -107,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (savedData.paymentMethod) paymentMethod.value = savedData.paymentMethod;
     }
 
-    // Guardar datos del formulario
+    // Guarda todos los datos del formulario en localStorage para persistencia
     function saveFormData() {
         const formData = {
             shipping: shippingSelect.value,
@@ -136,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 
-    // Validar un campo individual
+    // Valida un campo individual y actualiza clases de Bootstrap
     function validateField(field) {
         if (!field.value || field.value.trim() === '') {
             field.classList.add('is-invalid');
@@ -221,14 +230,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     paymentMethod.addEventListener("change", () => {
         saveFormData();
-        renderPaymentFields();
-    });
-    
-    // Cargar datos guardados al inicio
-    loadFormData();
-    renderPaymentFields(); 
-
-    function validateAddress() {
+		renderPaymentFields();
+	});
+	
+	loadFormData();
+	renderPaymentFields();    function validateAddress() {
         const campos = [
             { field: depInput, name: 'Departamento' },
             { field: locInput, name: 'Localidad' },
@@ -421,12 +427,9 @@ if (btnFinalizar) {
 
             // Limpiar carrito
             cart = [];
-            localStorage.removeItem("cart");
-            
-            // Limpiar datos del formulario
-            localStorage.removeItem("checkoutFormData");
-
-            if (badge) badge.textContent = "0";
+				localStorage.removeItem("cart");
+				
+				localStorage.removeItem("checkoutFormData");            if (badge) badge.textContent = "0";
             if (inputSubtot) inputSubtot.textContent = "";
 
             if (contenedorLista) {
@@ -538,15 +541,20 @@ if (btnFinalizar) {
         const lista = document.createElement("ul");
         lista.classList.add("list-group", "mb-3");
 
-        const TASA_CAMBIO_UYU_A_USD = 40;
+        // Tasa de cambio para conversión de monedas
+        const EXCHANGE_RATE_UYU_TO_USD = 40;
+        const MAX_DESCRIPTION_LENGTH = 80;
+        let subtotalNumerico = 0;
+        let esMonedaUSD = false;
 
         function convertirADolares(precio, moneda) {
             if (moneda === "UYU") {
-                return precio / TASA_CAMBIO_UYU_A_USD;
+                return precio / EXCHANGE_RATE_UYU_TO_USD;
             }
             return precio;
         }
 
+        // Recalcula el subtotal sumando todos los productos del carrito
         function recalcularTotales() {
             let totalCarrito = 0;
             let totalCantidad = 0;
@@ -565,50 +573,48 @@ if (btnFinalizar) {
                 totalCantidad += cantidad;
                 
                 if (hayDolares) {
-                    // Si hay dólares, convertir todo a USD
                     const precioEnDolares = convertirADolares(prodInfo.cost, prodInfo.currency);
                     totalCarrito += precioEnDolares * cantidad;
                 } else {
-                    // Si solo hay pesos, sumar en pesos
                     totalCarrito += prodInfo.cost * cantidad;
                 }
             });
 
+            subtotalNumerico = totalCarrito;
+            esMonedaUSD = hayDolares;
+
             if (hayDolares) {
                 inputSubtot.textContent = `USD ${totalCarrito.toFixed(2)}`;
             } else {
-                inputSubtot.textContent = `UYU ${totalCarrito.toLocaleString()}`;
+                inputSubtot.textContent = `UYU ${Math.round(totalCarrito).toLocaleString()}`;
             }
             if (badge) {
                 badge.textContent = totalCantidad;
             }
         }
 
+        // Calcula el costo de envío y el total final en base al tipo de envío
         function calcularEnvioYTotal() {
-            const subtotalTexto = inputSubtot.textContent.trim();
-            if (!subtotalTexto) return;
+            if (!subtotalNumerico) return;
 
-            let subtotal = parseFloat(subtotalTexto.replace(/[^\d.-]/g, ""));
-            const esUSD = subtotalTexto.includes("USD");
-
-            // Obtener el valor del select de envío
             let costoEnvio = 0;
             const shippingRate = parseFloat(shippingSelect.value);
             
             if (!isNaN(shippingRate)) {
-                costoEnvio = subtotal * shippingRate;
+                costoEnvio = subtotalNumerico * shippingRate;
             }
 
-            const total = subtotal + costoEnvio;
+            const total = subtotalNumerico + costoEnvio;
 
-            document.getElementById("resumen-subtotal").textContent =
-                esUSD ? `USD ${subtotal.toFixed(2)}` : `UYU ${subtotal.toLocaleString()}`;
-
-            document.getElementById("resumen-envio").textContent =
-                esUSD ? `USD ${costoEnvio.toFixed(2)}` : `UYU ${costoEnvio.toLocaleString()}`;
-
-            document.getElementById("resumen-total").textContent =
-                esUSD ? `USD ${total.toFixed(2)}` : `UYU ${total.toLocaleString()}`;
+            if (esMonedaUSD) {
+                document.getElementById("resumen-subtotal").textContent = `USD ${subtotalNumerico.toFixed(2)}`;
+                document.getElementById("resumen-envio").textContent = `USD ${costoEnvio.toFixed(2)}`;
+                document.getElementById("resumen-total").textContent = `USD ${total.toFixed(2)}`;
+            } else {
+                document.getElementById("resumen-subtotal").textContent = `UYU ${Math.round(subtotalNumerico).toLocaleString()}`;
+                document.getElementById("resumen-envio").textContent = `UYU ${Math.round(costoEnvio).toLocaleString()}`;
+                document.getElementById("resumen-total").textContent = `UYU ${Math.round(total).toLocaleString()}`;
+            }
         }
 
         cart.forEach((cartItem, index) => {
@@ -616,8 +622,8 @@ if (btnFinalizar) {
             const itemSubtotal = prodInfo.cost * cartItem.count;
 
             const descripcionCorta =
-                prodInfo.description.length > 80
-                    ? prodInfo.description.slice(0, 80) + "…"
+                prodInfo.description.length > MAX_DESCRIPTION_LENGTH
+                    ? prodInfo.description.slice(0, MAX_DESCRIPTION_LENGTH) + "…"
                     : prodInfo.description;
 
             const li = document.createElement("li");
@@ -728,23 +734,23 @@ if (btnFinalizar) {
 
             cart.splice(ids, 1);
 
-            detalles.splice(ids, 1);
+			detalles.splice(ids, 1);
 
-            //guardar carrito actualizado
-            localStorage.setItem("cart", JSON.stringify(cart));
-
-            btn.closest("li").remove();
+			localStorage.setItem("cart", JSON.stringify(cart));            btn.closest("li").remove();
             
-            // Mostrar mensaje de confirmación
             Swal.fire({
-                icon: 'success',
-                title: 'Producto eliminado',
-                text: 'El producto ha sido eliminado del carrito.',
-                timer: 1500,
-                showConfirmButton: false,
-                toast: true,
-                position: 'top-end'
-            });
+				toast: true,
+				position: 'top-end',
+				icon: 'success',
+				title: 'El producto ha sido eliminado del carrito.',
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				background: getComputedStyle(document.documentElement)
+					.getPropertyValue('--card-bg'),
+				color: getComputedStyle(document.documentElement)
+					.getPropertyValue('--font-color')
+			});
 
             if (!cart.length) {
                 contenedorLista.innerHTML = `
@@ -806,7 +812,6 @@ if (btnFinalizar) {
         });
 
     } catch (error) {
-        console.error("Error al cargar productos:", error);
         contenedorLista.innerHTML = `
             <div class="alert alert-danger text-center" role="alert">
                 Ocurrió un error al cargar los productos.

@@ -1,3 +1,13 @@
+/**
+ * init.js
+ * Archivo de inicialización que contiene:
+ * - URLs de la API de eMercado
+ * - Constantes globales para localStorage
+ * - Funciones auxiliares (spinner, fetch)
+ * - Event listeners globales
+ */
+
+// URLs de la API de eMercado
 const CATEGORIES_URL = "https://japceibal.github.io/emercado-api/cats/cat.json";
 const PUBLISH_PRODUCT_URL = "https://japceibal.github.io/emercado-api/sell/publish.json";
 const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
