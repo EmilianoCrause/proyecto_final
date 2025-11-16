@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                 msgToShowHTML.innerHTML = msgToShow;
                 document.getElementById("alertResult").classList.add("show");
             });
-        });
+        }
     });
 
     initDarkMode();
