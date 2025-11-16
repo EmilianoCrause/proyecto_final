@@ -112,6 +112,62 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
         return { ok: true };
     }
+   //  Botones "Continuar" de Envío y Pago
+  const btnEnvioContinuar = document.getElementById("btn-envio-continuar");
+  const btnPagoContinuar  = document.getElementById("btn-pago-continuar");
+
+  if (btnEnvioContinuar) {
+    btnEnvioContinuar.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const errores = [];
+
+      if (!validateAddress()) {
+        errores.push("Completá todos los campos de la dirección de envío.");
+      }
+
+      if (!validateShipping()) {
+        errores.push("Seleccioná un tipo de envío.");
+      }
+
+      const qtyCheck = validateQuantities();
+      if (!qtyCheck.ok) {
+        errores.push(qtyCheck.msg);
+      }
+
+      if (errores.length > 0) {
+        alert(errores.join("\n"));
+        return;
+      }
+
+      const pagoTabBtn = document.querySelector('button[data-bs-target="#pagoTab"]');
+      if (pagoTabBtn) {
+        const tab = new bootstrap.Tab(pagoTabBtn);
+        tab.show();
+      }
+    });
+  }
+
+  if (btnPagoContinuar) {
+    btnPagoContinuar.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const payCheck = validatePayment();
+      if (!payCheck.ok) {
+        alert(payCheck.msg);
+        return;
+      }
+
+      const resumenTabBtn = document.querySelector('button[data-bs-target="#resumenTab"]');
+      if (resumenTabBtn) {
+        const tab = new bootstrap.Tab(resumenTabBtn);
+        tab.show();
+      }
+    });
+  }
+
 if (btnFinalizar) {
     btnFinalizar.addEventListener("click", () => {
         const errores = [];
