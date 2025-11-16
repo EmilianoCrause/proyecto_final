@@ -394,14 +394,25 @@ document.addEventListener("DOMContentLoaded", function () {
 			const text = commentText.value.trim();
 			const commentScore = commentForm.querySelector('input[name="star"]:checked');
 			const score = commentScore ? parseInt(commentScore.value) : NaN;
-			const user = localStorage.getItem("usuario") || sessionStorage.getItem("usuario") || "Usuario actual";
+		const user = localStorage.getItem("usuario") || sessionStorage.getItem("usuario") || "Usuario actual";
 
-			if (!text || isNaN(score) || score < 1 || score > 5) {
-				alert("Por favor ingresa un comentario y selecciona una puntuación válida (1–5).");
-				return;
-			}
-
-			const now = new Date();
+		if (!text || isNaN(score) || score < 1 || score > 5) {
+			Swal.fire({
+				toast: true,
+				position: 'top',
+				icon: 'warning',
+				title: 'Datos incompletos',
+				text: 'Por favor ingresa un comentario y selecciona una puntuación válida (1–5).',
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: true,
+				background: getComputedStyle(document.documentElement)
+					.getPropertyValue('--card-bg'),
+				color: getComputedStyle(document.documentElement)
+					.getPropertyValue('--font-color')
+			});
+			return;
+		}			const now = new Date();
 			const formattedDate = now.toLocaleString("es-ES", {
 				year: "numeric", month: "2-digit", day: "2-digit",
 				hour: "2-digit", minute: "2-digit"
