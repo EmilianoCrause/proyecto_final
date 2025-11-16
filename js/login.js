@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const langBtn = document.querySelector('.lang-btn'); 
 
     initDarkMode();
-    initLanguageSelector();
 
     function loadTranslations(lang) {
         const elements = {

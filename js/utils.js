@@ -1,3 +1,5 @@
+// Verifica si hay un usuario autenticado en sessionStorage o localStorage
+// Redirige a login si no hay sesión activa
 function verificarUsuario() {
     const usuSession = sessionStorage.getItem(STORAGE_KEYS.USUARIO);
     const usuLocal = localStorage.getItem(STORAGE_KEYS.USUARIO);
@@ -9,28 +11,44 @@ function verificarUsuario() {
     return true;
 }
 
+// Agrega un evento click a un elemento por su ID de forma segura
 function addClick(id, handler) {
     const el = document.getElementById(id);
     if (el) el.addEventListener("click", handler);
 }
 
+// Guarda el ID del producto seleccionado y navega a la página de detalles
 function setProductID(id) {
     localStorage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
     window.location = "product-info.html";
 }
 
+// Guarda el ID de categoría seleccionada y navega a la lista de productos
 function setCatID(id) {
     localStorage.setItem(STORAGE_KEYS.CAT_ID, id);
     window.location = "products.html";
 }
 
+// Inicializa el modo oscuro: sincroniza el toggle con el estado guardado
+// y agrega el listener para cambios de tema
 function initDarkMode() {
     const themeToggle = document.getElementById('theme-toggle-checkbox');
+    const themeToggleContainer = document.querySelector('.theme-toggle');
+    
     if (themeToggle) {
         if (document.documentElement.classList.contains("dark-mode")) {
             document.body.classList.add("dark-mode");
             themeToggle.checked = true;
         }
+        
+        // Remover el atributo de carga y agregar ready después de un pequeño delay
+        setTimeout(() => {
+            document.documentElement.removeAttribute('data-theme-loading');
+            if (themeToggleContainer) {
+                themeToggleContainer.classList.add('ready');
+            }
+        }, 100);
+        
         themeToggle.addEventListener("change", () => {
             const isDark = themeToggle.checked;
             if (isDark) {
@@ -41,22 +59,6 @@ function initDarkMode() {
                 document.body.classList.remove("dark-mode");
             }
             localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark);
-        });
-    }
-}
-
-function initLanguageSelector() {
-    const langBtn = document.querySelector(".lang-btn");
-    const langSelect = document.getElementById("idioma");
-    if (langBtn && langSelect) {
-        langBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
-        });
-
-        langSelect.addEventListener("click", (e) => e.stopPropagation());
-        document.addEventListener("click", () => {
-            langSelect.style.display = "none";
         });
     }
 }

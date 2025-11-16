@@ -1,5 +1,19 @@
+/**
+ * product-info.js
+ * Maneja la visualización de detalles de un producto:
+ * - Carga información completa del producto
+ * - Galería de imágenes
+ * - Sistema de comentarios y calificaciones
+ * - Productos relacionados
+ * - Funcionalidad de agregar al carrito
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
 	if (!verificarUsuario()) return;
+
+	// Constantes de configuración
+	const MAX_DESCRIPTION_LENGTH = 80;
+	const MAX_RELATED_PRODUCTS = 10;
 
 	const productInfoContainer = document.getElementById("product-info-container");
 	const relatedList = document.getElementById("related-products-list");
@@ -147,7 +161,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 
 		const catID = localStorage.getItem(STORAGE_KEYS.CAT_ID);
-		console.log("Category ID:", catID);
 
 		function renderRelated(relatedItems) {
 			if (!relatedItems || relatedItems.length === 0) {
@@ -155,10 +168,8 @@ document.addEventListener("DOMContentLoaded", function () {
 				return;
 			}
 
-			const toShow = relatedItems.slice(0, 10);
-			console.log("Productos relacionados a renderizar:", toShow);
+			const toShow = relatedItems.slice(0, MAX_RELATED_PRODUCTS);
 			const html = toShow.map(p => {
-				console.log("Producto:", p.name, "Tiene description:", !!p.description);
 				return `
 					<div class="product-card" data-id="${p.id}">
 						<div class="product-image-wrapper">
@@ -191,30 +202,23 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 
 		if (catID) {
-			console.log("Cargando productos de la categoría:", PRODUCTS_URL + catID + EXT_TYPE);
 			getJSONData(PRODUCTS_URL + catID + EXT_TYPE).then(function (resCat) {
 				if (resCat.status === "ok") {
 					const all = resCat.data.products || [];
-					console.log("Productos cargados de la categoría:", all.length);
 					const map = {};
 					all.forEach(p => map[p.id] = p);
 
 					const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
-					console.log("Productos relacionados originales:", relFromProduct);
 					let relatedFull = [];
 
-							const promises = relFromProduct.map(r => {
+						const promises = relFromProduct.map(r => {
 						const id = (typeof r === 'object') ? r.id : r;
-						console.log("Procesando producto relacionado ID:", id, "¿Está en map?", !!map[id]);
 						if (map[id]) {
-							console.log("Producto encontrado en map:", map[id]);
 							return Promise.resolve(map[id]);
 						}
-						console.log("Cargando producto desde API:", PRODUCT_INFO_URL + id + EXT_TYPE);
 						return getJSONData(PRODUCT_INFO_URL + id + EXT_TYPE).then(res => {
 							if (res.status === "ok") {
 								const productData = res.data;
-								console.log("Producto cargado desde API:", productData);
 								return {
 									id: productData.id,
 									name: productData.name,
@@ -230,7 +234,6 @@ document.addEventListener("DOMContentLoaded", function () {
 					});
 
 					Promise.all(promises).then(loadedProducts => {
-						console.log("Todos los productos relacionados cargados:", loadedProducts);
 						relatedFull = loadedProducts;
 
 						for (let p of all) {
@@ -242,7 +245,6 @@ document.addEventListener("DOMContentLoaded", function () {
 						renderRelated(relatedFull);
 					});
 				} else {
-					console.log("Error al cargar productos de la categoría");
 					const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
 					const promises = relFromProduct.map(r => {
 						const id = (typeof r === 'object') ? r.id : r;
@@ -268,15 +270,12 @@ document.addEventListener("DOMContentLoaded", function () {
 				}
 			});
 		} else {
-			console.log("No hay catID, cargando productos relacionados individualmente");
 			const relFromProduct = (product.relatedProducts && product.relatedProducts.length) ? product.relatedProducts : [];
 			const promises = relFromProduct.map(r => {
 				const id = (typeof r === 'object') ? r.id : r;
-				console.log("Cargando producto individual:", id);
 				return getJSONData(PRODUCT_INFO_URL + id + EXT_TYPE).then(res => {
 					if (res.status === "ok") {
 						const productData = res.data;
-						console.log("Producto individual cargado:", productData.name, "con description:", productData.description);
 						return {
 							id: productData.id,
 							name: productData.name,
@@ -291,7 +290,6 @@ document.addEventListener("DOMContentLoaded", function () {
 				});
 			});
 			Promise.all(promises).then(loadedProducts => {
-				console.log("Productos individuales cargados:", loadedProducts);
 				renderRelated(loadedProducts);
 			});
 		}
@@ -465,5 +463,4 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	initDarkMode();
-	initLanguageSelector();
 });

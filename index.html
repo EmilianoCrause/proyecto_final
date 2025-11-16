@@ -22,9 +22,12 @@
         (function () {
             const savedTheme = localStorage.getItem("darkMode");
             const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            if (savedTheme === "true" || (!savedTheme && prefersDark)) {
+            const isDark = savedTheme === "true" || (!savedTheme && prefersDark);
+            if (isDark) {
                 document.documentElement.classList.add("dark-mode");
+                document.documentElement.setAttribute('data-theme-loading', 'true');
             }
+            window.__darkModeEnabled = isDark;
         })();
     </script>
 </head>
@@ -53,14 +56,14 @@
             <!-- Formulario de búsqueda -->
             <form class="search-form" role="search" onsubmit="return false;">
                 <input type="text" id="search-bar" placeholder="Buscar productos..." aria-label="Buscar">
-                <button type="button" class="clear-search" id="clear-search">×</button>
+                <button type="button" class="clear-search" id="clear-search" aria-label="Limpiar búsqueda">×</button>
             </form>
 
             <!-- Controles -->
             <div class="selectores">
                 <!-- Botón carrito con badge -->
                 <button id="btn-cart" class="btn light-btn position-relative"
-                    onclick="window.location.href='cart.html'">
+                    onclick="window.location.href='cart.html'" aria-label="Ver carrito de compras">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                         viewBox="0 0 256 256">
                         <path
@@ -74,7 +77,7 @@
                 </button>
 
                 <!-- Botón perfil  -->
-                <button class="light-btn" id="btn-perfil">
+                <button class="light-btn" id="btn-perfil" aria-label="Ir a mi perfil">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
                         <path
@@ -85,7 +88,7 @@
                 </button>
 
                 <!-- Botón Cerrar sesión -->
-                <button class="light-btn" id="btn-logout">
+                <button class="light-btn" id="btn-logout" aria-label="Cerrar sesión">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000"
                         viewBox="0 0 256 256">
                         <path
@@ -99,7 +102,7 @@
             <div class="selectores">
                 <!-- Modo claro/oscuro - Toggle -->
                 <div class="theme-toggle">
-                    <input type="checkbox" id="theme-toggle-checkbox">
+                    <input type="checkbox" id="theme-toggle-checkbox" aria-label="Cambiar modo oscuro/claro">
                     <label for="theme-toggle-checkbox">
                         <!-- Sol (modo claro) -->
                         <svg class="sun-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
@@ -277,7 +280,6 @@
             badge.textContent = totalCantidad;
         });
     </script>
-    <script src="js/translate.js"></script>
     <!--Script de Google-->
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>

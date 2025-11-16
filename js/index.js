@@ -1,3 +1,11 @@
+/**
+ * index.js
+ * Maneja la página principal:
+ * - Enlaces directos a categorías principales
+ * - Carousel de productos destacados usando Swiper.js
+ * - Inicialización de modo oscuro e idioma
+ */
+
 document.addEventListener("DOMContentLoaded", async function () {
     if (!verificarUsuario()) return;
 
@@ -29,7 +37,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     initDarkMode();
-    initLanguageSelector();
 });
 
 async function initRelevantProductsCarousel() {
@@ -98,7 +105,6 @@ async function initRelevantProductsCarousel() {
         }
 
     } catch (error) {
-        console.error("Error fetching relevant products:", error);
         carousel.innerHTML = '<p class="text-muted">No se pudieron cargar los productos relevantes.</p>';
     }
 }

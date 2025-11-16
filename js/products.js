@@ -1,7 +1,17 @@
+/**
+ * products.js
+ * Maneja el listado y filtrado de productos de una categoría:
+ * - Carga y muestra productos desde la API
+ * - Filtros por precio
+ * - Ordenamiento (precio, relevancia)
+ * - Búsqueda en tiempo real
+ */
+
 let currentProductsArray = [];
 let filteredProductsArray = [];
 const SORT_MAP = { asc: "priceAsc", desc: "priceDesc", count: "relevance" };
 
+// Renderiza la lista de productos en el DOM
 function showProductsList() {
     const productList = document.getElementById("products-list-container");
     if (!productList) return;
@@ -31,6 +41,7 @@ function showProductsList() {
     productList.innerHTML = htmlContentToAppend;
 }
 
+// Ordena los productos según el criterio especificado
 function ordenarProductos(criterio) {
     if (criterio === "priceAsc") {
         filteredProductsArray.sort((a, b) => a.cost - b.cost);
@@ -42,6 +53,7 @@ function ordenarProductos(criterio) {
     showProductsList();
 }
 
+// Filtra productos por rango de precio mínimo y máximo
 function filtrarPorPrecio(minID, maxID) {
     let min = parseInt(document.getElementById(minID)?.value);
     let max = parseInt(document.getElementById(maxID)?.value);
@@ -62,6 +74,7 @@ function filtrarPorPrecio(minID, maxID) {
     }
 }
 
+// Limpia los filtros de precio y resetea la lista de productos
 function limpiarFiltros(minID, maxID) {
     const minEl = document.getElementById(minID);
     const maxEl = document.getElementById(maxID);
@@ -159,7 +172,6 @@ function loadProducts() {
                 ordenarProductos("relevance");
                 initSort();
             } else {
-                console.error("Error al cargar productos:", resultObj.data);
                 productListContainer.innerHTML = `
                 <div class="alert alert-danger" role="alert">
                     Error al cargar los productos. Intente nuevamente.
@@ -196,14 +208,12 @@ function loadProducts() {
             }
         }
 
-        console.warn('No se pudo resolver catID a partir del valor guardado:', catID);
         productListContainer.innerHTML = `
             <div class="alert alert-warning" role="alert">
                 No se pudo cargar la categoría seleccionada. Serás redirigido a la página de categorías.
             </div>`;
         setTimeout(() => { window.location.href = 'categories.html'; }, 1800);
     }).catch(err => {
-        console.error('Error al recuperar lista de categorías para resolver catID:', err);
         productListContainer.innerHTML = `
             <div class="alert alert-danger" role="alert">
                 Error al cargar los productos. Intente nuevamente.
@@ -218,5 +228,4 @@ document.addEventListener("DOMContentLoaded", () => {
     initFilters();
     initSearchBar();
     initDarkMode();
-    initLanguageSelector();
 });

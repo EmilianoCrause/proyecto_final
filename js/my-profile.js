@@ -1,3 +1,12 @@
+/**
+ * my-profile.js
+ * Maneja la página de perfil del usuario:
+ * - Visualización de datos del usuario
+ * - Edición de información personal
+ * - Carga y eliminación de imagen de perfil
+ * - Persistencia en localStorage/sessionStorage
+ */
+
 document.addEventListener('DOMContentLoaded', function(){
     if (!verificarUsuario()) return;
     
@@ -132,4 +141,3 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 initDarkMode();
-initLanguageSelector();
