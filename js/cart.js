@@ -334,6 +334,34 @@ if (btnFinalizar) {
             }
         }
 
+        function calcularEnvioYTotal() {
+            const subtotalTexto = inputSubtot.textContent.trim();
+            if (!subtotalTexto) return;
+
+            let subtotal = parseFloat(subtotalTexto.replace(/[^\d.-]/g, ""));
+            const esUSD = subtotalTexto.includes("USD");
+
+            const envio = document.querySelector('input[name="shipping"]:checked');
+            let costoEnvio = 0;
+
+            if (envio) {
+                if (envio.value === "premium") costoEnvio = subtotal * 0.15;
+                if (envio.value === "express") costoEnvio = subtotal * 0.07;
+                if (envio.value === "standard") costoEnvio = subtotal * 0.05;
+            }
+
+            const total = subtotal + costoEnvio;
+
+            document.getElementById("resumen-subtotal").textContent =
+                esUSD ? `USD ${subtotal.toFixed(2)}` : `UYU ${subtotal.toLocaleString()}`;
+
+            document.getElementById("resumen-envio").textContent =
+                esUSD ? `USD ${costoEnvio.toFixed(2)}` : `UYU ${costoEnvio.toLocaleString()}`;
+
+            document.getElementById("resumen-total").textContent =
+                esUSD ? `USD ${total.toFixed(2)}` : `UYU ${total.toLocaleString()}`;
+        }
+
         cart.forEach((cartItem, index) => {
             const prodInfo = detalles[index].info;
             const itemSubtotal = prodInfo.cost * cartItem.count;
@@ -393,6 +421,7 @@ if (btnFinalizar) {
         contenedorLista.appendChild(lista);
 
         recalcularTotales();
+        calcularEnvioYTotal();
 
         lista.addEventListener("input", (e) => {
             if (!e.target.classList.contains("cantidad-input")) return;
@@ -419,6 +448,7 @@ if (btnFinalizar) {
             }
 
             recalcularTotales();
+            calcularEnvioYTotal();
         });
 
         lista.addEventListener("click", (e) => {
@@ -474,6 +504,12 @@ if (btnFinalizar) {
             });
 
             recalcularTotales();
+            calcularEnvioYTotal();
+        });
+
+        // Cambio de tipo de envío
+        document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+            radio.addEventListener("change", calcularEnvioYTotal);
         });
 
     } catch (error) {
