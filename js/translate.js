@@ -39,6 +39,31 @@ function googleTranslateElementInit() {
   }, 'google_translate_element');
 }
 
+// === Función global para cambiar idioma (usada por mobile-menu.js) ===
+window.changeLanguage = function(lang) {
+  // Si selecciona español (idioma original), recarga la página sin traducción
+  if (lang === 'es') {
+    // Elimina las cookies de Google Translate
+    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+    
+    // Recarga la página limpiando parámetros
+    const url = window.location.href.split('#')[0].split('?')[0];
+    window.location.href = url;
+    return;
+  }
+  
+  // Para otros idiomas, espera a que Google Translate esté listo
+  const interval = setInterval(() => {
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+      select.value = lang;
+      select.dispatchEvent(new Event('change'));
+      clearInterval(interval);
+    }
+  }, 100);
+};
+
 // === Espera a que el DOM esté listo ===
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('btnIdioma');
@@ -63,28 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   dropdown.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
       const lang = button.dataset.lang;
-      
-      // Si selecciona español (idioma original), recarga la página sin traducción
-      if (lang === 'es') {
-        // Elimina las cookies de Google Translate
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
-        
-        // Recarga la página limpiando parámetros
-        const url = window.location.href.split('#')[0].split('?')[0];
-        window.location.href = url;
-        return;
-      }
-      
-      const interval = setInterval(() => {
-        const select = document.querySelector('.goog-te-combo');
-        if (select) {
-          select.value = lang;
-          select.dispatchEvent(new Event('change'));
-          clearInterval(interval);
-        }
-      }, 400);
-
+      window.changeLanguage(lang);
       dropdown.parentElement.classList.remove('show');
     });
   });

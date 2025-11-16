@@ -136,6 +136,7 @@ body.dark-mode .menu-toggle:hover {
     gap: 0.75rem;
     display: flex;
     align-items: center;
+    color: var(--font-color);
 }
 
 .mobile-menu .light-btn:hover,
@@ -177,7 +178,7 @@ body.dark-mode .menu-toggle:hover {
 }
 
 .mobile-menu .light-btn:hover span:not(.position-absolute) {
-    color: rgb(0, 0, 0) !important;
+    color: black!important;
 }
 
 .mobile-menu #User-display {
@@ -228,6 +229,7 @@ body.dark-mode .menu-toggle:hover {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     transition: all 0.3s ease;
+    opacity: 1 !important;
 }
 
 .mobile-menu .theme-toggle:hover {
@@ -242,6 +244,7 @@ body.dark-mode .menu-toggle:hover {
 .mobile-menu .theme-toggle span {
     font-weight: 500;
     font-size: 0.95rem;
+    color: var(--font-color);
 }
 
 /* Menú Móvil - Modo Oscuro */
@@ -259,6 +262,7 @@ body.dark-mode .mobile-menu .light-btn,
 body.dark-mode .mobile-menu .lang-btn {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
+    color: var(--font-color);
 }
 
 body.dark-mode .mobile-menu .light-btn span:not(.position-absolute),
@@ -270,11 +274,6 @@ body.dark-mode .mobile-menu .light-btn:hover,
 body.dark-mode .mobile-menu .lang-btn:hover {
     background: var(--primary-color);
     border-color: var(--primary-color);
-    color: rgb(0, 0, 0);
-}
-
-body.dark-mode .mobile-menu .light-btn:hover span:not(.position-absolute),
-body.dark-mode .mobile-menu .light-btn:hover #User-display {
     color: rgb(0, 0, 0);
 }
 
