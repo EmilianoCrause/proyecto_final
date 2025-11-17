@@ -136,27 +136,28 @@ body.dark-mode .menu-toggle:hover {
     gap: 0.75rem;
     display: flex;
     align-items: center;
+    color: var(--font-color);
 }
 
-.mobile-menu .light-btn:hover,
-.mobile-menu .lang-btn:hover {
+.mobile-menu .light-btn:active,
+.mobile-menu .lang-btn:active {
     background: var(--primary-color);
     color: rgb(0, 0, 0);
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .mobile-menu .light-btn svg,
 .mobile-menu .lang-btn svg {
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
     flex-shrink: 0;
     width: 24px;
     height: 24px;
 }
 
-.mobile-menu .light-btn:hover svg,
-.mobile-menu .lang-btn:hover svg {
-    transform: scale(1.1);
+.mobile-menu .light-btn:active svg,
+.mobile-menu .lang-btn:active svg {
+    transform: scale(0.95);
 }
 
 /* Forzar que los SVG sean visibles */
@@ -165,8 +166,8 @@ body.dark-mode .menu-toggle:hover {
     fill: currentColor;
 }
 
-.mobile-menu .light-btn:hover svg path,
-.mobile-menu .lang-btn:hover svg path {
+.mobile-menu .light-btn:active svg path,
+.mobile-menu .lang-btn:active svg path {
     fill: rgb(0, 0, 0) !important;
 }
 
@@ -176,7 +177,7 @@ body.dark-mode .menu-toggle:hover {
     color: var(--font-color);
 }
 
-.mobile-menu .light-btn:hover span:not(.position-absolute) {
+.mobile-menu .light-btn:active span:not(.position-absolute) {
     color: rgb(0, 0, 0) !important;
 }
 
@@ -187,7 +188,7 @@ body.dark-mode .menu-toggle:hover {
     font-size: 0.9rem;
 }
 
-.mobile-menu .light-btn:hover #User-display {
+.mobile-menu .light-btn:active #User-display {
     color: rgb(0, 0, 0) !important;
 }
 
@@ -228,10 +229,12 @@ body.dark-mode .menu-toggle:hover {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     transition: all 0.3s ease;
+    opacity: 1 !important;
 }
 
-.mobile-menu .theme-toggle:hover {
-    background: rgba(var(--primary-color-rgb, 0, 123, 255), 0.05);
+.mobile-menu .theme-toggle:active {
+    background: rgba(var(--primary-color-rgb, 0, 123, 255), 0.08);
+    transform: scale(0.98);
 }
 
 .mobile-menu .theme-toggle label {
@@ -242,6 +245,7 @@ body.dark-mode .menu-toggle:hover {
 .mobile-menu .theme-toggle span {
     font-weight: 500;
     font-size: 0.95rem;
+    color: var(--font-color);
 }
 
 /* Menú Móvil - Modo Oscuro */
@@ -259,6 +263,7 @@ body.dark-mode .mobile-menu .light-btn,
 body.dark-mode .mobile-menu .lang-btn {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
+    color: var(--font-color);
 }
 
 body.dark-mode .mobile-menu .light-btn span:not(.position-absolute),
@@ -266,16 +271,16 @@ body.dark-mode .mobile-menu #User-display {
     color: var(--font-color);
 }
 
-body.dark-mode .mobile-menu .light-btn:hover,
-body.dark-mode .mobile-menu .lang-btn:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: rgb(0, 0, 0);
+body.dark-mode .mobile-menu .light-btn:active,
+body.dark-mode .mobile-menu .lang-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--font-color);
 }
 
-body.dark-mode .mobile-menu .light-btn:hover span:not(.position-absolute),
-body.dark-mode .mobile-menu .light-btn:hover #User-display {
-    color: rgb(0, 0, 0);
+body.dark-mode .mobile-menu .light-btn:active span:not(.position-absolute),
+body.dark-mode .mobile-menu .light-btn:active #User-display {
+    color: var(--font-color) !important;
 }
 
 body.dark-mode .mobile-menu .theme-toggle {
@@ -283,8 +288,9 @@ body.dark-mode .mobile-menu .theme-toggle {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode .mobile-menu .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.08);
+body.dark-mode .mobile-menu .theme-toggle:active {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(0.98);
 }
 
 body.dark-mode .lang-dropdown {
