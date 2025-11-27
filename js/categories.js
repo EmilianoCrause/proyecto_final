@@ -1,12 +1,22 @@
+/**
+ * categories.js
+ * Maneja el listado y filtrado de categorías:
+ * - Carga y muestra categorías desde la API
+ * - Filtros por cantidad de productos
+ * - Ordenamiento (nombre, relevancia)
+ */
+
 let currentCategoriesArray = [];
 let filteredCategoriesArray = [];
 const SORT_MAP = { nameAsc: 'nameAsc', nameDesc: 'nameDesc', relevance: 'relevance' };
 
+// Guarda el ID de categoría y navega a la página de productos
 function setCatID(id) {
     localStorage.setItem(STORAGE_KEYS.CAT_ID, id);
     window.location = "products.html";
 }
 
+// Ordena las categorías según el criterio especificado (nombre ascendente/descendente o relevancia)
 function sortCategories(criteria) {
     if (criteria === 'nameAsc') {
         filteredCategoriesArray.sort((a, b) => a.name.localeCompare(b.name));
@@ -17,6 +27,7 @@ function sortCategories(criteria) {
     }
 }
 
+// Renderiza la lista de categorías filtradas en el DOM
 function showCategoriesList() {
     const container = document.getElementById("cat-list-container");
     if (!container) return;
@@ -44,6 +55,7 @@ function showCategoriesList() {
     container.innerHTML = htmlContentToAppend;
 }
 
+// Aplica filtros por cantidad de productos y muestra los resultados ordenados
 function filterAndShow() {
     const minCount = parseInt(document.getElementById('rangeFilterCountMin')?.value) || 0;
     const maxCount = parseInt(document.getElementById('rangeFilterCountMax')?.value) || Infinity;
@@ -57,6 +69,7 @@ function filterAndShow() {
     showCategoriesList();
 }
 
+// Inicializa todos los event listeners para filtros y ordenamiento
 function initEventListeners() {
     document.querySelectorAll('input[name="sortOptions"]').forEach(input => {
         input.addEventListener('change', filterAndShow);
@@ -80,45 +93,6 @@ function initEventListeners() {
     }
 }
 
-function initDarkMode() {
-    const themeToggle = document.getElementById('theme-toggle-checkbox');
-    if (themeToggle) {
-        // Sincronizar estado inicial
-        if (document.documentElement.classList.contains("dark-mode")) {
-            document.body.classList.add("dark-mode");
-            themeToggle.checked = true;
-        }
-        // Escuchar cambios
-        themeToggle.addEventListener("change", () => {
-            const isDark = themeToggle.checked;
-            if (isDark) {
-                document.documentElement.classList.add("dark-mode");
-                document.body.classList.add("dark-mode");
-            } else {
-                document.documentElement.classList.remove("dark-mode");
-                document.body.classList.remove("dark-mode");
-            }
-            localStorage.setItem(STORAGE_KEYS.DARK_MODE, isDark);
-        });
-    }
-}
-
-function initLanguageSelector() {
-    const langBtn = document.querySelector(".lang-btn");
-    const langSelect = document.getElementById("idioma");
-    if (langBtn && langSelect) {
-        langBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            langSelect.style.display = langSelect.style.display === "block" ? "none" : "block";
-        });
-
-        langSelect.addEventListener("click", (e) => e.stopPropagation());
-        document.addEventListener("click", () => {
-            langSelect.style.display = "none";
-        });
-    }
-}
-
 // ===============================
 // CARGA INICIAL DE LA PÁGINA
 // ===============================
@@ -131,12 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
             filterAndShow();
             initEventListeners();
         } else {
-            console.error("Error al cargar categorías:", resultObj.data);
+            alert("Error al cargar categorías. Por favor, intenta nuevamente.");
         }
     });
 
     initDarkMode();
-    initLanguageSelector();
 
     const breadcrumb = document.getElementById("breadcrumb-container");
     if (breadcrumb) {

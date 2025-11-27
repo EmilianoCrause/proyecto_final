@@ -20,6 +20,7 @@
           const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
           if (savedTheme === "true" || (!savedTheme && prefersDark)) {
               document.documentElement.classList.add("dark-mode");
+              document.documentElement.setAttribute('data-theme-loading', 'true');
           }
       })();
   </script>
@@ -76,7 +77,7 @@
                 </button>
 
                 <!-- Botón perfil  -->
-                <button class="light-btn" id="btn-perfil">
+                <button class="light-btn" id="btn-perfil" aria-label="Ir a mi perfil">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
                         <path
@@ -87,7 +88,7 @@
                 </button>
 
                 <!-- Botón Cerrar sesión -->
-                <button class="light-btn" id="btn-logout">
+                <button class="light-btn" id="btn-logout" aria-label="Cerrar sesión">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256">
                         <path d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z"></path>
                     </svg>
@@ -98,7 +99,7 @@
             <div class="selectores">
                 <!-- Modo claro/oscuro - Toggle -->
                 <div class="theme-toggle">
-                    <input type="checkbox" id="theme-toggle-checkbox">
+                    <input type="checkbox" id="theme-toggle-checkbox" aria-label="Cambiar modo oscuro/claro">
                     <label for="theme-toggle-checkbox">
                         <!-- Sol (modo claro) -->
                         <svg class="sun-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">

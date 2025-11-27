@@ -1,3 +1,12 @@
+/**
+ * my-profile.js
+ * Maneja la página de perfil del usuario:
+ * - Visualización de datos del usuario
+ * - Edición de información personal
+ * - Carga y eliminación de imagen de perfil
+ * - Persistencia en localStorage/sessionStorage
+ */
+
 document.addEventListener('DOMContentLoaded', function(){
     if (!verificarUsuario()) return;
     
@@ -19,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const emailSaved =  localStorage.getItem('usuario') || sessionStorage.getItem('usuario')
     const telSaved = localStorage.getItem('telefono') || sessionStorage.getItem('telefono')
 
-    // Variables temporales para la imagen
     let tempImageData = null;
     let imageToDelete = false;
 
@@ -36,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function(){
         emailPerfil.value = emailSaved
         telPerfil.value = telSaved
         
-        // Resetear cambios temporales de imagen
         tempImageData = null;
         imageToDelete = false;
     })
@@ -45,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function(){
         formEditar.style.display = 'none'
         btnEditar.style.display = 'block'
         
-        // Restaurar imagen original si se canceló
         const savedImg = localStorage.getItem('profileImage');
         const profileImg = document.getElementById('profile-img');
         if (savedImg && profileImg) {
@@ -54,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function(){
             profileImg.src = 'img/extra/icono-perfil.png';
         }
         
-        // Resetear cambios temporales
         tempImageData = null;
         imageToDelete = false;
     })
@@ -68,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function(){
             localStorage.setItem('usuario', emailPerfil.value)
             localStorage.setItem('telefono', telPerfil.value)
             
-            // Guardar o eliminar imagen según corresponda
             if (imageToDelete) {
                 localStorage.removeItem('profileImage');
             } else if (tempImageData) {
@@ -80,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function(){
             sessionStorage.setItem('usuario', emailPerfil.value)
             sessionStorage.setItem('telefono', telPerfil.value)
             
-            // Guardar o eliminar imagen según corresponda
             if (imageToDelete) {
                 localStorage.removeItem('profileImage');
             } else if (tempImageData) {
@@ -91,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function(){
         formEditar.style.display = 'none'
         btnEditar.style.display = 'block'
         
-        // Resetear cambios temporales
         tempImageData = null;
         imageToDelete = false;
         
@@ -108,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     })
 
-    // Manejar cambio de imagen (solo vista previa)
     const imgInput = document.getElementById('img-input');
     if (imgInput) {
         imgInput.addEventListener('change', (e) => {
@@ -139,6 +140,4 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Inicializar dark mode y selector de idioma
 initDarkMode();
-initLanguageSelector();

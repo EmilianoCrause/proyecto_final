@@ -5,12 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const rememberCheckbox = document.getElementById('remember');
     const langBtn = document.querySelector('.lang-btn'); 
 
-    // Usar funciones de utils.js
     initDarkMode();
-    initLanguageSelector();
 
     function loadTranslations(lang) {
-        // Verificar que los elementos existan antes de manipularlos
         const elements = {
             'login-title': document.getElementById('login-title'),
             'remember-text': document.getElementById('remember-text'),
@@ -21,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'footer-text': document.getElementById('footer-text')
         };
 
-        // Solo actualizar elementos que existen
         if (elements['login-title']) elements['login-title'].textContent = translations[lang]['login-title'];
         if (elements['remember-text']) elements['remember-text'].textContent = translations[lang]['remember-text'];
         if (elements['btn-ingresar']) elements['btn-ingresar'].textContent = translations[lang]['btn-ingresar'];
@@ -45,16 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 ' <a href="https://jovenesaprogramar.edu.uy/" target="_blank" class="resaltar">Jóvenes a Programar</a>';
         }
 
-        // Actualizar placeholders
         if (usuario) usuario.placeholder = translations[lang]['email-placeholder'];
         if (contrasena) contrasena.placeholder = translations[lang]['password-placeholder'];
     }
 
-    // Cargar idioma guardado o usar español por defecto
     const savedLang = localStorage.getItem('language') || 'es';
     loadTranslations(savedLang);
 
-    // Validar que el formulario existe antes de agregar event listener
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();

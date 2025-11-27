@@ -25,6 +25,7 @@
             const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
             if (savedTheme === "true" || (!savedTheme && prefersDark)) {
                 document.documentElement.classList.add("dark-mode");
+                document.documentElement.setAttribute('data-theme-loading', 'true');
             }
         })();
     </script>

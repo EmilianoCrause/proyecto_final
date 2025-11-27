@@ -2,34 +2,38 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/cart.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  
-  
-  <!-- Script para evitar flash al cargar modo oscuro -->
-  <script>
-      (function() {
-          const savedTheme = localStorage.getItem("darkMode");
-          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          if (savedTheme === "true" || (!savedTheme && prefersDark)) {
-              document.documentElement.classList.add("dark-mode");
-          }
-      })();
-  </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Script para evitar flash al cargar modo oscuro -->
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("darkMode");
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            if (savedTheme === "true" || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add("dark-mode");
+                document.documentElement.setAttribute('data-theme-loading', 'true');
+            }
+        })();
+    </script>
 </head>
 
 <body>
-  <header>
+    <header>
         <nav>
             <!-- Logo del e_commerce -->
             <a href="index.html">
@@ -50,10 +54,13 @@
             <!-- Controles -->
             <div class="selectores">
                 <!-- Botón carrito con badge -->
-                <button id="btn-cart" class="btn light-btn position-relative" onclick="window.location.href='cart.html'">
+                <button id="btn-cart" class="btn light-btn position-relative"
+                    onclick="window.location.href='cart.html'" aria-label="Ver carrito de compras">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                         viewBox="0 0 256 256">
-                        <path d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z"></path>
+                        <path
+                            d="M241.55,64.74A12,12,0,0,0,232,60H60.23L51.56,28.79A12,12,0,0,0,40,20H20a12,12,0,0,0,0,24H30.88l34.3,123.49a28.09,28.09,0,0,0,27,20.51H191a28.09,28.09,0,0,0,27-20.51l25.63-92.28A12,12,0,0,0,241.55,64.74ZM194.8,161.07A4,4,0,0,1,191,164H92.16a4,4,0,0,1-3.85-2.93L66.9,84H216.21ZM108,220a20,20,0,1,1-20-20A20,20,0,0,1,108,220Zm104,0a20,20,0,1,1-20-20A20,20,0,0,1,212,220Z">
+                        </path>
                     </svg>
                     <span id="cart-badge" class="position-absolute"
                         style="top:-4px; right:-4px; background:#F09100; color:white; border-radius:999px; font-size:12px; line-height:1; padding:2px 6px; min-width:20px; text-align:center;">
@@ -62,7 +69,7 @@
                 </button>
 
                 <!-- Botón perfil  -->
-                <button class="light-btn" id="btn-perfil">
+                <button class="light-btn" id="btn-perfil" aria-label="Ir a mi perfil">
                     <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000"
                         viewBox="0 0 256 256">
                         <path
@@ -73,9 +80,12 @@
                 </button>
 
                 <!-- Botón Cerrar sesión -->
-                <button class="light-btn" id="btn-logout">
-                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000" viewBox="0 0 256 256">
-                        <path d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z"></path>
+                <button class="light-btn" id="btn-logout" aria-label="Cerrar sesión">
+                    <svg class="light-img" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#000000"
+                        viewBox="0 0 256 256">
+                        <path
+                            d="M104,32a8,8,0,0,0-8,8V64a8,8,0,0,0,16,0V40h88V216H112V192a8,8,0,0,0-16,0v32a16,16,0,0,0,16,16h88a16,16,0,0,0,16-16V40a16,16,0,0,0-16-16ZM141.66,154.34a8,8,0,0,0,11.32,11.32l32-32a8,8,0,0,0,0-11.32l-32-32a8,8,0,0,0-11.32,11.32L164.69,120H56a8,8,0,0,0,0,16H164.69Z">
+                        </path>
                     </svg>
                     <span class="d-none d-sm-inline">Cerrar sesión</span>
                 </button>
@@ -84,213 +94,257 @@
             <div class="selectores">
                 <!-- Modo claro/oscuro - Toggle -->
                 <div class="theme-toggle">
-                    <input type="checkbox" id="theme-toggle-checkbox">
+                    <input type="checkbox" id="theme-toggle-checkbox" aria-label="Cambiar modo oscuro/claro">
                     <label for="theme-toggle-checkbox">
                         <!-- Sol (modo claro) -->
                         <svg class="sun-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 17.01c2.76 0 5.01-2.25 5.01-5.01S14.76 6.99 12 6.99 6.99 9.24 6.99 12s2.25 5.01 5.01 5.01M12 9c1.66 0 3.01 1.35 3.01 3.01s-1.35 3.01-3.01 3.01-3.01-1.35-3.01-3.01S10.34 9 12 9M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z"/>
+                            <path
+                                d="M12 17.01c2.76 0 5.01-2.25 5.01-5.01S14.76 6.99 12 6.99 6.99 9.24 6.99 12s2.25 5.01 5.01 5.01M12 9c1.66 0 3.01 1.35 3.01 3.01s-1.35 3.01-3.01 3.01-3.01-1.35-3.01-3.01S10.34 9 12 9M13 19h-2v3h2v-3M13 2h-2v3h2V2M2 11h3v2H2zM19 11h3v2h-3zM4.22 18.36l.71.71.71.71 1.06-1.06 1.06-1.06-.71-.71-.71-.71-1.06 1.06zM19.78 5.64l-.71-.71-.71-.71-1.06 1.06-1.06 1.06.71.71.71.71 1.06-1.06zM7.76 6.34 6.7 5.28 5.64 4.22l-.71.71-.71.71L5.28 6.7l1.06 1.06.71-.71zM16.24 17.66l1.06 1.06 1.06 1.06.71-.71.71-.71-1.06-1.06-1.06-1.06-.71.71z" />
                         </svg>
                         <!-- Luna (modo oscuro) -->
                         <svg class="moon-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="m12.2,22c4.53,0,8.45-2.91,9.76-7.24.11-.35.01-.74-.25-1-.26-.26-.64-.36-1-.25-.78.23-1.58.35-2.38.35-4.52,0-8.2-3.68-8.2-8.2,0-.8.12-1.6.35-2.38.11-.35.01-.74-.25-1s-.64-.36-1-.25C4.91,3.35,2,7.28,2,11.8c0,5.62,4.57,10.2,10.2,10.2ZM8.18,4.65c-.03.34-.05.68-.05,1.02,0,5.62,4.57,10.2,10.2,10.2.34,0,.68-.02,1.02-.05-1.42,2.56-4.12,4.18-7.15,4.18-4.52,0-8.2-3.68-8.2-8.2,0-3.03,1.63-5.73,4.18-7.15Z"/>
+                            <path
+                                d="m12.2,22c4.53,0,8.45-2.91,9.76-7.24.11-.35.01-.74-.25-1-.26-.26-.64-.36-1-.25-.78.23-1.58.35-2.38.35-4.52,0-8.2-3.68-8.2-8.2,0-.8.12-1.6.35-2.38.11-.35.01-.74-.25-1s-.64-.36-1-.25C4.91,3.35,2,7.28,2,11.8c0,5.62,4.57,10.2,10.2,10.2ZM8.18,4.65c-.03.34-.05.68-.05,1.02,0,5.62,4.57,10.2,10.2,10.2.34,0,.68-.02,1.02-.05-1.42,2.56-4.12,4.18-7.15,4.18-4.52,0-8.2-3.68-8.2-8.2,0-3.03,1.63-5.73,4.18-7.15Z" />
                         </svg>
                     </label>
                 </div>
-                <!-- Selector de idioma --> 
-                 <div class="lang-container"> 
-                    <button id="btnIdioma" class="lang-btn" aria-label="Seleccionar idioma"> 
-                        <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> 
-                            <path 
-                            d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z"> 
-                        </path> 
-                        <path 
-                        d="m12.25,14.97l.49-1.94c-.13-.03-1.6-.43-3.17-1.42,1.4-1.41,2.49-3.26,2.74-5.61h1.68v-2h-5v-2h-2v2H2v2h8.3c-.25,1.91-1.19,3.34-2.31,4.4-.69-.65-1.31-1.44-1.74-2.4h-2.13c.5,1.44,1.33,2.63,2.3,3.61-1.57.99-3.04,1.39-3.17,1.42l.49,1.94c1.18-.3,2.76-.96,4.26-2.02,1.49,1.06,3.08,1.72,4.25,2.02Z"> 
-                    </path> 
-                </svg> 
-            </button> 
-            
-            <!-- Menú desplegable --> 
-             <div class="lang-dropdown" id="langDropdown"> 
-                <button data-lang="es">ES</button> 
-                <button data-lang="en">EN</button> 
-                <button data-lang="fr">FR</button> 
-                <button data-lang="pt">PT</button> 
-                <button data-lang="de">DE</button> 
-            </div> 
-            <div id="google_translate_element" style="opacity:0; height:0; overflow:hidden;"></div> </div>
+                <!-- Selector de idioma -->
+                <div class="lang-container">
+                    <button id="btnIdioma" class="lang-btn" aria-label="Seleccionar idioma">
+                        <svg class="lang-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path
+                                d="m17,11c-.4,0-.75.23-.91.59l-4,9,1.83.81,1.07-2.41h4.03l1.07,2.41,1.83-.81-4-9c-.16-.36-.52-.59-.91-.59Zm-1.13,6l1.13-2.54,1.13,2.54h-2.26Z">
+                            </path>
+                            <path
+                                d="m12.25,14.97l.49-1.94c-.13-.03-1.6-.43-3.17-1.42,1.4-1.41,2.49-3.26,2.74-5.61h1.68v-2h-5v-2h-2v2H2v2h8.3c-.25,1.91-1.19,3.34-2.31,4.4-.69-.65-1.31-1.44-1.74-2.4h-2.13c.5,1.44,1.33,2.63,2.3,3.61-1.57.99-3.04,1.39-3.17,1.42l.49,1.94c1.18-.3,2.76-.96,4.26-2.02,1.49,1.06,3.08,1.72,4.25,2.02Z">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <!-- Menú desplegable -->
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button data-lang="es">ES</button>
+                        <button data-lang="en">EN</button>
+                        <button data-lang="fr">FR</button>
+                        <button data-lang="pt">PT</button>
+                        <button data-lang="de">DE</button>
+                    </div>
+                    <div id="google_translate_element" style="opacity:0; height:0; overflow:hidden;"></div>
                 </div>
+            </div>
             </div>
 
             </div>
         </nav>
     </header>
-  <main class="py-5">
-  <div class="container">
-    <h2 class="mb-4">Carrito de compra</h2>
 
-    <div class="row g-4 justify-content-center">
+    <main class="py-5">
+        <div class="container">
+            <h2 class="mb-4">Carrito de compra</h2>
 
-      <!-- Lista de productos -->
-      <div class="col-lg-7">
-        <h5 class="fw-bold mb-3">Detalle del pedido</h5>
-        <div id="lista-art"></div>
+            <div class="row g-4 justify-content-center">
 
-        <div class="d-flex justify-content-between align-items-center mt-3 p-2 border-top">
-          <p class="mb-0 fw-bold">Subtotal:</p>
-          <p id="input-subtot" class="mb-0 fw-semibold"></p>
+                <!-- Lista de productos -->
+                <div class="col-lg-7" >
+                    <h5 class="fw-bold mb-3" id="pedido-titulo">Detalle del pedido</h5>
+                    <div id="lista-art"></div>
+
+                    <div style="display: none !important;" class="justify-content-between align-items-center mt-3 p-2 border-top" id="subtotal-section">
+                        <p class="mb-0 fw-bold">Subtotal:</p>
+                        <p id="input-subtot" class="mb-0 fw-semibold"></p>
+                    </div>
+                </div>
+
+                <!-- Panel de información / Breadcrumbs -->
+                <div class="col-lg-5" id="checkout-panel">
+
+                    <!-- Breadcrumbs para indicar progreso -->
+                    <nav aria-label="breadcrumb" class="mb-3">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item active" id="breadcrumb-envio">
+                                <i class="bi bi-truck me-1"></i>Envío
+                            </li>
+                            <li class="breadcrumb-item" id="breadcrumb-pago">
+                                <i class="bi bi-credit-card me-1"></i>Pago
+                            </li>
+                            <li class="breadcrumb-item" id="breadcrumb-resumen">
+                                <i class="bi bi-check-circle me-1"></i>Resumen
+                            </li>
+                        </ol>
+                    </nav>
+
+                    <div class="checkout-content">
+
+                        <!-- PASO 1: ENVÍO -->
+                        <div class="checkout-step theme-section" id="envioTab" style="display: block;">
+
+                            <h6 class="fw-bold">Tipo de envío</h6>
+                            <div class="mb-3">
+                                <select id="shipping-type" class="form-select" required>
+                                    <option value="">Seleccione un tipo de envío</option>
+                                    <option value="0.15">Premium 2 a 5 días (15%)</option>
+                                    <option value="0.07">Express 5 a 8 días (7%)</option>
+                                    <option value="0.05">Standard 12 a 15 días (5%)</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Por favor, seleccione un tipo de envío.
+                                </div>
+                            </div>
+
+                            <h6 class="fw-bold">Dirección de envío</h6>
+                            <div class="mb-2">
+                                <input class="form-control" id="dep" placeholder="Departamento" required>
+                                <div class="invalid-feedback">
+                                    El departamento es requerido.
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <input class="form-control" id="loc" placeholder="Localidad" required>
+                                <div class="invalid-feedback">
+                                    La localidad es requerida.
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <input class="form-control" id="calle" placeholder="Calle" required>
+                                <div class="invalid-feedback">
+                                    La calle es requerida.
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 mb-2">
+                                <div class="flex-fill">
+                                    <input class="form-control" id="numero" placeholder="Número" required>
+                                    <div class="invalid-feedback">
+                                        El número es requerido.
+                                    </div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input class="form-control" id="esquina" placeholder="Esquina" required>
+                                    <div class="invalid-feedback">
+                                        La esquina es requerida.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button id="btn-envio-continuar" class="btn btn-primary w-100 mt-2">
+                                Continuar <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+                        </div>
+
+                        <!-- PASO 2: PAGO -->
+                        <div class="checkout-step theme-section" id="pagoTab" style="display: none;">
+
+                            <h6 class="fw-bold">Forma de pago</h6>
+                            <div class="mb-3">
+                                <select id="payment-method" class="form-select" required>
+                                    <option value="card">Tarjeta de crédito</option>
+                                    <option value="transfer">Transferencia bancaria</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Seleccione una forma de pago.
+                                </div>
+                            </div>
+
+                            <div id="payment-fields">
+                                <!-- Los campos se generan dinámicamente -->
+                            </div>
+
+                            <button class="btn btn-secondary w-100 mt-2" id="btn-pago-volver">
+                                <i class="bi bi-arrow-left me-1"></i>Volver
+                            </button>
+                            <button id="btn-pago-continuar" class="btn btn-primary w-100 mt-2">
+                                Continuar <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
+
+                        </div>
+
+                        <!-- PASO 3: RESUMEN -->
+                        <div class="checkout-step theme-section" id="resumenTab" style="display: none;">
+                            <h6 class="fw-bold">Costos</h6>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Subtotal:</span>
+                                <span id="resumen-subtotal"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <span>Costo de envío:</span>
+                                <span id="resumen-envio"></span>
+                            </div>
+
+                            <hr>
+
+                            <div class="d-flex justify-content-between fw-bold">
+                                <span>Total:</span>
+                                <span id="resumen-total"></span>
+                            </div>
+
+                            <button class="btn btn-secondary w-100 mt-3" id="btn-resumen-volver">
+                                <i class="bi bi-arrow-left me-1"></i>Volver
+                            </button>
+                            <button id="btn-finalizar" class="btn btn-success w-100 mt-2">
+                                <i class="bi bi-check-circle me-1"></i>Finalizar compra
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </main>
 
-      <!-- Panel de información / Tabs -->
-      <div class="col-lg-5">
-
-        <!-- Tabs -->
-        <ul class="nav nav-tabs mb-3" id="checkoutTabs">
-          <li class="nav-item">
-            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#envioTab">Envío</button>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pagoTab">Pago</button>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#resumenTab">Resumen</button>
-          </li>
-        </ul>
-
-        <div class="tab-content">
-
-          <!-- TAB ENVÍO -->
-          <div class="tab-pane fade show active theme-section" id="envioTab">
-
-            <h6 class="fw-bold">Tipo de envío</h6>
-            <select id="shipping-type" class="form-select mb-3">
-              <option value="0.15">Premium 2 a 5 días (15%)</option>
-              <option value="0.07">Express 5 a 8 días (7%)</option>
-              <option value="0.05">Standard 12 a 15 días (5%)</option>
-            </select>
-
-            <h6 class="fw-bold">Dirección de envío</h6>
-            <input class="form-control mb-2" id="dep" placeholder="Departamento">
-            <input class="form-control mb-2" id="loc" placeholder="Localidad">
-            <input class="form-control mb-2" id="calle" placeholder="Calle">
-            <div class="d-flex gap-2 mb-2">
-              <input class="form-control" id="numero" placeholder="Número">
-              <input class="form-control" id="esquina" placeholder="Esquina">
-            </div>
-
-            <button id="btn-envio-continuar"class="btn btn-primary w-100 mt-2" data-bs-toggle="tab" data-bs-target="#pagoTab">
-              Continuar
-            </button>
-          </div>
-
-          <!-- TAB PAGO -->
-          <div class="tab-pane fade theme-section" id="pagoTab">
-
-            <h6 class="fw-bold">Forma de pago</h6>
-            <select id="payment-method" class="form-select mb-3">
-              <option value="card">Tarjeta de crédito</option>
-              <option value="transfer">Transferencia bancaria</option>
-            </select>
-
-            <div id="payment-fields">
-
-              <!-- Por defecto tarjeta -->
-              <input class="form-control mb-2" placeholder="Nombre completo">
-              <input class="form-control mb-2" placeholder="Número de tarjeta">
-              <div class="d-flex gap-2 mb-2">
-                <input class="form-control" placeholder="CVV">
-                <input class="form-control" placeholder="Vencimiento">
-              </div>
-
-            </div>
-
-            <button class="btn btn-secondary w-100 mt-2" data-bs-toggle="tab" data-bs-target="#envioTab">Volver</button>
-            <button id="btn-pago-continuar" class="btn btn-primary w-100 mt-2" data-bs-toggle="tab" data-bs-target="#resumenTab">
-              Continuar
-            </button>
-
-          </div>
-
-          <!-- TAB RESUMEN -->
-          <div class="tab-pane fade theme-section" id="resumenTab">
-            <h6 class="fw-bold">Costos</h6>
-
-            <div class="d-flex justify-content-between">
-              <span>Subtotal:</span>
-              <span id="resumen-subtotal"></span>
-            </div>
-
-            <div class="d-flex justify-content-between">
-              <span>Costo de envío:</span>
-              <span id="resumen-envio"></span>
-            </div>
-
-            <hr>
-
-            <div class="d-flex justify-content-between fw-bold">
-              <span>Total:</span>
-              <span id="resumen-total"></span>
-            </div>
-
-            <button class="btn btn-secondary w-100 mt-3" data-bs-toggle="tab" data-bs-target="#pagoTab">Volver</button>
-            <button id="btn-finalizar" class="btn btn-success w-100 mt-2">Finalizar compra</button>
-          </div>
-
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-end">
+                <a href="#">Volver arriba</a>
+            </p>
+            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a
+                    Programar</a></p>
         </div>
-      </div>
-    </div>
-  </div>
-</main>
+    </footer>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/mobile-menu.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/user-display.js"></script>
 
-  <footer class="text-muted">
-    <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
-    </div>
-  </footer>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/utils.js"></script>
-  <script src="js/mobile-menu.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/user-display.js"></script>
+    <!-- Script logout + badge carrito -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // ==== CERRAR SESIÓN ====
+            const logoutBtn = document.getElementById("btn-logout");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    localStorage.removeItem("user");
+                    localStorage.removeItem("profileImage");
+                    window.location.href = "login.html";
+                });
+            }
 
-  <!-- Script logout + badge carrito -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // ==== CERRAR SESIÓN ====
-      const logoutBtn = document.getElementById("btn-logout");
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
-          localStorage.removeItem("user");
-          localStorage.removeItem("profileImage");
-          window.location.href = "login.html";
+            // ==== BADGE DEL CARRITO ====
+            const badge = document.getElementById("cart-badge");
+            if (!badge) return;
+
+            let cart = [];
+            try {
+                cart = JSON.parse(localStorage.getItem("cart")) || [];
+            } catch (e) {
+                cart = [];
+            }
+
+            const totalCantidad = cart.reduce(
+                (acc, item) => acc + (item.count || 0),
+                0
+            );
+
+            badge.textContent = totalCantidad;
         });
-      }
-
-      // ==== BADGE DEL CARRITO ====
-      const badge = document.getElementById("cart-badge");
-      if (!badge) return;
-
-      let cart = [];
-      try {
-        cart = JSON.parse(localStorage.getItem("cart")) || [];
-      } catch (e) {
-        cart = [];
-      }
-
-      const totalCantidad = cart.reduce(
-        (acc, item) => acc + (item.count || 0),
-        0
-      );
-
-      badge.textContent = totalCantidad;
-    });
-  </script>
-  <script src="js/translate.js"></script>
-  <!--Script de Google-->
+    </script>
+    <script src="js/translate.js"></script>
+    <!--Script de Google-->
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 

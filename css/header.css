@@ -136,27 +136,28 @@ body.dark-mode .menu-toggle:hover {
     gap: 0.75rem;
     display: flex;
     align-items: center;
+    color: var(--font-color);
 }
 
-.mobile-menu .light-btn:hover,
-.mobile-menu .lang-btn:hover {
+.mobile-menu .light-btn:active,
+.mobile-menu .lang-btn:active {
     background: var(--primary-color);
     color: rgb(0, 0, 0);
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .mobile-menu .light-btn svg,
 .mobile-menu .lang-btn svg {
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
     flex-shrink: 0;
     width: 24px;
     height: 24px;
 }
 
-.mobile-menu .light-btn:hover svg,
-.mobile-menu .lang-btn:hover svg {
-    transform: scale(1.1);
+.mobile-menu .light-btn:active svg,
+.mobile-menu .lang-btn:active svg {
+    transform: scale(0.95);
 }
 
 /* Forzar que los SVG sean visibles */
@@ -165,8 +166,8 @@ body.dark-mode .menu-toggle:hover {
     fill: currentColor;
 }
 
-.mobile-menu .light-btn:hover svg path,
-.mobile-menu .lang-btn:hover svg path {
+.mobile-menu .light-btn:active svg path,
+.mobile-menu .lang-btn:active svg path {
     fill: rgb(0, 0, 0) !important;
 }
 
@@ -176,7 +177,7 @@ body.dark-mode .menu-toggle:hover {
     color: var(--font-color);
 }
 
-.mobile-menu .light-btn:hover span:not(.position-absolute) {
+.mobile-menu .light-btn:active span:not(.position-absolute) {
     color: rgb(0, 0, 0) !important;
 }
 
@@ -187,7 +188,7 @@ body.dark-mode .menu-toggle:hover {
     font-size: 0.9rem;
 }
 
-.mobile-menu .light-btn:hover #User-display {
+.mobile-menu .light-btn:active #User-display {
     color: rgb(0, 0, 0) !important;
 }
 
@@ -228,10 +229,12 @@ body.dark-mode .menu-toggle:hover {
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     transition: all 0.3s ease;
+    opacity: 1 !important;
 }
 
-.mobile-menu .theme-toggle:hover {
-    background: rgba(var(--primary-color-rgb, 0, 123, 255), 0.05);
+.mobile-menu .theme-toggle:active {
+    background: rgba(var(--primary-color-rgb, 0, 123, 255), 0.08);
+    transform: scale(0.98);
 }
 
 .mobile-menu .theme-toggle label {
@@ -242,6 +245,7 @@ body.dark-mode .menu-toggle:hover {
 .mobile-menu .theme-toggle span {
     font-weight: 500;
     font-size: 0.95rem;
+    color: var(--font-color);
 }
 
 /* Menú Móvil - Modo Oscuro */
@@ -259,6 +263,7 @@ body.dark-mode .mobile-menu .light-btn,
 body.dark-mode .mobile-menu .lang-btn {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
+    color: var(--font-color);
 }
 
 body.dark-mode .mobile-menu .light-btn span:not(.position-absolute),
@@ -266,16 +271,16 @@ body.dark-mode .mobile-menu #User-display {
     color: var(--font-color);
 }
 
-body.dark-mode .mobile-menu .light-btn:hover,
-body.dark-mode .mobile-menu .lang-btn:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: rgb(0, 0, 0);
+body.dark-mode .mobile-menu .light-btn:active,
+body.dark-mode .mobile-menu .lang-btn:active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--font-color);
 }
 
-body.dark-mode .mobile-menu .light-btn:hover span:not(.position-absolute),
-body.dark-mode .mobile-menu .light-btn:hover #User-display {
-    color: rgb(0, 0, 0);
+body.dark-mode .mobile-menu .light-btn:active span:not(.position-absolute),
+body.dark-mode .mobile-menu .light-btn:active #User-display {
+    color: var(--font-color) !important;
 }
 
 body.dark-mode .mobile-menu .theme-toggle {
@@ -283,8 +288,9 @@ body.dark-mode .mobile-menu .theme-toggle {
     border-color: rgba(255, 255, 255, 0.1);
 }
 
-body.dark-mode .mobile-menu .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.08);
+body.dark-mode .mobile-menu .theme-toggle:active {
+    background: rgba(255, 255, 255, 0.12);
+    transform: scale(0.98);
 }
 
 body.dark-mode .lang-dropdown {
@@ -379,7 +385,13 @@ body.dark-mode .lang-dropdown button:hover {
     height: 32px;
     padding: 4px;
     border-radius: 50px;
-    transition: background 0.3s ease;
+    transition: background 0.5s ease, border-color 0.5s ease;
+    opacity: 0;
+}
+
+.theme-toggle.ready {
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 .theme-toggle input {
@@ -396,7 +408,11 @@ body.dark-mode .lang-dropdown button:hover {
     position: relative;
     cursor: pointer;
     border-radius: 50px;
-    transition: all 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html[data-theme-loading] .theme-toggle label {
+    transition: none !important;
 }
 
 .theme-toggle input:checked + label {
@@ -406,7 +422,7 @@ body.dark-mode .lang-dropdown button:hover {
 .theme-toggle label svg {
     width: 20px;
     height: 20px;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
     fill: black;
     position: absolute;
 }
@@ -434,6 +450,7 @@ body.dark-mode .theme-toggle {
 
 body.dark-mode .theme-toggle label {
     background: #666;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.dark-mode .theme-toggle input:checked + label {
@@ -496,6 +513,7 @@ body.dark-mode .theme-toggle input:checked + label {
   text-align: left;
   width: 100%;
   cursor: pointer;
+  color: #000;
 }
 
 .lang-dropdown button:hover {
@@ -506,45 +524,85 @@ body.dark-mode .theme-toggle input:checked + label {
   display: flex;
 }
 
+/* Estilos de selector de idioma en modo oscuro */
+body.dark-mode .lang-dropdown {
+  background: #2a2a2a;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .lang-dropdown button {
+  color: #fff;
+}
+
+body.dark-mode .lang-dropdown button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 /* Ocultar completamente el widget original de Google */
 .goog-te-banner-frame,
 .goog-te-gadget,
 .goog-te-combo {
-  display: none !important;
-    display: none;
-    position: absolute;
-    top: 110%;
-    left: 0;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    flex-direction: column;
-    z-index: 9999;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    z-index: -1 !important;
 }
 
-.lang-dropdown button {
-    background: none;
-    border: none;
-    padding: 8px 12px;
-    text-align: left;
-    width: 100%;
-    cursor: pointer;
-    color: var(--font-color)
+/* Eliminar todos los elementos flotantes de Google Translate */
+body {
+    top: 0px !important;
 }
 
-.lang-dropdown button:hover {
-    background: #f5f5f5;
+body.translated-ltr,
+body.translated-rtl {
+    margin-top: 0 !important;
+    top: 0 !important;
 }
 
-.lang-container.show .lang-dropdown {
-    display: flex;
+.skiptranslate,
+.goog-te-spinner-pos,
+.goog-tooltip,
+.goog-te-balloon-frame {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
 }
 
-.goog-te-banner-frame,
-.goog-te-gadget,
-.goog-te-combo {
-    display: none;
+iframe.goog-te-banner-frame,
+iframe.skiptranslate {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+}
+
+#google_translate_element {
+    display: none !important;
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    top: -9999px !important;
+    visibility: hidden !important;
+}
+
+[class*="goog-te"],
+[id*="goog-te"] {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    z-index: -1 !important;
 }
 
 /* Breadcrumb */
