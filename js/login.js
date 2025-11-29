@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTranslations(savedLang);
 
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             if (usuario) usuario.classList.remove('is-invalid');
@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!uservalido && usuario) usuario.classList.add('is-invalid');
                 if (!passvalida && contrasena) contrasena.classList.add('is-invalid');
 
-                // Mostrar mensaje de error en el idioma actual
                 const currentLang = localStorage.getItem('language') || 'es';
                 Swal.fire({
                     toast: true,
@@ -79,17 +78,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            if (rememberCheckbox && rememberCheckbox.checked) {
-                localStorage.setItem('usuario', uservalido);
-            } else {
-                sessionStorage.setItem('usuario', uservalido);
-            }
+            // 🔥 HACER LOGIN AL BACKEND
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: uservalido,
+                        password: passvalida
+                    })
+                });
 
-            window.location.href = 'index.html';
+                const result = await response.json();
+                const currentLang = localStorage.getItem('language') || 'es';
+
+                if (!response.ok) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: translations[currentLang]['alert-title'],
+                        text: result.error || translations[currentLang]['alert-message']
+                    });
+                    return;
+                }
+
+                // 🔒 Guardar TOKEN
+                if (rememberCheckbox && rememberCheckbox.checked) {
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('usuario', uservalido);
+                } else {
+                    sessionStorage.setItem('token', result.token);
+                    sessionStorage.setItem('usuario', uservalido);
+                }
+
+                // Redirigir
+                window.location.href = 'index.html';
+
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se pudo conectar con el servidor.'
+                });
+            }
         });
     }
 
-    // Cargar usuario guardado si existe
+    // Cargar usuario guardado
     const savedUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
     if (savedUser && usuario) {
         usuario.value = savedUser;
