@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require("path");
 
 const loginRouter = require("./routes/login");
+const authMiddleware = require("./middleware/auth");
 
 const app = express();
 const PORT = 3000;
@@ -17,6 +18,14 @@ app.use(cors({
 app.use(express.json());
 
 app.use("/api", loginRouter);
+
+// Rutas protegidas (solo usuarios autenticados)
+app.get("/api/productos", authMiddleware, (req, res) => {
+    res.json({
+        message: "Ruta protegida",
+        user: req.user
+    });
+});
 
 app.use("/emercado-api-main", express.static(path.join(__dirname,"emercado-api-main")));
 
