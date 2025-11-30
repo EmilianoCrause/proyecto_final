@@ -23,10 +23,16 @@ document.addEventListener('DOMContentLoaded', function(){
     const emailPerfil = document.getElementById('input-email')
     const telPerfil = document.getElementById('input-tel')
 
-    const nomSaved = localStorage.getItem('nombre') || sessionStorage.getItem('nombre')
-    const apellSaved = localStorage.getItem('apellido') || sessionStorage.getItem('apellido')
-    const emailSaved =  localStorage.getItem('usuario') || sessionStorage.getItem('usuario')
-    const telSaved = localStorage.getItem('telefono') || sessionStorage.getItem('telefono')
+    const currentUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario')
+    const userKey = `profile_${currentUser}`
+    
+    // Cargar perfil específico del usuario actual
+    const userProfile = JSON.parse(localStorage.getItem(userKey) || sessionStorage.getItem(userKey) || '{}')
+    
+    const nomSaved = userProfile.nombre || ''
+    const apellSaved = userProfile.apellido || ''
+    const emailSaved = currentUser
+    const telSaved = userProfile.telefono || ''
 
     let tempImageData = null;
     let imageToDelete = false;
@@ -52,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function(){
         formEditar.style.display = 'none'
         btnEditar.style.display = 'block'
         
-        const savedImg = localStorage.getItem('profileImage');
+        const savedImg = userProfile.profileImage;
         const profileImg = document.getElementById('profile-img');
         if (savedImg && profileImg) {
             profileImg.src = savedImg;
@@ -67,28 +73,18 @@ document.addEventListener('DOMContentLoaded', function(){
     document.getElementById('form-edit').addEventListener('submit', (e) => {
         e.preventDefault();
         
+        // Guardar perfil del usuario actual
+        const profileData = {
+            nombre: nomPerfil.value,
+            apellido: apellPerfil.value,
+            telefono: telPerfil.value,
+            profileImage: imageToDelete ? null : (tempImageData || userProfile.profileImage || null)
+        };
+        
         if (localStorage.getItem('usuario') !== null) {
-            localStorage.setItem('nombre', nomPerfil.value)
-            localStorage.setItem('apellido', apellPerfil.value)
-            localStorage.setItem('usuario', emailPerfil.value)
-            localStorage.setItem('telefono', telPerfil.value)
-            
-            if (imageToDelete) {
-                localStorage.removeItem('profileImage');
-            } else if (tempImageData) {
-                localStorage.setItem('profileImage', tempImageData);
-            }
+            localStorage.setItem(userKey, JSON.stringify(profileData));
         } else {
-            sessionStorage.setItem('nombre', nomPerfil.value)
-            sessionStorage.setItem('apellido', apellPerfil.value)
-            sessionStorage.setItem('usuario', emailPerfil.value)
-            sessionStorage.setItem('telefono', telPerfil.value)
-            
-            if (imageToDelete) {
-                localStorage.removeItem('profileImage');
-            } else if (tempImageData) {
-                localStorage.setItem('profileImage', tempImageData);
-            }
+            sessionStorage.setItem(userKey, JSON.stringify(profileData));
         }
         
         formEditar.style.display = 'none'
@@ -134,9 +130,14 @@ document.addEventListener('DOMContentLoaded', function(){
 const profileImg = document.getElementById('profile-img');
 
 window.addEventListener('DOMContentLoaded', () => {
-  const savedImg = localStorage.getItem('profileImage');
-  if (savedImg && profileImg) {
-    profileImg.src = savedImg;
+  const currentUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
+  if (currentUser) {
+    const userKey = `profile_${currentUser}`;
+    const userProfile = JSON.parse(localStorage.getItem(userKey) || sessionStorage.getItem(userKey) || '{}');
+    const savedImg = userProfile.profileImage;
+    if (savedImg && profileImg) {
+      profileImg.src = savedImg;
+    }
   }
 });
 
