@@ -251,16 +251,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ==== BADGE DEL CARRITO ====
   const badge = document.getElementById("cart-badge");
-  if (!badge) return; 
+  if (!badge) return;
 
-  let cart = [];
-  try {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
-  } catch (e) {
-    cart = [];
-  }
-
-  const totalCantidad = cart.reduce(
+  const cart = getCart();  const totalCantidad = cart.reduce(
     (acc, item) => acc + (item.count || 0),
     0
   );
