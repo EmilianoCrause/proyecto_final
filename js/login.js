@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const uservalido = usuario ? usuario.value.trim() : '';
             const passvalida = contrasena ? contrasena.value.trim() : '';
+            
+            // Validar formato de correo electrónico
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             if (!uservalido || !passvalida) {
                 if (!uservalido && usuario) usuario.classList.add('is-invalid');
@@ -75,6 +78,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 (usuario && !uservalido ? usuario : contrasena)?.focus();
+                return;
+            }
+            
+            // Validar que el usuario sea un correo válido
+            if (!emailRegex.test(uservalido)) {
+                if (usuario) usuario.classList.add('is-invalid');
+                
+                const currentLang = localStorage.getItem('language') || 'es';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: currentLang === 'es' ? 'Por favor ingresa un correo electrónico válido' : 'Please enter a valid email address'
+                });
+                
+                usuario?.focus();
                 return;
             }
 

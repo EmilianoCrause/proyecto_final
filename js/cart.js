@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         subtotalSection.style.display = "none";
     }
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = getCart();
 
     const checkoutPanel = document.getElementById("checkout-panel");
     const shippingSelect = document.getElementById("shipping-type");
@@ -529,11 +529,23 @@ if (btnFinalizar) {
     safeShowSpinner();
 
     try {
+        // Obtener token para autenticación
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+        
         const detalles = await Promise.all(
             cart.map(item => {
                 const url = PRODUCT_INFO_URL + item.id + EXT_TYPE;
-                return fetch(url)
-                    .then(r => r.json())
+                return fetch(url, { headers })
+                    .then(r => {
+                        if (r.status === 401 || r.status === 403) {
+                            localStorage.removeItem('token');
+                            sessionStorage.removeItem('token');
+                            window.location.href = 'login.html';
+                            throw new Error('Sesión expirada');
+                        }
+                        return r.json();
+                    })
                     .then(data => ({ info: data }));
             })
         );
@@ -697,7 +709,7 @@ if (btnFinalizar) {
             cart[ids].count = nuevaCantidad;
 
             // guardar carrito actualizado en localStorage
-            localStorage.setItem("cart", JSON.stringify(cart));
+            saveCart(cart);
 
             const prodInfo = detalles[ids].info;
             const nuevoSubtotal = prodInfo.cost * nuevaCantidad;
@@ -736,7 +748,7 @@ if (btnFinalizar) {
 
 			detalles.splice(ids, 1);
 
-			localStorage.setItem("cart", JSON.stringify(cart));            btn.closest("li").remove();
+			saveCart(cart);            btn.closest("li").remove();
             
             Swal.fire({
 				toast: true,

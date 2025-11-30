@@ -328,12 +328,7 @@
             const badge = document.getElementById("cart-badge");
             if (!badge) return;
 
-            let cart = [];
-            try {
-                cart = JSON.parse(localStorage.getItem("cart")) || [];
-            } catch (e) {
-                cart = [];
-            }
+            const cart = getCart();
 
             const totalCantidad = cart.reduce(
                 (acc, item) => acc + (item.count || 0),

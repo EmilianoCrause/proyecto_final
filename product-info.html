@@ -258,12 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const badge = document.getElementById("cart-badge");
   if (!badge) return; 
 
-  let cart = [];
-  try {
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
-  } catch (e) {
-    cart = [];
-  }
+  const cart = getCart();
 
   const totalCantidad = cart.reduce(
     (acc, item) => acc + (item.count || 0),
@@ -274,39 +269,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 <script src="js/translate.js"></script>
-  <!--Script de Google-->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // ==== CERRAR SESIÓN ====
-            const logoutBtn = document.getElementById("btn-logout");
-            if (logoutBtn) {
-                logoutBtn.addEventListener("click", () => {
-                    localStorage.removeItem("user");
-                    localStorage.removeItem("profileImage");
-                    window.location.href = "login.html";
-                });
-            }
-
-            // ==== BADGE DEL CARRITO ====
-            const badge = document.getElementById("cart-badge");
-            if (!badge) return;
-
-            let cart = [];
-            try {
-                cart = JSON.parse(localStorage.getItem("cart")) || [];
-            } catch (e) {
-                cart = [];
-            }
-
-            const totalCantidad = cart.reduce(
-                (acc, item) => acc + (item.count || 0),
-                0
-            );
-
-            badge.textContent = totalCantidad;
-        });
-    </script>
-    <script src="js/translate.js"></script>
     <!--Script de Google-->
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>

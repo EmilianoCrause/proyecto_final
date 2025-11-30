@@ -254,23 +254,14 @@
             // ==== CERRAR SESIÓN ====
             const logoutBtn = document.getElementById("btn-logout");
             if (logoutBtn) {
-                logoutBtn.addEventListener("click", () => {
-                    localStorage.removeItem("user");
-                    localStorage.removeItem("profileImage");
-                    window.location.href = "login.html";
-                });
+                logoutBtn.addEventListener("click", logout);
             }
 
             // ==== BADGE DEL CARRITO ====
             const badge = document.getElementById("cart-badge");
             if (!badge) return;
 
-            let cart = [];
-            try {
-                cart = JSON.parse(localStorage.getItem("cart")) || [];
-            } catch (e) {
-                cart = [];
-            }
+            const cart = getCart();
 
             const totalCantidad = cart.reduce(
                 (acc, item) => acc + (item.count || 0),

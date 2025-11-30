@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		const addBtn = document.getElementById("addToCartBtn");
 
 		function addProductToCart(redirect = false) {
-			let cart = JSON.parse(localStorage.getItem("cart")) || [];
+			let cart = getCart();
 			const productToBuy = {
 				id: product.id,
 				name: product.name,
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			} else {
 				cart.push(productToBuy);
 			};
-			localStorage.setItem("cart", JSON.stringify(cart));
+			saveCart(cart);
 
 			const badge = document.getElementById("cart-badge");
 			if (badge) {
@@ -356,7 +356,12 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		}
 
-		let allComments = [...comments];
+		// Cargar comentarios guardados en localStorage para este producto
+		const savedCommentsKey = `comments_${productID}`;
+		const savedComments = JSON.parse(localStorage.getItem(savedCommentsKey) || '[]');
+		
+		// Combinar comentarios del servidor con los guardados localmente
+		let allComments = [...comments, ...savedComments];
 
 		updateRatingSummary(allComments);
 
@@ -437,12 +442,19 @@ document.addEventListener("DOMContentLoaded", function () {
 				commentsList.insertAdjacentHTML("beforeend", newCommentHTML);
 			}
 
-			allComments.push({
+			const newComment = {
 				user: user,
 				dateTime: formattedDate,
 				score: score,
 				description: text
-			});
+			};
+			
+			allComments.push(newComment);
+			
+			// Guardar solo los comentarios nuevos (no los del servidor) en localStorage
+			savedComments.push(newComment);
+			localStorage.setItem(savedCommentsKey, JSON.stringify(savedComments));
+			
 			updateRatingSummary(allComments);
 
 			Swal.fire({

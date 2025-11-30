@@ -1,11 +1,15 @@
 # 🛒 eMercado - E-Commerce Platform
 
-> Plataforma de comercio electrónico completa desarrollada como proyecto final del curso Jóvenes a Programar (JAP). Sistema web con carrito de compras, gestión de productos, perfiles de usuario y proceso de checkout completo.
+> Plataforma de comercio electrónico completa desarrollada como proyecto final del curso Jóvenes a Programar (JAP). Sistema web con carrito de compras, gestión de productos, perfiles de usuario, autenticación JWT y proceso de checkout completo.
 
-[![GitHub](https://img.shields.io/badge/GitHub-EmilianoCrause-blue?logo=github)](https://github.com/EmilianoCrause/proyecto_final)
+[![GitHub](https://img.shields.io/badge/GitHub-Repositorio-blue?logo=github)](https://github.com/EmilianoCrause/proyecto_final)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/es/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/es/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/es/docs/Web/JavaScript)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)](https://expressjs.com/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![JWT](https://img.shields.io/badge/JWT-000000?logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 
 ---
 
@@ -45,11 +49,31 @@
 
 ## ✨ Características Principales
 
-### 🔐 Autenticación
-- Login con validación de campos
+### 🔐 Autenticación (Backend + JWT)
+- **Backend con Node.js + Express**
+- **Base de datos SQLite** para almacenar usuarios
+- **Autenticación JWT** con tokens de 1 hora
+- **Contraseñas hasheadas** con bcrypt
+- **Usuario predeterminado:**
+  - `admin@emercado.com` (contraseña: admin123)
+- Middleware de autorización protegiendo todas las rutas
+- Token incluido en headers de todas las peticiones
 - Opción "Recordarme" (localStorage/sessionStorage)
 - Verificación de sesión en todas las páginas
-- Redirección automática
+- Redirección automática al expirar token
+### 🛒 Carrito de Compras
+- Agregar/eliminar productos con confirmación
+- Modificar cantidades en tiempo real
+- Cálculo automático de totales y subtotales
+- Conversión automática de monedas (UYU ↔ USD)
+- **Checkout en 3 pasos:**
+  1. Envío (dirección + tipo de envío)
+  2. Pago (tarjeta o transferencia)
+  3. Resumen (totales y confirmación)
+- Persistencia de datos del formulario
+- Validaciones en tiempo real con feedback visual
+- Funciones auxiliares: `getCart()` y `saveCart()`
+- Limpieza automática al finalizar compra
 
 ### 🛍️ Productos y Categorías
 - Listado dinámico desde API
@@ -59,18 +83,6 @@
 - Detalle con galería de imágenes
 - Sistema de comentarios con calificaciones
 - Productos relacionados
-
-### 🛒 Carrito de Compras
-- Agregar/eliminar productos
-- Modificar cantidades
-- Cálculo automático de totales
-- Conversión de monedas (UYU ↔ USD)
-- **Checkout en 3 pasos:**
-  1. Envío (dirección + tipo de envío)
-  2. Pago (tarjeta o transferencia)
-  3. Resumen (totales y confirmación)
-- Persistencia de datos del formulario
-- Validaciones en tiempo real
 
 ### 🎨 UI/UX
 - Modo oscuro con toggle persistente
@@ -96,7 +108,16 @@
   - LocalStorage API
   - DOM Manipulation
 
-### Librerías
+### Backend
+- **Node.js** - Entorno de ejecución
+- **Express 5.1.0** - Framework web
+- **SQLite3** - Base de datos
+- **JWT (jsonwebtoken 9.0.2)** - Autenticación
+- **bcrypt 6.0.0** - Hash de contraseñas
+- **dotenv 17.2.3** - Variables de entorno
+- **CORS 2.8.5** - Cross-Origin Resource Sharing
+
+### Librerías Frontend
 - **Bootstrap 5** - Framework CSS
 - **Font Awesome 5** - Iconos
 - **Swiper.js** - Carousel de productos
@@ -105,6 +126,7 @@
 ### Herramientas
 - Git & GitHub
 - VS Code
+- npm - Gestor de paquetes
 
 ---
 
@@ -122,6 +144,26 @@ proyecto_final/
 ├── my-profile.html         # Perfil de usuario
 ├── sell.html               # Venta de productos
 │
+├── Backend/                # Servidor Node.js
+│   ├── Server.js           # Configuración principal del servidor
+│   ├── .env                # Variables de entorno (JWT_SECRET, PORT)
+│   ├── package.json        # Dependencias del backend
+│   ├── users.db            # Base de datos SQLite (gitignored)
+│   │
+│   ├── routes/             # Rutas de la API
+│   │   ├── login.js        # POST /login y /new_user
+│   │   └── middleware/
+│   │       └── auth.js     # Middleware de verificación JWT
+│   │
+│   ├── config/
+│   │   └── database.js     # Configuración SQLite + usuarios default
+│   │
+│   └── emercado-api-main/  # Datos JSON de productos
+│       ├── cats/
+│       ├── cats_products/
+│       ├── products/
+│       └── products_comments/
+│
 ├── css/                    # Estilos modulares
 │   ├── common.css          # Archivo principal (imports)
 │   ├── variables.css       # Variables CSS y modo oscuro
@@ -136,32 +178,22 @@ proyecto_final/
 │   └── product-info.css    # Detalle de producto
 │
 ├── js/                     # Scripts por funcionalidad
-│   ├── init.js             # Constantes globales y API
-│   ├── utils.js            # Funciones compartidas
+│   ├── init.js             # Constantes globales, API y envío de JWT
+│   ├── utils.js            # Funciones compartidas + getCart/saveCart
 │   ├── index.js            # Lógica del index
 │   ├── categories.js       # Lógica de categorías
 │   ├── products.js         # Lógica de productos
-│   ├── product-info.js     # Lógica de detalle
+│   ├── product-info.js     # Lógica de detalle + persistencia comentarios
 │   ├── cart.js             # Lógica del carrito
-│   ├── login.js            # Lógica de login
-│   ├── my-profile.js       # Lógica del perfil
-│   ├── user-display.js     # Display usuario en header
-│   └── translate.js        # Sistema de traducción
-│
-├── img/                    # Imágenes
-├── webfonts/               # Fuentes
-│
-├── README.md               # Este archivo
+│   ├── login.js            # Lógica de login + validación email
+│   ├── my-profile.js       # Lógica del perfil + aislamiento por usuario
 ```
-
----
-
 ## 🚀 Instalación y Configuración
 
 ### Prerrequisitos
+- **Node.js 18+** y npm instalados
 - Navegador moderno (Chrome, Firefox, Edge, Safari)
 - Conexión a internet
-- (Opcional) Servidor local
 
 ### Instalación
 
@@ -171,26 +203,64 @@ proyecto_final/
    cd proyecto_final
    ```
 
-2. **Abrir en navegador**
-   
-   **Opción A: Directo**
-   - Abrir `login.html` con doble clic
-
-   **Opción B: Servidor local (recomendado)**
+2. **Configurar Backend**
    ```bash
-   # Python 3
-   python -m http.server 8000
-   
-   # Node.js
-   npx http-server -p 8000
-   
-   # Abrir: http://localhost:8000/login.html
+   cd Backend
+   npm install
    ```
 
-3. **Iniciar sesión**
-   - Email: cualquier email válido
-   - Contraseña: cualquier texto
-   - Clic en "Ingresar"
+3. **Configurar variables de entorno**
+   
+   Crear archivo `.env` en carpeta `Backend/`:
+   ```env
+   JWT_SECRET= proyectofinal123
+   PORT= 3000
+   ```
+
+4. **Iniciar servidor backend**
+   ```bash
+   # Desde la carpeta Backend/
+   node Server.js
+   ```
+   
+   Deberías ver:
+   ```
+   Servidor escuchando en http://localhost:3000
+   Conectado a la base de datos SQLite
+   Tabla users lista
+   ✓ Usuario predeterminado creado: admin@emercado.com
+   ```
+
+5. **Abrir Frontend**
+   
+   En otra terminal, desde la raíz del proyecto:
+   
+   **Opción A: Live Server (VS Code)**
+   - Instalar extensión "Live Server"
+   - Clic derecho en `login.html` → "Open with Live Server"
+   - URL: `http://127.0.0.1:5500/login.html`
+
+   **Opción B: Python**
+   ```bash
+   python -m http.server 5500
+   ```
+   
+   **Opción C: Node.js**
+   ```bash
+   npx http-server -p 5500
+   ```
+   
+   Luego abrir: `http://127.0.0.1:5500/login.html`
+
+6. **Iniciar sesión**
+   
+   Usar el usuario predeterminado:
+   - **Email:** `admin@emercado.com` | **Contraseña:** `admin123`
+
+### ⚠️ Importante
+- El backend debe estar corriendo en el puerto **3000**
+- El frontend debe estar en el puerto **5500** (configurado en CORS)
+- Si usas otro puerto para el frontend, actualiza el CORS en `Backend/Server.js`
 
 ---
 
@@ -276,9 +346,12 @@ Login → Index → Categorías → Productos → Detalle → Carrito → Checko
 ### Constantes Globales (`init.js`)
 
 ```javascript
+// Base URL del backend local
+const BASE_URL = "http://localhost:3000/emercado-api-main";
+
 // URLs API
-const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
-const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
+const PRODUCTS_URL = `${BASE_URL}/cats_products/`;
+const PRODUCT_INFO_URL = `${BASE_URL}/products/`;
 
 // Keys de localStorage
 const STORAGE_KEYS = {
@@ -287,15 +360,35 @@ const STORAGE_KEYS = {
     PRODUCT_ID: "productID",
     DARK_MODE: "darkMode"
 };
+
+// Función que agrega token JWT a todas las peticiones
+function getJSONData(url) {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    
+    return fetch(url, { headers })
+        .then(response => {
+            if (response.status === 401 || response.status === 403) {
+                // Token expirado - redirigir a login
+                localStorage.removeItem('token');
+                sessionStorage.removeItem('token');
+                window.location.href = 'login.html';
+            }
+            return response.json();
+        });
+}
 ```
 
 ### Funciones Compartidas (`utils.js`)
 
 ```javascript
-verificarUsuario()     // Verificar login
+verificarUsuario()     // Verificar login + token válido
+logout()               // Cerrar sesión y limpiar datos
+getCart()              // Obtener carrito del usuario actual
+saveCart(cart)         // Guardar carrito del usuario actual
 setProductID(id)       // Navegar a detalle
-setCatID(id)          // Navegar a productos
-initDarkMode()        // Inicializar modo oscuro
+setCatID(id)           // Navegar a productos
+initDarkMode()         // Inicializar modo oscuro
 ```
 
 ### Patrón JavaScript
@@ -332,15 +425,93 @@ common.css
 
 ---
 
+## 🔐 Arquitectura de Seguridad y Datos
+
+### Backend (Node.js + Express)
+
+#### Autenticación JWT
+```javascript
+// POST /api/login
+{
+  "username": "admin@emercado.com",
+  "password": "admin123"
+}
+
+// Respuesta
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### Middleware de Autorización
+- Todas las rutas `/emercado-api-main/*` requieren token JWT
+- Token enviado en header: `Authorization: Bearer <token>`
+- Token válido por 1 hora
+- Redirección automática al login si expira
+
+#### Base de Datos SQLite
+```sql
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,  -- Hash bcrypt
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### Almacenamiento de Datos
+
+#### Carrito
+```javascript
+// Carrito único compartido
+localStorage: cart  // Array de productos [{id, count, name, ...}]
+```
+
+#### Perfiles
+```javascript
+// Datos de perfil del usuario
+localStorage: profileImage  // Imagen en base64
+// Estructura almacenada: { nombre, apellido, telefono, profileImage }
+```
+
+#### Comentarios
+```javascript
+// Comentarios persistidos por producto
+localStorage: comments_40281
+localStorage: comments_50741
+```
+
+### Flujo de Autenticación
+
+```
+1. Usuario ingresa email + password
+   ↓
+2. Frontend → POST /api/login (backend)
+   ↓
+3. Backend valida con SQLite + bcrypt
+   ↓
+4. Backend genera JWT y lo devuelve
+   ↓
+5. Frontend guarda token en localStorage
+   ↓
+6. Frontend agrega token en todas las peticiones
+   ↓
+7. Middleware verifica token antes de cada request
+```
+
+---
+
 ## 🛒 Sistema de Carrito
 
 ### Funcionalidades
-- Agregar/eliminar productos
-- Modificar cantidades
-- Conversión automática de monedas
-- Checkout en 3 pasos
-- Validaciones en tiempo real
-- Persistencia de datos
+- Sistema simplificado con funciones `getCart()` y `saveCart()`
+- Agregar/eliminar productos con confirmación visual
+- Modificar cantidades con actualización automática de totales
+- Conversión automática de monedas (USD/UYU)
+- Checkout en 3 pasos con validaciones
+- Validaciones en tiempo real con clases Bootstrap
+- Persistencia de datos en localStorage
+- Limpieza automática al finalizar la compra
 
 ### Checkout
 
@@ -368,7 +539,18 @@ common.css
 
 ## 🌐 API y Endpoints
 
-**Base:** `https://japceibal.github.io/emercado-api/`
+### Backend Local (Puerto 3000)
+
+#### Endpoints de Autenticación (Públicos)
+
+| Método | Endpoint | Descripción | Body |
+|--------|----------|-------------|------|
+| POST | `/api/login` | Autenticación de usuario | `{ username, password }` |
+| POST | `/api/new_user` | Crear nuevo usuario | `{ username, password }` |
+
+#### Endpoints Protegidos (Requieren JWT)
+
+**Base:** `http://localhost:3000/emercado-api-main/`
 
 | Endpoint | Descripción |
 |----------|-------------|
@@ -377,10 +559,27 @@ common.css
 | `/products/{id}.json` | Detalle de producto |
 | `/products_comments/{id}.json` | Comentarios |
 | `/user_cart/{id}.json` | Carrito de usuario |
+| `/cart/buy.json` | Datos de compra |
 
 ### Ejemplo de Uso
 
 ```javascript
+// Login
+fetch('http://localhost:3000/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        username: 'admin@emercado.com',
+        password: 'admin123'
+    })
+})
+.then(res => res.json())
+.then(data => {
+    localStorage.setItem('token', data.token);
+});
+
+// Obtener productos (con token)
+const token = localStorage.getItem('token');
 getJSONData(PRODUCTS_URL + "101" + EXT_TYPE)
     .then(result => {
         if (result.status === "ok") {
@@ -426,11 +625,12 @@ getJSONData(PRODUCTS_URL + "101" + EXT_TYPE)
 
 ### LocalStorage
 ```javascript
-"usuario"           // Email
-"cart"              // Array de productos
-"darkMode"          // true/false
-"checkoutFormData"  // Datos del checkout
-"profileImage"      // Imagen base64
+"usuario"           // Email del usuario actual
+"cart"              // Array de productos del carrito
+"token"             // JWT token de autenticación
+"darkMode"          // true/false para tema
+"checkoutFormData"  // Datos del formulario de checkout
+"profileImage"      // Imagen de perfil en base64
 ```
 
 ### SessionStorage
@@ -443,12 +643,11 @@ getJSONData(PRODUCTS_URL + "101" + EXT_TYPE)
 ## 🤝 Contribución
 
 ### Equipo
-- **EmilianoCrause** - [GitHub](https://github.com/EmilianoCrause)
-- Emiliano Crause
-- Lourdes Maside
-- Cristhian Fontes
-- Marcos Hernández
-- Emely González
+- **Emiliano Crause** - [GitHub](https://github.com/EmilianoCrause)
+- **Lourdes Maside** - [GitHub](https://github.com/lou-maoli-611)
+- **Cristhian Fontes** - [GitHub](https://github.com/CristhianMarc)
+- **Marcos Hernández** - [GitHub](https://github.com/mhernandez234)
+- **Emely González** - [GitHub](https://github.com/eme-bass)
 
 ### Cómo Contribuir
 
@@ -477,13 +676,63 @@ getJSONData(PRODUCTS_URL + "101" + EXT_TYPE)
 
 ## 🚧 Roadmap
 
+### ✅ Completado
+- [x] Backend con Node.js + Express
+- [x] Base de datos SQLite
+- [x] Autenticación JWT
+- [x] Middleware de autorización
+- [x] Hash de contraseñas con bcrypt
+- [x] Aislamiento de datos por usuario
+- [x] Validación de email en login
+
 ### Futuro
-- [ ] Backend con Node.js
-- [ ] Base de datos
-- [ ] Autenticación JWT
+- [ ] Registro de usuarios desde el frontend
 - [ ] Pasarela de pago real
 - [ ] Panel de administración
-- [ ] PWA
+- [ ] PWA (Progressive Web App)
+- [ ] Notificaciones push
+- [ ] Chat de soporte
+
+---
+
+## 🔧 Solución de Problemas
+
+### Error: "Token no proporcionado" o "Token inválido"
+**Causa:** El token JWT expiró o no existe  
+**Solución:** 
+1. Cerrar sesión
+2. Volver a iniciar sesión
+3. El sistema generará un nuevo token
+
+### Error: "Error al cargar los productos"
+**Causa:** Backend no está corriendo  
+**Solución:**
+```bash
+cd Backend
+node Server.js
+```
+
+### Error: CORS Policy
+**Causa:** Frontend corriendo en puerto diferente a 5500  
+**Solución:** Actualizar `Backend/Server.js`:
+```javascript
+app.use(cors({
+    origin: 'http://127.0.0.1:TU_PUERTO',  // Cambiar puerto
+    credentials: true
+}));
+```
+
+### Base de datos corrupta
+**Solución:**
+```bash
+cd Backend
+Remove-Item users.db -ErrorAction SilentlyContinue
+node Server.js  # Recreará la BD con usuarios default
+```
+
+### Frontend no carga recursos estáticos
+**Causa:** Rutas relativas incorrectas  
+**Solución:** Usar Live Server o servidor local en puerto 5500
 
 ---
 

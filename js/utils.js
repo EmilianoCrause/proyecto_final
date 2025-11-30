@@ -1,14 +1,36 @@
-// Verifica si hay un usuario autenticado en sessionStorage o localStorage
-// Redirige a login si no hay sesión activa
+// Verifica si hay un usuario autenticado y un token válido
+// Redirige a login si no hay sesión activa o token
 function verificarUsuario() {
     const usuSession = sessionStorage.getItem(STORAGE_KEYS.USUARIO);
     const usuLocal = localStorage.getItem(STORAGE_KEYS.USUARIO);
+    const tokenSession = sessionStorage.getItem('token');
+    const tokenLocal = localStorage.getItem('token');
 
-    if (!usuSession && !usuLocal) {
+    // Verificar que exista usuario Y token
+    if ((!usuSession && !usuLocal) || (!tokenSession && !tokenLocal)) {
         window.location = "login.html";
         return false;
     }
     return true;
+}
+
+// Cierra la sesión del usuario actual
+function logout() {
+    // Limpiar solo datos de sesión, mantener perfiles guardados por usuario
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('token');
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+}
+
+// Obtiene el carrito
+function getCart() {
+    return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+
+// Guarda el carrito
+function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // Agrega un evento click a un elemento por su ID de forma segura
