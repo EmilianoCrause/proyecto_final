@@ -4,7 +4,7 @@ const cors = require("cors");
 const path = require("path");
 
 const loginRouter = require("./routes/login");
-const authMiddleware = require("./middleware/auth");
+const authMiddleware = require("./routes/middleware/auth");
 
 const app = express();
 const PORT = 3000;
@@ -17,17 +17,11 @@ app.use(cors({
 
 app.use(express.json());
 
+// Rutas públicas (login)
 app.use("/api", loginRouter);
 
-// Rutas protegidas (solo usuarios autenticados)
-app.get("/api/productos", authMiddleware, (req, res) => {
-    res.json({
-        message: "Ruta protegida",
-        user: req.user
-    });
-});
-
-app.use("/emercado-api-main", express.static(path.join(__dirname,"emercado-api-main")));
+// Rutas protegidas - Requieren autenticación para acceder a los datos del eCommerce
+app.use("/emercado-api-main", authMiddleware, express.static(path.join(__dirname,"emercado-api-main")));
 
 app.get("/", (req, res) => {
     res.send("Backend eMercado funcionando");

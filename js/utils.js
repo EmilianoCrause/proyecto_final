@@ -1,10 +1,13 @@
-// Verifica si hay un usuario autenticado en sessionStorage o localStorage
-// Redirige a login si no hay sesión activa
+// Verifica si hay un usuario autenticado y un token válido
+// Redirige a login si no hay sesión activa o token
 function verificarUsuario() {
     const usuSession = sessionStorage.getItem(STORAGE_KEYS.USUARIO);
     const usuLocal = localStorage.getItem(STORAGE_KEYS.USUARIO);
+    const tokenSession = sessionStorage.getItem('token');
+    const tokenLocal = localStorage.getItem('token');
 
-    if (!usuSession && !usuLocal) {
+    // Verificar que exista usuario Y token
+    if ((!usuSession && !usuLocal) || (!tokenSession && !tokenLocal)) {
         window.location = "login.html";
         return false;
     }

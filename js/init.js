@@ -30,11 +30,27 @@ let hideSpinner = function(){
 let getJSONData = function(url){
     let result = {};
     showSpinner();
-    return fetch(url)
+    
+    // Obtener token (primero intenta localStorage, luego sessionStorage)
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    
+    // Configurar headers con el token si existe
+    const headers = {};
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+    
+    return fetch(url, { headers })
     .then(response => {
       if (response.ok) {
         return response.json();
-      }else{
+      } else if (response.status === 401 || response.status === 403) {
+        // Token inválido o expirado - redirigir al login
+        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
+        window.location.href = 'login.html';
+        throw Error('Sesión expirada');
+      } else {
         throw Error(response.statusText);
       }
     })
