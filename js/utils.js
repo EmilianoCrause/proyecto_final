@@ -14,6 +14,33 @@ function verificarUsuario() {
     return true;
 }
 
+// Cierra la sesión del usuario actual
+function logout() {
+    // Limpiar solo datos de sesión, mantener perfiles guardados por usuario
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('token');
+    sessionStorage.clear();
+    window.location.href = 'login.html';
+}
+
+// Obtiene el carrito del usuario actual
+function getCart() {
+    const currentUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
+    if (!currentUser) return [];
+    
+    const cartKey = `cart_${currentUser}`;
+    return JSON.parse(localStorage.getItem(cartKey) || '[]');
+}
+
+// Guarda el carrito del usuario actual
+function saveCart(cart) {
+    const currentUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
+    if (!currentUser) return;
+    
+    const cartKey = `cart_${currentUser}`;
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+}
+
 // Agrega un evento click a un elemento por su ID de forma segura
 function addClick(id, handler) {
     const el = document.getElementById(id);
