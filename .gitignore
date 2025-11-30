@@ -7,6 +7,11 @@ package-lock.json
 .env.local
 .env.*.local
 
+# Base de datos
+*.db
+*.sqlite
+*.sqlite3
+
 # Logs
 *.log
 npm-debug.log*
