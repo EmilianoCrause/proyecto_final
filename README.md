@@ -54,28 +54,26 @@
 - **Base de datos SQLite** para almacenar usuarios
 - **Autenticación JWT** con tokens de 1 hora
 - **Contraseñas hasheadas** con bcrypt
-- **Usuarios predeterminados:**
+- **Usuario predeterminado:**
   - `admin@emercado.com` (contraseña: admin123)
-  - `usuario1@emercado.com` (contraseña: 1234)
-  - `test@emercado.com` (contraseña: test)
 - Middleware de autorización protegiendo todas las rutas
 - Token incluido en headers de todas las peticiones
 - Opción "Recordarme" (localStorage/sessionStorage)
 - Verificación de sesión en todas las páginas
 - Redirección automática al expirar token
 ### 🛒 Carrito de Compras
-- **Aislamiento por usuario** (cada usuario tiene su propio carrito)
-- Agregar/eliminar productos
-- Modificar cantidades
-- Cálculo automático de totales
-- Conversión de monedas (UYU ↔ USD)
+- Agregar/eliminar productos con confirmación
+- Modificar cantidades en tiempo real
+- Cálculo automático de totales y subtotales
+- Conversión automática de monedas (UYU ↔ USD)
 - **Checkout en 3 pasos:**
   1. Envío (dirección + tipo de envío)
   2. Pago (tarjeta o transferencia)
   3. Resumen (totales y confirmación)
-- Persistencia de datos del formulario por usuario
-- Validaciones en tiempo real
+- Persistencia de datos del formulario
+- Validaciones en tiempo real con feedback visual
 - Funciones auxiliares: `getCart()` y `saveCart()`
+- Limpieza automática al finalizar compra
 
 ### 🛍️ Productos y Categorías
 - Listado dinámico desde API
@@ -231,8 +229,6 @@ proyecto_final/
    Conectado a la base de datos SQLite
    Tabla users lista
    ✓ Usuario predeterminado creado: admin@emercado.com
-   ✓ Usuario predeterminado creado: test@emercado.com
-   ✓ Usuario predeterminado creado: usuario1@emercado.com
    ```
 
 5. **Abrir Frontend**
@@ -258,10 +254,8 @@ proyecto_final/
 
 6. **Iniciar sesión**
    
-   Usar uno de los usuarios predeterminados:
+   Usar el usuario predeterminado:
    - **Email:** `admin@emercado.com` | **Contraseña:** `admin123`
-   - **Email:** `usuario1@emercado.com` | **Contraseña:** `1234`
-   - **Email:** `test@emercado.com` | **Contraseña:** `test`
 
 ### ⚠️ Importante
 - El backend debe estar corriendo en el puerto **3000**
@@ -465,20 +459,19 @@ CREATE TABLE users (
 );
 ```
 
-### Aislamiento de Datos por Usuario
+### Almacenamiento de Datos
 
-#### Carritos
+#### Carrito
 ```javascript
-// Cada usuario tiene su propio carrito
-localStorage: cart_admin@emercado.com
-localStorage: cart_test@emercado.com
+// Carrito único compartido
+localStorage: cart  // Array de productos [{id, count, name, ...}]
 ```
 
 #### Perfiles
 ```javascript
-// Datos de perfil aislados
-localStorage: profile_admin@emercado.com
-// Estructura: { nombre, apellido, telefono, profileImage }
+// Datos de perfil del usuario
+localStorage: profileImage  // Imagen en base64
+// Estructura almacenada: { nombre, apellido, telefono, profileImage }
 ```
 
 #### Comentarios
@@ -511,13 +504,14 @@ localStorage: comments_50741
 ## 🛒 Sistema de Carrito
 
 ### Funcionalidades
-- **Aislamiento por usuario** con `getCart()` y `saveCart()`
-- Agregar/eliminar productos
-- Modificar cantidades
-- Conversión automática de monedas
-- Checkout en 3 pasos
-- Validaciones en tiempo real
-- Persistencia de datos
+- Sistema simplificado con funciones `getCart()` y `saveCart()`
+- Agregar/eliminar productos con confirmación visual
+- Modificar cantidades con actualización automática de totales
+- Conversión automática de monedas (USD/UYU)
+- Checkout en 3 pasos con validaciones
+- Validaciones en tiempo real con clases Bootstrap
+- Persistencia de datos en localStorage
+- Limpieza automática al finalizar la compra
 
 ### Checkout
 
@@ -631,11 +625,12 @@ getJSONData(PRODUCTS_URL + "101" + EXT_TYPE)
 
 ### LocalStorage
 ```javascript
-"usuario"           // Email
-"cart"              // Array de productos
-"darkMode"          // true/false
-"checkoutFormData"  // Datos del checkout
-"profileImage"      // Imagen base64
+"usuario"           // Email del usuario actual
+"cart"              // Array de productos del carrito
+"token"             // JWT token de autenticación
+"darkMode"          // true/false para tema
+"checkoutFormData"  // Datos del formulario de checkout
+"profileImage"      // Imagen de perfil en base64
 ```
 
 ### SessionStorage

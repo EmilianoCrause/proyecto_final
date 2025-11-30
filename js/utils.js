@@ -23,22 +23,14 @@ function logout() {
     window.location.href = 'login.html';
 }
 
-// Obtiene el carrito del usuario actual
+// Obtiene el carrito
 function getCart() {
-    const currentUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
-    if (!currentUser) return [];
-    
-    const cartKey = `cart_${currentUser}`;
-    return JSON.parse(localStorage.getItem(cartKey) || '[]');
+    return JSON.parse(localStorage.getItem('cart') || '[]');
 }
 
-// Guarda el carrito del usuario actual
+// Guarda el carrito
 function saveCart(cart) {
-    const currentUser = localStorage.getItem('usuario') || sessionStorage.getItem('usuario');
-    if (!currentUser) return;
-    
-    const cartKey = `cart_${currentUser}`;
-    localStorage.setItem(cartKey, JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
 }
 
 // Agrega un evento click a un elemento por su ID de forma segura

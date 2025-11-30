@@ -34,12 +34,10 @@ db.serialize(() => {
     });
 });
 
-// Función para insertar usuarios predeterminados
+// Función para insertar usuario predeterminado
 async function insertDefaultUsers() {
     const defaultUsers = [
-        { username: 'admin@emercado.com', password: 'admin123' },
-        { username: 'usuario1@emercado.com', password: '1234' },
-        { username: 'test@emercado.com', password: 'test' }
+        { username: 'admin@emercado.com', password: 'admin123' }
     ];
 
     for (const user of defaultUsers) {
